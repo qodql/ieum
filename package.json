@@ -9,14 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
-<<<<<<< HEAD
-    "sass": "^1.79.4"
-=======
-    "zustand": "^5.0.0-rc.2"
->>>>>>> 23c9fa9fd41bce864b49a0ababb4adcba55d7834
+    "sass": "^1.79.4",
+
+    "axios": "^1.7.7",
+    "firebase": "^10.14.0",
+    "firestore": "^1.1.6",
+    "next": "14.2.14",
+    "next-auth": "^4.24.8",
+    "react": "^18",
+    "react-dom": "^18",
+    "sass": "^1.79.4",
+    "uuid": "^10.0.0"
+
   },
   "devDependencies": {
     "eslint": "^8",

@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import s from '@/styles/css/page/main.module.scss'
 import Footer from './component/Footer';
 import Header from './component/Header';
 import { ButtonAll, ButtonArrow } from './component/Button';
 import { CommentCard} from './component/contents/ContentCard';
 import { ContentListMain1, ContentListMain2, ContentListMain3 } from './component/contents/ContentList';
+=======
+import Head from "next/head";
+import Link from "next/link";
+>>>>>>> 22c500e4badd27a6e4dde07a77d8590585b73a1e
 
 export default function Home() {
   return (

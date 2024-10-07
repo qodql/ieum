@@ -1,0 +1,52 @@
+.userInput{
+  display: block;
+ }
+ 
+
+
+
+
+// login
+.loginBox{
+  max-width: 390px;
+  margin: 0 auto;
+  &>p{
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .loginInput{
+    display: block;
+    width: calc(100% - 137px);
+    height: 40px;
+    margin: 28px auto 0 auto;
+      &:nth-of-type(2){
+        margin-top: 8px;
+        margin-bottom: 20px;
+      }
+      &::placeholder{
+        color: #CCCCCC;
+        opacity: 0.4;
+        padding-left: 16px;
+      }
+      &:focus::placeholder{
+        opacity: 0;
+      }
+  }
+  .loginBtn{
+    width: calc(100% - 137px);
+    background-color: #2E8B57;
+    color: #fafafa;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 20px;
+    height: 40px;
+  }
+  .linkText{
+    text-decoration: underline black;
+
+  }
+}
