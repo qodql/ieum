@@ -1,9 +1,9 @@
 import React from 'react'
 import s from '@/styles/css/component/header.module.scss'
 import Search from './Search'
+import Link from 'next/link'
 
 const Header = () => {
-    
 return (
     <heder>
         <div className={s.header1}>
