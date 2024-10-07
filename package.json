@@ -12,7 +12,11 @@
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
+<<<<<<< HEAD
     "sass": "^1.79.4"
+=======
+    "zustand": "^5.0.0-rc.2"
+>>>>>>> 23c9fa9fd41bce864b49a0ababb4adcba55d7834
   },
   "devDependencies": {
     "eslint": "^8",
