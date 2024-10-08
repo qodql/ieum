@@ -18,6 +18,9 @@ return (
         <li className={s.header2Li}>베스트</li>
         <li className={s.header2Li}>신간</li>
         <li className={s.header2Li}>추천도서</li>
+        <li>
+            <Link href='/page/member/Login'>테스트용</Link>
+        </li>
         </ul>
     </heder>
 )

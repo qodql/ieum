@@ -91,6 +91,7 @@ export default function Home() {
                 <p className={s.date}>2024-10-22</p>
               </div>
             </div>
+            <div></div>
             <CommentCard/>
           </div>
         </div>

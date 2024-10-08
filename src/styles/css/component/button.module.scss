@@ -4,3 +4,6 @@
 .contentTitle4_btn{
 
 }
+.buttonArrowBack::after{
+    content: url(../../../../public/arrow_b.png);
+}
