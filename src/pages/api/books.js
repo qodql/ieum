@@ -1,53 +1,34 @@
-import axios from "axios";
+import axios from 'axios';
 
-
-async function Bestsellers(req, res) {
-    try {
-      const response = await fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbbengby1506001&QueryType=ItemNewAll&MaxResults=20&start=1&SearchTarget=Book&output=JS&Version=20131101`);
-  
-      if (!response.ok) {
-        throw new Error(`Failed to fetch. Status: ${response.status}`);
-      }
-      const data = await response.json();
-      res.status(200).json(data);
-    } catch {}
+const instant = axios.create({
+  baseURL: 'http://www.aladin.co.kr/ttb/api', 
+  params: {
+    ttbkey: 'ttbbengby1506001',
+    MaxResults: 20,
+    start: 1,
+    SearchTarget: 'Book',
+    output: 'xml',
+    Version: '20131101'
   }
+});
 
-
-async function searchItems(req, res) {
-    const { query, maxResults = 20, start = 1, searchTarget = "Book" } = req.query;
-  
-    if (!query) {
-      return res.status(400).json({ error: "Query parameter is required" });
-    }
-  
-    try {
-      const response = await fetch(
-        `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbbengby1506001&Query=${query}&MaxResults=${maxResults}&start=${start}&SearchTarget=${searchTarget}&output=JS&Version=20131101`
-      );
-  
-      if (!response.ok) {
-        throw new Error(`Failed to fetch. Status: ${response.status}`);
+//search
+export async function search(keyword) {
+    const response = await instant.get('/ItemSearch.aspx', {
+      params: {
+        Query: keyword,
       }
-      const data = await response.json();
-      res.status(200).json(data);
-    } catch {}
-  }
-
-
-export default async function handler(req, res) {
-    const { type } = req.query; 
-  
-    switch (type) {
-        case 'bestseller':
-            return Bestsellers(req, res); // 베스트셀러 API 호출
-        case 'search':
-            return searchItems(req, res); // 상품 검색 API 호출
-        default: 
-            return;
-    }
+    });
+    return response.data;  
 }
-  
 
-  
-  
+//main
+export async function main() {
+    const response = await instant.get('/ItemList.aspx', {
+      params: {
+        QueryType: 'ItemNewAll'
+      }
+    });
+    const items = response.data; 
+    return items;
+}

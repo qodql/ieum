@@ -1,19 +1,10 @@
-import { create } from 'zustand';
-import { aladin } from '../api/aladin';
+import { configureStore } from '@reduxjs/toolkit';
+import bookSlice from '../api/books';
 
-const BookStore = create((set) => ({
-  books: [],
-  loading: false,
+const store = configureStore({
+  reducer: {
+    books: bookSlice,
+  },
+});
 
-  Bestsellers: async () => {
-    set({ loading: true });
-    
-    try {
-      const data = await aladin();
-      set({ books: data.item, loading: false });
-    } catch {}
-  }
-  
-}));
-
-export default BookStore;
+export default store;
