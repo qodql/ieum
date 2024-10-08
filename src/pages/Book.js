@@ -1,30 +1,31 @@
-import React, { useEffect } from 'react';
-import BookStore from '../stores/BookStore';
+import React from 'react'
+import Header from './component/Header'
+import Footer from './component/Footer'
+import { ContentList_card } from './component/contents/ContentCard'
+import s from '../styles/css/page/book.module.scss'
 
 const Book = () => {
-    const { books, loading, Bestsellers } = BookStore();
-
-    useEffect(() => {
-        Bestsellers();
-      }, [Bestsellers]);
-
-    if (loading) return <p>Loading...</p>;
-
-    console.log(books);
-
-    return (
-      <div>
-        <h2>베스트셀러</h2>
-        <ul>
-          {books.map((book) => (
-            <li key={book.itemId}>
-              <h3>{book.title}</h3>
-              <p>지은이: {book.author}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+  return (
+    <>
+        <Header/>
+        <div className={s.book}>
+            <div className={s.bookBanner}>
+                <h2>베스트셀러</h2>
+                <div className={s.bookBanner_Icon}></div>
+            </div>
+            <div className={s.bookList}>
+                <ContentList_card/>
+                <ContentList_card/>
+                <ContentList_card/>
+                <ContentList_card/>
+                <ContentList_card/>
+                <ContentList_card/>
+                <ContentList_card/>
+            </div>
+        </div>
+        <Footer/>
+    </>
+  )
 }
 
-export default Book;
+export default Book

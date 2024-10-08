@@ -1,15 +1,20 @@
 import React from 'react'
 import s from '@/styles/css/component/button.module.scss'
+import Link from 'next/link'
 
 const ButtonAll = () => {
   return (
-    <button>전체보기</button>
+    <Link href="../Book">
+      <button>전체보기</button>
+    </Link>
   )
 }
 
 const ButtonArrow = () => {
     return(
-        <button className={s.contentTitle4_btn}></button>
+        <Link  href="../CommentList">
+          <button className={s.contentTitle4_btn}></button>
+        </Link>
     )
 }
 
