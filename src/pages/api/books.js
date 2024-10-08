@@ -3,7 +3,7 @@ import axios from "axios";
 
 async function Bestsellers(req, res) {
     try {
-      const response = await fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbbengby1506001&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=Book&output=JS&Version=20131101`);
+      const response = await fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbbengby1506001&QueryType=ItemNewAll&MaxResults=20&start=1&SearchTarget=Book&output=JS&Version=20131101`);
   
       if (!response.ok) {
         throw new Error(`Failed to fetch. Status: ${response.status}`);
