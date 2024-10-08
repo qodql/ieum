@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Header/>
       <main>
-
+      
         <div className={s.banner}>
           <div className={s.bannerImg} style={{backgroundImage:`url(./Maskgroup.png)`}}></div>
           <div className={s.bannerText}>
