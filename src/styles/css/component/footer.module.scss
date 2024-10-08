@@ -3,6 +3,12 @@
 .footer{
     border-top: 1px solid;
     padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fafafa;
+    transition: .3s;
+    z-index: 5;
     .footerMenu{
         display: flex;
         align-items: center;
@@ -18,4 +24,8 @@
             .footerText{}
         }
     }
+}
+.footerAct{
+    transition: .3s;
+    transform: translateY(100%);
 }

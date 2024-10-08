@@ -1,0 +1,20 @@
+.commentList_title{
+    margin: 16px;
+    display: flex;
+    align-items: center;
+    gap: 125px;
+    .commentList_back{}
+    .commentList_back::after{
+        content: url(../../../../public/back.png);
+        width: 24px;
+        height: 24px;
+    }
+    h2{
+        word-spacing: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+}
+.commentCard_list{
+    
+}
