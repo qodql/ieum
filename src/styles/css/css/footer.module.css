@@ -1,0 +1,28 @@
+.footer {
+  border-top: 1px solid;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fafafa;
+  transition: 0.3s;
+  z-index: 5;
+}
+.footer .footerMenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 48px;
+}
+.footer .footerMenu .footerMenu_li {
+  text-align: center;
+}
+.footer .footerMenu .footerMenu_li .footerMenu_icon {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+}
+.footerAct {
+  transition: 0.3s;
+  transform: translateY(100%);
+}

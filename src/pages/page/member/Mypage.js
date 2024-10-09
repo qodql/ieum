@@ -1,6 +1,7 @@
 import React from 'react'
 import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from 'next/link';
+import { MypageCard, MypageComment } from '@/pages/component/contents/ContentCard';
 
 
 const Mypage = () => {
@@ -24,7 +25,7 @@ const Mypage = () => {
               <Link href='/'>더보기</Link>
             </div>
             <span className={loginStyles.contentText}>이홍영님께서 설정한 읽고 있는 책들의 리스트에요</span>
-          {/* 컴포넌트 자리 */}
+            <MypageCard/>
           </li>
           <li>
             <div className={loginStyles.contentList}>
@@ -40,7 +41,7 @@ const Mypage = () => {
               <Link href='/'>더보기</Link>
             </div>
             <span className={loginStyles.contentText}>이홍영님께서 작성한 코멘트를 볼 수 있어요</span>
-          {/* 컴포넌트 자리 */}
+          <MypageComment/>
           </li>
         </ul>
     </div>

@@ -1,0 +1,16 @@
+.commentList_title {
+  margin: 16px;
+  display: flex;
+  align-items: center;
+  gap: 125px;
+}
+.commentList_title .commentList_back::after {
+  content: url(../../../../public/back.png);
+  width: 24px;
+  height: 24px;
+}
+.commentList_title h2 {
+  word-spacing: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
