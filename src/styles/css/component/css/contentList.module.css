@@ -1,0 +1,19 @@
+.content1 {
+  display: flex;
+  margin: 16px 0px 0px 16px;
+}
+
+.content2 {
+  display: flex;
+  margin-left: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content3 {
+  margin-left: 16px;
+  display: flex;
+  margin-top: 8px;
+  align-items: center;
+  gap: 12px;
+}

@@ -227,14 +227,13 @@
         width: 115px;
         height: 130px;
         .MypageCard_image{
-            margin: 0 auto;
             background-repeat: no-repeat;
             width: 103px;
             height: 118px;
         }
     }
     .MypageCard_title{
-        margin-top: 12px;
+        margin-top: 8px;
         font-size: 12px;
         font-weight: 500;
         color: #333;
@@ -245,9 +244,9 @@
 
 .MypageComment{
     display: flex;
-    margin: 20px 16px;
+    margin: 20px 0;
     .MypageComment_img{
-        margin-left: 16px;
+        
         background-repeat: no-repeat;
         background-size: cover;
         width: 70px;

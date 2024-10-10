@@ -34,6 +34,9 @@
       margin: 0 auto;
       border: none ;
       border-bottom: 1px solid #111111;
+      &:focus::placeholder{
+        opacity: 0;
+      }
      }
      .duplicationBox{
       width: 358px;
@@ -100,7 +103,7 @@
  
 }
 
-// login
+// 로그인
 .loginBox{
   max-width: 390px;
   margin: 0 auto;
@@ -164,7 +167,19 @@
       text-decoration: underline;
     }
   }
-
+  .externalLoginBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 40px;
+    .loginIcon{
+      width: 40px;
+      height: 40px;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
 }
 
 //아이디찾기
@@ -288,6 +303,12 @@
         font-size: 12px;
       }
     }
+    .mypageCardBox{
+      width: 358px;
+      display: flex;
+      margin-top: 12px;
+      margin-bottom: 40px;
+    }
     .contentText{
       font-size: 12px;
       color: #999999;
@@ -347,6 +368,12 @@
     }
     &:nth-of-type(1):focus::placeholder{
       opacity: 1;
+    }
+    &:last-of-type:focus::placeholder{
+      opacity: 1;
+    }
+    &:last-of-type:focus{
+      outline: none;
     }
    }
    .nicknameChangeBox{

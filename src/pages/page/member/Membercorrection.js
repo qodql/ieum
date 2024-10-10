@@ -40,7 +40,9 @@ const Membercorrection = () => {
       <input 
         type="text" 
         placeholder="010-6660-1578"
-        className={loginStyles.userInput}/> 
+        className={loginStyles.userInput}
+        value='' readOnly/> 
+        
       <div className={loginStyles.memberCorrectionBtnBox}>
         <button className={loginStyles.memberCorrectionBtn}>저장</button>
         <button className={loginStyles.memberCorrectionCancel}>취소</button>
