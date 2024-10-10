@@ -11,6 +11,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.8",
     "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "firebase": "^10.14.0",
     "firestore": "^1.1.6",
     "next": "14.2.14",
@@ -22,6 +24,7 @@
     "sass": "^1.79.4",
     "swiper": "^11.1.14",
     "uuid": "^10.0.0",
+    "xml2js": "^0.6.2",
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {

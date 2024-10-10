@@ -3,11 +3,8 @@ import Header from './component/Header'
 import Footer from './component/Footer'
 import { ContentList_card } from './component/contents/ContentCard'
 import s from '../styles/css/page/book.module.scss'
-import { useDispatch } from 'react-redux'
 
 const Book = () => {
-
-  const dispatch = useDispatch();
 
   return (
     <>
