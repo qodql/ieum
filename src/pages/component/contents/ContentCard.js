@@ -99,7 +99,7 @@ const ContentList_card = () => {
         return (
             <div className={s.MypageCard}>
                 <div className={s.MypageCard_box}>
-                    <div className={s.MypageCard_image} style={{backgroundImage:`url(./image2.png)`}}></div>
+                    <div className={s.MypageCard_image} style={{backgroundImage:`url(/image2.png)`}}></div>
                 </div>
                 <p className={s.MypageCard_title}>시대예보:호명사회</p>
             </div>
@@ -112,7 +112,7 @@ const ContentList_card = () => {
     const MypageComment = () => {
         return (
             <div className={s.MypageComment}>
-                <div className={s.MypageComment_img} style={{backgroundImage:`url(./image2.png)`}}>\</div>
+                <div className={s.MypageComment_img} style={{backgroundImage:`url(/image2.png)`}}></div>
                 <div className={s.MypageComment_text}>
                     <p className={s.MypageComment_date}>
                         2024.10.02
@@ -127,7 +127,7 @@ const ContentList_card = () => {
                         재밌는 책이었다 아주 재미있었다 너무 재미있었다 대박이다
                     </p>
                 </div>
-                <span className={s.MypageComment_more} style={{backgroundImage:`url(./more.png)`}}></span>        
+                <span className={s.MypageComment_more} style={{backgroundImage:`url(/more.png)`}}></span>        
             </div>
         )
     }

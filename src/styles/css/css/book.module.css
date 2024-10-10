@@ -1,0 +1,10 @@
+.book {
+  margin-top: 126px;
+}
+.book .bookBanner {
+  margin: 0 16px;
+}
+.book .bookBanner .bookBanner_Icon {
+  height: 125px;
+  background-color: #2e8b57;
+}

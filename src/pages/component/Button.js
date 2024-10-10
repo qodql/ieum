@@ -18,4 +18,10 @@ const ButtonArrow = () => {
     )
 }
 
-export {ButtonAll, ButtonArrow}
+const ButtonArrowBack = ()=>{
+  return(
+    <button className={s.buttonArrowBack}></button>
+  )
+}
+
+export {ButtonAll, ButtonArrow,ButtonArrowBack}
