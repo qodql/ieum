@@ -10,7 +10,7 @@ http://www.aladin.co.kr/ttb/api/ItemSearch.aspx
 
 QueryType
 ItemNewAll : 신간 전체 리스트
-ItemEditorChoice : 편집자 추천 리스트
+ItemEditorChoice : 편집자 추천 리스트 // 카테고리가 있어야함
 Bestseller : 베스트셀러
 BlogBest : 블로거 베스트셀러
 

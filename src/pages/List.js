@@ -5,14 +5,14 @@ const List = () => {
     const { mainItems, items, itemApi, loading } = BookStore();
 
     useEffect(() => {
-        itemApi('Bestseller');
+        const cateNum = '170';
+        const coverSize = 'Big'; 
+        itemApi('main', cateNum, coverSize);
     }, []);
     
-    //console.log(mainItems);
-    
-    if (loading) return <div>Loading...</div>;
+    console.log(mainItems.ItemNewAll.item);
 
-
+    if (loading) return <div>Loading..</div>;
 
     return (
         <div>

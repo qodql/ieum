@@ -4,6 +4,8 @@ import { CommentCard } from './component/contents/ContentCard'
 import s from '@/styles/css/page/comment.module.scss'
 
 const CommentList = () => {
+
+  
   return (
     <>
         <div className={s.commentList_title}>
