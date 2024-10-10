@@ -19,6 +19,11 @@ const Login = () => {
         <Link href='/page/member/Mypage' className={loginStyles.linkText}>테스트1</Link>
         <Link href='/page/member/Membercorrection'>테스트2</Link>
       </div>
+      <div className={loginStyles.externalLoginBox}>
+        <div style={{backgroundImage:`url(/icon_login_naver.svg)`}} className={loginStyles.loginIcon}/>
+        <div style={{backgroundImage:`url(/icon_login_github.svg)`}} className={loginStyles.loginIcon}/>
+        <div style={{backgroundImage:`url(/icon_login_google.svg`}} className={loginStyles.loginIcon}/>
+      </div>
      </div>
   )
 }

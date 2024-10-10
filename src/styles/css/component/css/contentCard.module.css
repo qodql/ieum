@@ -209,13 +209,12 @@
   height: 130px;
 }
 .MypageCard .MypageCard_box .MypageCard_image {
-  margin: 0 auto;
   background-repeat: no-repeat;
   width: 103px;
   height: 118px;
 }
 .MypageCard .MypageCard_title {
-  margin-top: 12px;
+  margin-top: 8px;
   font-size: 12px;
   font-weight: 500;
   color: #333;

@@ -275,6 +275,11 @@
 .mypageBox .contentBox .contentList > a {
   font-size: 12px;
 }
+.mypageBox .contentBox .mypageCardBox {
+  width: 358px;
+  display: flex;
+  margin-top: 12px;
+}
 .mypageBox .contentBox .contentText {
   font-size: 12px;
   color: #999999;
