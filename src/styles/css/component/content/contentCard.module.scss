@@ -39,20 +39,32 @@
         background-size: cover;
     }
     .contentCard2_category{
+        width: 160px;
         font-size: 14px;
         font-weight: lighter;
         color: #999999;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
     .contentCard2_title{
+        width: 170px;
         font-size: 16px;
         color: #111111;
         width: 140px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
     .contentCard2_author{
+        width: 170px;
         font-size: 14px;
         font-weight: lighter;
         color: #999999;
         margin-top: 16px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
 }
 

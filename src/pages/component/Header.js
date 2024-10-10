@@ -19,7 +19,6 @@ const Header = () => {
         const moving = window.scrollY;
         setVisible(position > moving);
         setPosition(moving);
-        console.log(visible)
     }, [position]);
 return (
     <header>

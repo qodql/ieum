@@ -13,7 +13,7 @@ const BookStore = create((set) => ({
       set({ books: data.item, loading: false });
     } catch {}
   }
-  
+
 }));
 
 export default BookStore;

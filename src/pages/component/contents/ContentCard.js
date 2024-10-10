@@ -2,22 +2,24 @@ import React from 'react'
 import s from '@/styles/css/component/content/contentCard.module.scss'
 
 
-const ContentCard1 = () => {
+const ContentCard1 = (props) => {
+    // console.log(props.item)
 return (
     <div className={s.contentCard1}>
-        <span className={s.bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>1</span>
-        <div className={s.contentCard1_image} style={{backgroundImage:`url(./image1.png)`}}></div>
+        <span className={s.bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{props.item.bestRank}</span>
+        <div className={s.contentCard1_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
     </div>
 )
 }
 
-const ContentCard2 = () => {
+const ContentCard2 = (props) => {
+    // console.log(props.item.categoryName.slice(0,6))
 return (
     <div className={s.contentCard2}>
-        <div className={s.contentCard2_image} style={{backgroundImage:`url(./image1.png)`}}></div>
-        <p className={s.contentCard2_category}>경제/경영</p>
-        <p className={s.contentCard2_title}>피벗의 시대 2025년 경제 전망</p>
-        <p className={s.contentCard2_author}>김경식</p>
+        <div className={s.contentCard2_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
+        <p className={s.contentCard2_category}>{props.item.categoryName}</p>
+        <p className={s.contentCard2_title}>{props.item.title}</p>
+        <p className={s.contentCard2_author}>{props.item.author}</p>
     </div>
 )
 }
