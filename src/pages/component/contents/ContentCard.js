@@ -3,7 +3,7 @@ import s from '@/styles/css/component/content/contentCard.module.scss'
 
 
 const ContentCard1 = (props) => {
-    // console.log(props.item)
+    // console.log(props)
 return (
     <div className={s.contentCard1}>
         <span className={s.bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{props.item.bestRank}</span>
@@ -24,12 +24,13 @@ return (
 )
 }
 
-const ContentCard3 = () => {
+const ContentCard3 = (props) => {
+
 return (
     <div className={s.contentCard3}>
-        <div className={s.contentCard3_image} style={{backgroundImage:`url(./image1.png)`}}></div>
-        <p className={s.contentCard3_title}>피벗의 시대 2025년 경제 전망</p>
-        <p className={s.contentCard3_author}>김경식</p>
+        <div className={s.contentCard3_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
+        <p className={s.contentCard3_title}>{props.item.title}</p>
+        <p className={s.contentCard3_author}>{props.item.author}</p>
     </div>
 )
 }

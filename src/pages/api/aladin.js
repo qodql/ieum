@@ -3,7 +3,7 @@ import axios from "axios";
 const instant = axios.create({
   baseURL: 'http://www.aladin.co.kr/ttb/api', 
   params: {
-    ttbkey: 'ttbbengby1506001',
+    ttbkey: 'ttbhongyeong5751628001',
     MaxResults: 20,
     start: 1,
     SearchTarget: 'Book',
@@ -12,33 +12,35 @@ const instant = axios.create({
   }
 });
 
-async function mainItems(res) {
+async function mainItems(res, categoryId, Cover) {
   try {
-    let [ItemNewAll,Bestseller,BlogBest] = await Promise.all([
-      instant(`/ItemList.aspx?QueryType=ItemNewAll`),
-      instant(`/ItemList.aspx?QueryType=Bestseller`),
-      instant(`/ItemList.aspx?QueryType=BlogBest`)
+    let [ItemNewAll,Bestseller,BlogBest,ItemEditorChoice] = await Promise.all([
+      instant(`/ItemList.aspx?QueryType=ItemNewAll&categoryId=${categoryId}&Cover=${Cover}`),
+      instant(`/ItemList.aspx?QueryType=Bestseller&categoryId=${categoryId}&Cover=${Cover}`),
+      instant(`/ItemList.aspx?QueryType=BlogBest&categoryId=${categoryId}&Cover=${Cover}`),
+      instant(`/ItemList.aspx?QueryType=ItemEditorChoice&categoryId=${categoryId}&Cover=${Cover}`)
     ]);
     
-    ItemNewAll=ItemNewAll.data;
-    Bestseller=Bestseller.data;
-    BlogBest=BlogBest.data;
+    ItemNewAll = ItemNewAll.data;
+    Bestseller = Bestseller.data;
+    BlogBest = BlogBest.data;
+    ItemEditorChoice = ItemEditorChoice.data;
     
-    res.status(200).json({ItemNewAll,Bestseller,BlogBest});
+    res.status(200).json({ItemNewAll, Bestseller, BlogBest, ItemEditorChoice});
   } catch(error) {
     throw new Error(`Error. Status: ${error}`);
   }
 }
 
-async function listItems(res,type) {
-    try {
-      const response = await instant(`/ItemList.aspx?QueryType=${type}`);
-      const data = response.data;
-      res.status(200).json(data);
-    } catch(error) {
-      throw new Error(`Error. Status: ${error}`);
-    }
+async function listItems(res, type, categoryId, Cover) {
+  try {
+    const response = await instant(`/ItemList.aspx?QueryType=${type}&categoryId=${categoryId}&Cover=${Cover}`);
+    const data = response.data;
+    res.status(200).json(data);
+  } catch(error) {
+    throw new Error(`Error. Status: ${error}`);
   }
+}
 
 
 async function searchItems(req, res) {
@@ -56,15 +58,19 @@ async function searchItems(req, res) {
 
 
 export default async function handler(req, res) {
-    const { type } = req.query; 
+    const { type, categoryId, Cover  } = req.query; 
     
     switch (type) {
         case 'main':
-            return await mainItems(res);
+            return await mainItems(res, categoryId, Cover);
+        case 'cate':
+            return await mainItems(res, categoryId, Cover);
         case 'search':
             return await searchItems(res);
+        case 'test':
+            res.status(200).json({item:100}); return;
         default: 
-            return await listItems(res,type);
+            return await listItems(res,type,categoryId, Cover);
     }
 
 }
