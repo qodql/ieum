@@ -1,21 +1,45 @@
 import React from 'react'
-import { getDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useState } from "react";
 import { storage,db } from "@/lib/firebase";
 import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from "next/link";
 
 const Findid = () => {
+
+  const [findInfo, setFindInfo] = useState({phoneNum:'', name:'' });
+  const [searchInfo, setSearchInfo] = useState([]);
   const infoFind = (edit)=>{
-    setUserInfo({...info, ...edit});
+    setFindInfo({...findInfo, ...edit});
   }
+
+const contrastInfo = async ()=>{
+ const q = query(
+  collection(db,"userInfo"),
+  where("info.phoneNum", "==", findInfo.phoneNum),
+  where("info.name", "==" , findInfo.name),
+ )
+ const querySnapshot = await getDocs(q);
+
+ const data = querySnapshot.docs.map((doc)=> doc.data());
+ setSearchInfo(data);
+}
+
+const submitHandle = (e) => {
+  e.preventDefault();
+  contrastInfo();
+}
+
+
+
+
   return (
     <div className={loginStyles.findIdBox}>
        <div className={loginStyles.ieumLogo} style={{backgroundImage:`url(/icon_login_ieum.svg)`
       }}></div>
       <p>아이디 찾기</p>
     {/* 아이디 찾기 */}
-    <form onSubmit={(e)=> e.preventDefault}>
+    <form onSubmit={submitHandle}>
       <span>이름</span>
       <input 
       className={loginStyles.userInput} 
@@ -36,8 +60,14 @@ const Findid = () => {
       className={loginStyles.userInput} 
       type='text'
       placeholder='인증번호를 입력하세요'/>
-      <button className={loginStyles.findBtn}>아이디 찾기</button>
+      <button type='submit' className={loginStyles.findBtn}>아이디 찾기</button>
     </form>
+    {searchInfo.length > 0 && (
+        <div>
+          <h2>검색 결과</h2>
+          <pre>{JSON.stringify(searchInfo, null, 2)}</pre>
+        </div>
+      )}
   </div>
   )
 }

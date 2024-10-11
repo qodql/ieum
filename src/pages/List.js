@@ -5,7 +5,7 @@ const List = () => {
     const { mainItems, items, itemApi, loading } = BookStore();
 
     useEffect(() => {
-        itemApi('Bestseller');
+        itemApi('BlogBest');
     }, []);
     
     //console.log(mainItems);

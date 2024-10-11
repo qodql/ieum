@@ -1,14 +1,16 @@
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
 import store from './stores/BookStore';
+import { SessionProvider } from "next-auth/react"
 
 
-function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-    <Provider store={store}>
-        <Component {...pageProps} />
-    </Provider>
-  );
+    <SessionProvider session={session} store={store}>
+      <Component {...pageProps} />
+    </SessionProvider>
+  )
 }
-
-export default App;
