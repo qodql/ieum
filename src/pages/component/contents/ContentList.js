@@ -1,68 +1,45 @@
-// import React, { useEffect } from 'react'
-// import { ContentCard1, ContentCard2, ContentCard3 } from './ContentCard'
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
+import React, { useEffect } from 'react'
+import { ContentCard1, ContentCard2, ContentCard3 } from './ContentCard'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
-// import s from '@/styles/css/component/content/contentList.module.scss'
-// import BookStore from '@/pages/stores/BookStore';
+import s from '@/styles/css/component/content/contentList.module.scss'
+import BookStore from '@/pages/stores/BookStore';
+
+const ContentListMain1 = (props) => {
 
 
+  return (
 
-// const ContentListMain1 = () => {
-
-//   const {books, Bestsellers} = BookStore()
-//   const { mainItems, items, itemApi, loading } = BookStore();
-
-//   // useEffect(()=>{
-//   //   Bestsellers()
-//   // },[])
-
-//   useEffect(()=>{
-//     async function fetchData(){
-//         await Bestsellers()
-//     }
-//     fetchData();
-//   },[])
-
-//   return (
-//     <Swiper
-//     slidesPerView={'3'}
-//     spaceBetween={50}
-//     className={`${s.content1} mySwiper`}>
-        
-          {/* {
-            books.map((item)=>
-            <SwiperSlide>
-              <ContentCard1 item={item}/>
-            </SwiperSlide>
-            )
-          } */}
+    <Swiper
+    slidesPerView={'3'}
+    spaceBetween={50}
+    className={`${s.content1} mySwiper`}>
+      {
+        props.mainItems.BlogBest.item.map((item)=>
+        <SwiperSlide>
+          <ContentCard1 item={item} key={item.itemid}/>
+        </SwiperSlide>
+        )
+      }
     </Swiper>
   )
 }
 
 
 
-// const ContentListMain2 = () => {
+const ContentListMain2 = (props) => {
 
-//   const {books, Bestsellers} = BookStore()
-
-//   useEffect(()=>{
-//     async function fetchData(){
-//         await Bestsellers()
-//     }
-//     fetchData();
-//   },[])
   
   return (
     <Swiper
     slidesPerView={'2'}
     spaceBetween={40}
     className={` ${s.content2} mySwiper`}>
-      {/* {
-        books.map((item)=>
+      {
+        props.mainItems.ItemNewAll.item.map((item)=>
           <SwiperSlide>
-            <ContentCard2 item={item}/>
+            <ContentCard2 item={item} key={item.itemid}/>
           </SwiperSlide>
         )
       }                  */}
@@ -70,32 +47,49 @@
   )
 }
 
-// const ContentListMain3 = () => {
-//   return (
-//     <Swiper 
-//     slidesPerView={'3'}
-//     spaceBetween={100}
-//     className={`${s.content3} mySwiper `}>
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//       <SwiperSlide>
-//         <ContentCard3/>
-//       </SwiperSlide> 
-//     </Swiper>
-//   )
-// }
+const ContentListMain3 = (props) => {
 
-// export {ContentListMain1, ContentListMain2, ContentListMain3}
+  // const [cate, setCate] = useState('1');
+  const {category, itemApi, loading} = BookStore();
+
+  // // const sendCateNum = ()=>{
+  // //   props.categoryNum(props.cate)
+  // // }
+  // // sendCateNum();
+
+  useEffect( () => {
+    
+    const coverSize = 'Big'; 3
+    async function fetchData(){
+      await itemApi('cate', props.cate, coverSize);
+    }
+    if(props.cate){
+        fetchData();
+    }
+  }, [props.cate]);
+
+  
+  if (loading) return <div className={s.loading}>
+                        <p className={s.loadingText}>Loading...</p>
+                      </div>
+
+  console.log(props)
+
+  return (
+    <Swiper 
+    slidesPerView={'3'}
+    spaceBetween={100}
+    className={`${s.content3} mySwiper `}>
+      {
+        category.ItemEditorChoice.item.map((item)=>
+          <SwiperSlide>
+            <ContentCard3 item={item} key={item.itemid}/>
+          </SwiperSlide>
+        )
+      }
+    </Swiper>
+  )
+}
+
+
+export {ContentListMain1, ContentListMain2, ContentListMain3}

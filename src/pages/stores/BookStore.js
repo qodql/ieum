@@ -26,7 +26,7 @@ const BookStore = create((set) => ({
   // 리스트 데이터
   items: [],         // 리스트 데이터
   searchResults: [], // 검색 결과
-  loading: false,    // 로딩 상태
+  loading: true,    // 로딩 상태
   error:'',
 
   // List Api 요청
@@ -43,6 +43,7 @@ const BookStore = create((set) => ({
       }else{
         set({ items: response.data.item, loading: false });
       }
+
     } catch (error) {
       set({ error: error, loading: false });
     }
