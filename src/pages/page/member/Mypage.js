@@ -7,7 +7,8 @@ import { useSession } from 'next-auth/react';
 
 const Mypage = () => {
   const {data : session} = useSession({});
-  if (session != undefined && session != null)console.log(session.user.email)
+   
+ 
   return (
     <>    
     {
