@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router';
 import s from '@/styles/css/page/main.module.scss'
 import detail from '@/styles/css/page/detail.module.scss'
-import { ButtonAll, ButtonArrow } from './component/Button';
+import { ButtonAll } from './component/Button';
 import Footer from './component/Footer';
+import BookStore from './stores/BookStore';
 
 const Detail = () => {
+    const router = useRouter();
+    const { itemId } = router.query;
+    const { mainItems } = BookStore();
+    const [item, setItem] = useState(null);
+
+    useEffect(() => {
+        if (itemId) {
+            const foundItem = Object.values(mainItems).flatMap(category => category.item)
+                .find(i => i.itemId === Number(itemId));
+            setItem(foundItem);
+        }
+    }, [itemId, mainItems]);
+
+    if (!item) return <div>Loading...</div>;
+
+    console.log(item);
+
   return (
     <>
         <div className={detail.subWrap}>
@@ -15,21 +34,21 @@ const Detail = () => {
             <div className={detail.detail}>
                 <div className={detail.detailThumbArea}>
                     <div className={detail.detailThumbBg}>
-                        <img src='./trend.jpg'/>
+                        <img src={item.cover} alt={item.title}/>
                     </div>
                     <div className={detail.detailThumbBox}>
                         <div className={detail.detailThumb}>
-                            <img src='./trend.jpg'/>
+                            <img src={item.cover} alt={item.title}/>
                         </div>
                         <div className={detail.detailThumbInfo}>
                             <div className={detail.detailThumbIcon}>
                                 <span>베스트</span>
                                 <span>편집자추천</span>
                             </div>
-                            <h5 className={detail.detailThumbTit}>트렌드 코리아 2025</h5>
-                            <p className={detail.detailTumbOverview}>2025 대한민국 소비트렌드 전망</p>
-                            <span className={detail.detailThumbWriter}>김난도, 전미영, 최지혜, 권정윤, 한다혜, 이혜원, 이준영, 이향은, 추예린, 전다현</span>
-                            <span className={detail.detailThumbType}>국내도서&gt;경제경영&gt;트렌드/미래전망&gt;트렌드/미래전망 일반</span>
+                            <h5 className={detail.detailThumbTit}>{item.title}</h5>
+                            <p className={detail.detailTumbOverview}>{item.author}</p>
+                            <span className={detail.detailThumbWriter}>{item.author}</span>
+                            <span className={detail.detailThumbType}>{item.categoryName}</span>
                         </div>
                     </div>
                     <div className={detail.detailInfoArea}>
@@ -74,17 +93,15 @@ const Detail = () => {
                         </div>
                         <div className={detail.detailInfo}>
                             <p className={detail.detailInfoTit}>기본 정보</p>
-                            <span>국내도서&gt;경제경영&gt;트렌드/미래전망&gt;트렌드/미래전망 일반</span>
+                            <span>{item.categoryName}</span>
                             <p className={detail.detailInfoDescription}>
-                                역대급 무더위가 대한민국을 강타한 2024년 여름, 지구는 역사상 가장 뜨거운 날의 기록을 연달아 경신했다.<br/><br/>
-                                지금 우리는 ‘역대급’이라는 말 자체가 역대급으로 많이 쓰이는 시대를 살고 있다. 그만큼 우리 사회의 역동성이 크다는 뜻이기도 하다.<br/><br/>
-                                근 20년 동안 우리 사회의 추이와 소비 활동의 여러 모습을 추적, 관찰해온 트렌드 코리아 팀은 대한민국이 그 어느 때보다도 더 특유의 역동성과 역량을 바탕으로 전에 없는 다양성을 표출하는 모습을 목격하고 이를 책에 담고자 했다.
+                                {item.description}
                             </p>
                         </div>
                         <div className={detail.detailInfoBox}>
                             <div>
                                 <span>출판일</span>
-                                <span>2024-09-25</span>
+                                <span>{item.pubDate}</span>
                             </div>
                             <div>
                                 <span>페이지</span>
@@ -92,7 +109,7 @@ const Detail = () => {
                             </div>
                             <div>
                                 <span>출판사</span>
-                                <span>미래의 창</span>
+                                <span>{item.publisher}</span>
                             </div>
                         </div>
                         <div className={detail.detailInfoPlace}>

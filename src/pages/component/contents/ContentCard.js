@@ -57,20 +57,21 @@ return (
 }
 
 
-const ContentList_card = () => {
+const ContentList_card = ({item}) => {
+
     return (
         <div className={s.ContentList_card}>
             <div className={s.ContentList_card_main}>
                 <div className={s.ContentList_card_img}>
                     <span className={s.ContentList_card_bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>1</span>
-                    <div className={s.ContentList_card_mainImg} style={{backgroundImage:`url(./image1.png)`}}></div>
+                    <div className={s.ContentList_card_mainImg} style={{ backgroundImage: `url(${item.cover})` }}></div>
                 </div>
                 <div className={s.ContentList_card_text}>
                     <h2 className={s.ContentList_card_title}>
-                    트렌드 코리아 2025 - 2025 대한민국 소비트렌드 전망
+                        {item.title}
                     </h2>
                     <p className={s.ContentList_card_auther}>
-                        김난도, 전미영, 최지혜, 권정윤, 한다혜, 이혜원, 이준영, 이향은, 추예린, 전다현 (지은이)
+                        {item.author}
                     </p>
                     <p className={s.ContentList_card_rateTitle}>
                     책이음 평점
@@ -85,7 +86,7 @@ const ContentList_card = () => {
                     123
                 </p>
                 <p className={s.ContentList_card_category}>
-                국내도서{'>'}경제경영{'>'}트렌드/미래전망{'>'}트렌드/미래전망 일반
+                    {item.categoryName}
                 </p>
             </div>
         </div>

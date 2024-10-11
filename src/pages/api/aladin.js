@@ -3,7 +3,7 @@ import axios from "axios";
 const instant = axios.create({
   baseURL: 'http://www.aladin.co.kr/ttb/api', 
   params: {
-    ttbkey: 'ttbbengby1506001',
+    ttbkey: 'ttbhongyeong5751628001',
     MaxResults: 20,
     start: 1,
     SearchTarget: 'Book',
@@ -61,6 +61,8 @@ export default async function handler(req, res) {
     
   switch (type) {
     case 'main':
+      return await mainItems(res, categoryId, Cover);
+    case 'cate':
       return await mainItems(res, categoryId, Cover);
     case 'search':
       return await searchItems(res, Query);

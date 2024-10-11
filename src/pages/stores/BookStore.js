@@ -7,6 +7,7 @@ const instant = axios.create({
 
 // 스토어
 const BookStore = create((set) => ({
+  // 메인 데이터
   mainItems: {
     ItemNewAll: { item: [] },        // 초기값 설정
     Bestseller: { item: [] },        // 초기값 설정
@@ -14,7 +15,15 @@ const BookStore = create((set) => ({
     ItemEditorChoice: { item: [] }   // 초기값 설정
   },      
 
-  // 메인 데이터
+  // 카테고리 데이터
+  category: {
+    ItemNewAll: { item: [] },        
+    Bestseller: { item: [] },      
+    BlogBest: { item: [] },          
+    ItemEditorChoice: { item: [] }   
+  },
+
+  // 리스트 데이터
   items: [],         // 리스트 데이터
   searchResults: [], // 검색 결과
   loading: false,    // 로딩 상태
@@ -29,6 +38,8 @@ const BookStore = create((set) => ({
       });
       if(type==='main'){
         set({ mainItems: response.data, loading: false });
+      }else if(type==='cate'){
+        set({ category: response.data, loading: false });
       }else{
         set({ items: response.data.item, loading: false });
       }

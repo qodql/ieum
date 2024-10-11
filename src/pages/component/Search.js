@@ -8,7 +8,7 @@ const Search = () => {
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    console.log("검색 결과:", searchResults);
+    //console.log("검색 결과:", searchResults);
   }, [searchResults]);
 
   if (loading) return <div>Loading..</div>;
@@ -41,7 +41,7 @@ const Search = () => {
             </li>
           ))
         ) : (
-          <li><p>검색 결과가 없습니다.</p></li>
+          <li><p></p></li>
         )}
       </ul>
         </div>

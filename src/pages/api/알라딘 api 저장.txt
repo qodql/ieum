@@ -38,6 +38,7 @@ categoryId
 종교 3125
 철학 8516
 판타지 4132
+에세이 55889
 
 &categoryId=${cateNum}
 
