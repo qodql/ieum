@@ -30,16 +30,16 @@
 //     spaceBetween={50}
 //     className={`${s.content1} mySwiper`}>
         
-//           {
-//             books.map((item)=>
-//             <SwiperSlide>
-//               <ContentCard1 item={item}/>
-//             </SwiperSlide>
-//             )
-//           }
-//     </Swiper>
-//   )
-// }
+          {/* {
+            books.map((item)=>
+            <SwiperSlide>
+              <ContentCard1 item={item}/>
+            </SwiperSlide>
+            )
+          } */}
+    </Swiper>
+  )
+}
 
 
 
@@ -54,21 +54,21 @@
 //     fetchData();
 //   },[])
   
-//   return (
-//     <Swiper
-//     slidesPerView={'2'}
-//     spaceBetween={40}
-//     className={` ${s.content2} mySwiper`}>
-//       {
-//         books.map((item)=>
-//           <SwiperSlide>
-//             <ContentCard2 item={item}/>
-//           </SwiperSlide>
-//         )
-//       }                 
-//     </Swiper>
-//   )
-// }
+  return (
+    <Swiper
+    slidesPerView={'2'}
+    spaceBetween={40}
+    className={` ${s.content2} mySwiper`}>
+      {/* {
+        books.map((item)=>
+          <SwiperSlide>
+            <ContentCard2 item={item}/>
+          </SwiperSlide>
+        )
+      }                  */}
+    </Swiper>
+  )
+}
 
 // const ContentListMain3 = () => {
 //   return (

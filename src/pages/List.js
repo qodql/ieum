@@ -5,9 +5,7 @@ const List = () => {
     const { mainItems, items, itemApi, loading } = BookStore();
 
     useEffect(() => {
-        const cateNum = '170';
-        const coverSize = 'Big'; 
-        itemApi('main', cateNum, coverSize);
+        itemApi('BlogBest');
     }, []);
     
     console.log(mainItems.ItemNewAll.item);
