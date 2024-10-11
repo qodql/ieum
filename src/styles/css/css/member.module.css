@@ -32,6 +32,9 @@
   border: none;
   border-bottom: 1px solid #111111;
 }
+.CreateAccountBox form .userInput:focus::placeholder {
+  opacity: 0;
+}
 .CreateAccountBox form .duplicationBox {
   width: 358px;
   border-bottom: 1px solid black;
@@ -158,6 +161,19 @@
   display: block;
   text-decoration: underline;
 }
+.loginBox .externalLoginBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 40px;
+}
+.loginBox .externalLoginBox .loginIcon {
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .findIdBox {
   width: 390px;
@@ -279,6 +295,7 @@
   width: 358px;
   display: flex;
   margin-top: 12px;
+  margin-bottom: 40px;
 }
 .mypageBox .contentBox .contentText {
   font-size: 12px;
@@ -336,6 +353,12 @@
 }
 .memberCorrection .userInput:nth-of-type(1):focus::placeholder {
   opacity: 1;
+}
+.memberCorrection .userInput:last-of-type:focus::placeholder {
+  opacity: 1;
+}
+.memberCorrection .userInput:last-of-type:focus {
+  outline: none;
 }
 .memberCorrection .nicknameChangeBox {
   display: flex;
