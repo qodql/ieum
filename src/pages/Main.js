@@ -22,7 +22,6 @@ export default function Home() {
 
 //mainItems
     useEffect( () => {
-        console.log('======================================');
         const cateNum = '';
         const coverSize = 'Big'; 3
         async function fetchData(){

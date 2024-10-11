@@ -42,7 +42,7 @@ const ContentListMain2 = (props) => {
             <ContentCard2 item={item} key={item.itemid}/>
           </SwiperSlide>
         )
-      }                  */}
+      }                 
     </Swiper>
   )
 }
