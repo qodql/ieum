@@ -20,7 +20,7 @@ export default function Home() {
     }
 
 
-//mainItems
+    //mainItems
     useEffect( () => {
         const cateNum = '';
         const coverSize = 'Big'; 3
