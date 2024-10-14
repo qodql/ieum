@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
 import s from '@/styles/css/page/main.module.scss';
 import Footer from './component/Footer';
 import Header from './component/Header';
 import { ButtonAll, ButtonArrow } from './component/Button';
 import { CommentCard } from './component/contents/ContentCard';
 import { ContentListMain1, ContentListMain2, ContentListMain3 } from './component/contents/ContentList';
+import { useEffect, useState } from 'react';
 import BookStore from './stores/BookStore';
-import LoadingScreen from './component/loadingScreen';
+import LoadingScreen from './component/loadingScreen'; 
+
 
 export default function Home() {
     const [cate, setCate] = useState('1');
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(true); 
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
-    const { mainItems, itemApi, hasLoadedOnce, setHasLoadedOnce } = BookStore();
+    const { mainItems, category, itemApi } = BookStore();
 
     const categoryNum = (num) => {
         setCate(num);
@@ -21,28 +22,22 @@ export default function Home() {
 
     // mainItems
     useEffect(() => {
-        if (!hasLoadedOnce) {
-            setLoading(true);
-        }
-
         const cateNum = '';
         const coverSize = 'Big';
+
         async function fetchData() {
             await itemApi('main', cateNum, coverSize);
-            if (!hasLoadedOnce) {
-                setTimeout(() => {
-                    setLoadingfadeOut(true);
-                    setTimeout(() => {
-                        setLoading(false);
-                        setHasLoadedOnce(true);
-                    }, 500);
-                }, 2000);
-            }
+            setTimeout(() => {
+                setLoadingfadeOut(true);
+                setTimeout(() => setLoading(false), 500);
+            }, 1500);
         }
         fetchData();
-    }, [hasLoadedOnce, itemApi, setHasLoadedOnce]);
+    }, []);
 
-    if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut} />;
+    console.log(mainItems);
+
+    if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
         <>
@@ -110,7 +105,9 @@ export default function Home() {
                             <button className={s.c3Category_btn} onClick={() => { categoryNum('4132') }}>판타지</button>
                         </li>
                     </ul>
-                    <ContentListMain3 categoryNum={categoryNum} cate={cate} />
+                    <ContentListMain3 
+                        categoryNum={categoryNum} 
+                        cate={cate} />
                 </div>
 
                 <div className={s.mainContent4}>
