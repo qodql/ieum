@@ -1,11 +1,6 @@
 //Header
-
-
-
-
 .header1{
     transition: .3s;
-    background-color: #fafafa;
     display: flex;
     padding: 20px 16px 8px;
     padding-top: 20px;
@@ -26,7 +21,6 @@
             padding: 11px 16px;
             border-radius: 20px;
             font-size: 12px;
-            border-color: #999999;
             background: transparent;
         }
         .searchIcon{
@@ -41,11 +35,10 @@
 }
 .header1Act{
     transition: .3s;
-    background-color: #eee;
+    background-color: #fafafa;
 }
 .header2{
     position: relative;
-    background-color: #fafafa;
     transition: .3s;
     display: flex;
     padding-top: 16px;

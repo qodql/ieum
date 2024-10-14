@@ -11,8 +11,16 @@ const Search = () => {
     //console.log("검색 결과:", searchResults);
   }, [searchResults]);
 
-  if (loading) return <div>Loading..</div>;
+  // 로딩
+  if (loading) {
+    return (
+        <div className={s.loading}>
+            <img src="/icon/loading.gif" alt="Loading..." />
+        </div>
+    );
+  }
 
+  // 검색
   const handleSearch = (e) => {
     e.preventDefault();
     searchApi(keyword);

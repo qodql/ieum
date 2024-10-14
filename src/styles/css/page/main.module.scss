@@ -7,6 +7,39 @@
     background-color: transparent
 }
 
+.loadingScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2E8B57;
+    animation: loadinffadeIn 0.5s forwards;
+}
+
+@keyframes loadinffadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.loadingfadeOut {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+
 //contentTitle
 
 .contentTitle{
