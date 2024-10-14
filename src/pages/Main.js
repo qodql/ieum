@@ -35,7 +35,7 @@ export default function Home() {
         fetchData();
     }, []);
 
-    //console.log(mainItems);
+    // console.log(mainItems);
 
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 

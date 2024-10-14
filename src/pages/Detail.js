@@ -35,6 +35,7 @@ const Detail = () => {
             })
         }
     };
+    console.log(item);
 
     // 로딩
     if (!item) {
@@ -45,7 +46,6 @@ const Detail = () => {
         );
     }
 
-    console.log(item);
 
   return (
     <>
