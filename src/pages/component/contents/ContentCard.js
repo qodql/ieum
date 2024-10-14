@@ -60,11 +60,14 @@ return (
 
 const ContentList_card = ({item}) => {
 
+    //console.log(item);
+    
+
     return (
         <div className={s.ContentList_card}>
             <div className={s.ContentList_card_main}>
                 <div className={s.ContentList_card_img}>
-                    <span className={s.ContentList_card_bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>1</span>
+                    <span className={s.ContentList_card_bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{item.bestRank}</span>
                     <div className={s.ContentList_card_mainImg} style={{ backgroundImage: `url(${item.cover})` }}></div>
                 </div>
                 <div className={s.ContentList_card_text}>
@@ -92,7 +95,7 @@ const ContentList_card = ({item}) => {
             </div>
         </div>
     )
-    }
+}
 
 
     //Mypage contentsCard

@@ -1,6 +1,6 @@
 .subWrap{
     width: 100%;
-    height: 1600px;
+    height: 1500px;
     box-sizing: border-box;
     .subTop{
         width: 100%;
@@ -85,7 +85,7 @@
             .detailInfoArea{
                 width: 100%;
                 background-color: #fff;
-                border-radius: 16px;
+                border-radius: 16px 16px 0 0;
                 .detailInfoMark{
                     padding: 24px 16px 16px;
                     display: flex;

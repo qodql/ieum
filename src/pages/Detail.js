@@ -20,7 +20,30 @@ const Detail = () => {
         }
     }, [itemId, mainItems]);
 
-    if (!item) return <div>Loading...</div>;
+    // 뒤로가기 
+    const backBtn = () => {
+        router.back(); 
+    };
+
+    // 공유 버튼
+    const shareBtn = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: item.title,
+                text: item.description,
+                url: window.location.href
+            })
+        }
+    };
+
+    // 로딩
+    if (!item) {
+        return (
+            <div className={s.loading}>
+                <img src="/icon/loading.gif" alt="Loading..." />
+            </div>
+        );
+    }
 
     console.log(item);
 
@@ -28,8 +51,8 @@ const Detail = () => {
     <>
         <div className={detail.subWrap}>
             <div className={detail.subTop}>
-                <a><img src='./arrow-left.svg'/></a>
-                <a><img src='./share.svg'/></a>
+                <a onClick={backBtn}><img src='./arrow-left.svg'/></a>
+                <a onClick={shareBtn}><img src='./share.svg'/></a>
             </div>
             <div className={detail.detail}>
                 <div className={detail.detailThumbArea}>

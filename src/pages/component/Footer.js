@@ -38,11 +38,11 @@ const Footer = () => {
                session ? location.href = '/page/member/Mypage'
                : alert('로그인이 필요한 서비스입니다') }}  className={s.footerMenu_li}>
                 <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
-                <p className={s.footerText}>마이페이지</p>
+                <p className={s.footerText}>MY</p>
             </li>
             <li  className={s.footerMenu_li}>
                 <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer4.png)`}}></span>
-                <p className={s.footerText}>더보기</p>
+                <p className={s.footerText}>메뉴</p>
             </li>          
             </ul>
         </footer>

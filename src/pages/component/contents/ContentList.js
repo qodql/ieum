@@ -69,9 +69,19 @@ const ContentListMain3 = (props) => {
   }, [props.cate]);
 
   
-  if (loading) return <div className={s.loading}>
-                        <p className={s.loadingText}>Loading...</p>
-                      </div>
+  // if (loading) return <div className={s.loading}>
+  //                       <p className={s.loadingText}>Loading...</p>
+  //                     </div>
+
+
+  // 로딩
+  if (loading) {
+    return (
+        <div className={s.loading}>
+            <img src="/icon/loading.gif" alt="Loading..." />
+        </div>
+    );
+  }
 
   console.log(props)
 
