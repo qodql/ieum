@@ -27,7 +27,7 @@ const ContentListMain2 = (props) => {
   return (
     <Swiper
     slidesPerView={'2'}
-    spaceBetween={40}
+    spaceBetween={16}
     className={` ${s.content2} mySwiper`}>
       {
         props.mainItems.ItemNewAll.item.map((item)=>
@@ -80,7 +80,7 @@ const ContentListMain3 = (props) => {
     <Swiper 
     slidesPerView={'3'}
     spaceBetween={100}
-    className={`${s.content3} mySwiper `}>
+    className={`${s.content3} mySwiper`}>
       {
         category.ItemEditorChoice.item.map((item)=>
           <SwiperSlide key={item.itemId}>

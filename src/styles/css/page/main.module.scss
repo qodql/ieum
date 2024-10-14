@@ -13,10 +13,10 @@
     align-items: center;
     height: 100vh;
     background-color: #2E8B57;
-    animation: loadinffadeIn 0.5s forwards;
+    animation: loadingfadeIn 0.5s forwards;
 }
 
-@keyframes loadinffadeIn {
+@keyframes loadingfadeIn {
     from {
         opacity: 0;
     }
@@ -24,32 +24,16 @@
         opacity: 1;
     }
 }
-
-.loadingfadeOut {
-    animation: fadeOut 0.5s forwards;
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-
 
 //contentTitle
-
 .contentTitle{
-    margin: 0 16px;
+    margin: 0 16px 16px;
     margin-top: 48px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     h2{
-        font-size: 20;
+        font-size: 20px;
         font-weight: 600;
         color: #111111;
     }

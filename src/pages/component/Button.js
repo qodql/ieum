@@ -2,9 +2,9 @@ import React from 'react'
 import s from '@/styles/css/component/button.module.scss'
 import Link from 'next/link'
 
-const ButtonAll = () => {
+const ButtonAll = ({ category }) => {
   return (
-    <Link href="../Book">
+    <Link href={{ pathname: '/Book', query: { category } }}>
       <button>전체보기</button>
     </Link>
   )

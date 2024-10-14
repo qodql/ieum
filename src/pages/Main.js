@@ -35,7 +35,7 @@ export default function Home() {
         fetchData();
     }, []);
 
-    console.log(mainItems);
+    //console.log(mainItems);
 
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
@@ -67,7 +67,7 @@ export default function Home() {
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
                         <h2>블로거 베스트셀러</h2>
-                        <ButtonAll />
+                        <ButtonAll category="BlogBest"/>
                     </div>
                     <ContentListMain1 mainItems={mainItems} />
                 </div>
@@ -75,7 +75,7 @@ export default function Home() {
                 <div className={s.mainContent2}>
                     <div className={s.contentTitle}>
                         <h2>신간 리스트</h2>
-                        <ButtonAll />
+                        <ButtonAll category="ItemNewAll"/>
                     </div>
                     <ContentListMain2 mainItems={mainItems} />
                 </div>
@@ -83,7 +83,7 @@ export default function Home() {
                 <div className={s.mainContent3}>
                     <div className={s.contentTitle}>
                         <h2>편집자 추천 리스트</h2>
-                        <ButtonAll />
+                        <ButtonAll category="Bestseller"/>
                     </div>
                     <ul className={s.c3Category}>
                         <li className={s.c3Category_li}>
