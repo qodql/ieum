@@ -26,6 +26,20 @@ const Book = () => {
 
     const categoryItems = ['Bestseller', 'ItemNewAll', 'BlogBest'];
 
+    // 카테고리 이름에 대한 변환 함수
+    const getCategoryLabel = (category) => {
+        switch (category) {
+            case 'Bestseller':
+                return '베스트 셀러';
+            case 'ItemNewAll':
+                return '신간 베스트';
+            case 'BlogBest':
+                return '블로거 베스트';
+            default:
+                return '카테고리별';
+        }
+    };
+
     // 로딩
     if (loading) {
         return (
@@ -58,10 +72,10 @@ const Book = () => {
             <Header />
             <div className={list.book}>
                 <div className={list.bookBanner}>
-                    <h2>카테고리별</h2>
-                    <div className={list.bookBanner_Icon}></div>
+                    <h2>
+                        {getCategoryLabel(categoryTab)}
+                    </h2>
                 </div>
-
                 <div className={list.tabContainer}>
                     {categoryItems.map((v) => (
                         <button
@@ -69,7 +83,9 @@ const Book = () => {
                             className={categoryTab === v ? list.activeTab : list.tab}
                             onClick={() => setCategoryTab(v)}
                         >
-                            {v}
+                            <img src={`./icon/${v}.png`} alt={v}
+                                className={list.tabImage} 
+                            />
                         </button>
                     ))}
                 </div>

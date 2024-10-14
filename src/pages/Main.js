@@ -15,7 +15,6 @@ export default function Home() {
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
     const { mainItems, category, itemApi } = BookStore();
-
     const categoryNum = (num) => {
         setCate(num);
     };
@@ -30,13 +29,12 @@ export default function Home() {
             setTimeout(() => {
                 setLoadingfadeOut(true);
                 setTimeout(() => setLoading(false), 500);
-            }, 1500);
+            }, 1000);
         }
         fetchData();
     }, []);
 
     //console.log(mainItems);
-
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (

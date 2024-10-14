@@ -5,6 +5,7 @@ import detail from '@/styles/css/page/detail.module.scss'
 import { ButtonAll } from './component/Button';
 import Footer from './component/Footer';
 import BookStore from './stores/BookStore';
+import { Rating } from '@mui/material';
 
 const Detail = () => {
     const router = useRouter();
@@ -24,7 +25,7 @@ const Detail = () => {
     const backBtn = () => {
         router.back(); 
     };
-
+    
     // 공유 버튼
     const shareBtn = () => {
         if (navigator.share) {
@@ -45,7 +46,7 @@ const Detail = () => {
         );
     }
 
-    console.log(item);
+    //console.log(item);
 
   return (
     <>
@@ -69,7 +70,6 @@ const Detail = () => {
                                 <span>편집자추천</span>
                             </div>
                             <h5 className={detail.detailThumbTit}>{item.title}</h5>
-                            <p className={detail.detailTumbOverview}>{item.author}</p>
                             <span className={detail.detailThumbWriter}>{item.author}</span>
                             <span className={detail.detailThumbType}>{item.categoryName}</span>
                         </div>
@@ -89,13 +89,35 @@ const Detail = () => {
                                 <span>105</span>
                             </div>
                         </div>
+                        {/* <div className={detail.detailInfoStar}>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                        </div> */}
                         <div className={detail.detailInfoStar}>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                        </div>
+                                    <Rating
+                                        name="simple-controlled"
+                                        precision={0.5}
+                                        sx={{
+                                            '& .MuiRating-icon': {
+                                                fontSize: '48px',
+                                                borderRadius: '50%',
+                                                transition: 'color 0.3s ease',
+                                            },
+                                            '& .MuiRating-iconHover': {
+                                                color: '#FFC700',
+                                            },
+                                            '& .MuiRating-iconFilled': {
+                                                color: '#FFC700',
+                                            },
+                                            '& .MuiRating-iconEmpty': {
+                                                color: '#EAEAEA',
+                                            },
+                                        }}
+                                    />
+                                </div>
                         <div className={detail.detailInfoIcon}>
                             <div>
                                 <i><img src='./interest.svg'/></i>

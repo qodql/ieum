@@ -12,7 +12,7 @@ const ButtonAll = ({ category }) => {
 
 const ButtonArrow = () => {
     return(
-        <Link  href="../CommentList">
+        <Link href="../CommentList">
           <button className={s.contentTitle4_btn}></button>
         </Link>
     )

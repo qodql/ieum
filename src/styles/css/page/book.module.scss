@@ -2,11 +2,26 @@
     margin-top: 126px;
     .bookBanner{
         margin: 0 16px;
-        h2{}
-        .bookBanner_Icon{
-            height: 125px;
-            background-color: #2e8b57;
+        h2{
+            font-size: 20px;
+            color: #111;
+            font-weight: 600;
         }
     }
-    .bookList{}
+    .tabContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin: 12px 0 28px;
+        button{
+            height: 74px;
+            border: none;
+            border-radius: 8px;
+            .tabImage{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
 }

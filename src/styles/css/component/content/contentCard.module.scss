@@ -37,12 +37,14 @@
     .contentCard2_image{
         width: 165px;
         height: 242px;
+        margin-bottom: 8px;
         background-repeat: no-repeat;
         background-size: cover;
     }
     .contentCard2_category{
         width: 160px;
         font-size: 14px;
+        margin-bottom: 4px;
         font-weight: lighter;
         color: #999999;
         overflow:hidden;
@@ -102,7 +104,7 @@
 //comment card
 .comment{
     border: 1px solid #ddd;
-    margin: 20px 16px 24px;
+    margin: 16px 16px 80px;
     border-radius: 8px;
     .profile{
         display: flex;
@@ -158,9 +160,8 @@
 .ContentList_card{
     padding: 20px 0;
     margin: 0 16px;
-    border-top: 1px solid #999;
+    border-bottom: 1px solid #ddd;
     .ContentList_card_main{
-        margin-left: 16px;
         display: flex;
         .ContentList_card_img{
             position: relative;
@@ -220,7 +221,6 @@
         display: flex;
         margin-top: 16px;
         gap: 40px;
-        margin-left: 16px;
         .ContentList_card_Like{
             font-size: 13px;
         }
@@ -231,16 +231,13 @@
         .ContentList_card_category{
             width: 220px;
             font-size: 13px;
+            margin-left: 20px;
             color: rgba(0, 0, 0, 50%);
-            padding-left: 20px;
         }
     }
 }
 
-
-
 //Mypage contentscard
-
 .MypageCard{
     .MypageCard_box{
         text-align: center;

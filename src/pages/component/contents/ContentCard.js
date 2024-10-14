@@ -105,7 +105,6 @@ const MypageCard = () => {
     )
 }
 
-
 //Mypage commentCard
 const MypageComment = () => {
     return (
