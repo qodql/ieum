@@ -36,20 +36,32 @@
   background-size: cover;
 }
 .contentCard2 .contentCard2_category {
+  width: 160px;
   font-size: 14px;
   font-weight: lighter;
   color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .contentCard2 .contentCard2_title {
+  width: 170px;
   font-size: 16px;
   color: #111111;
   width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .contentCard2 .contentCard2_author {
+  width: 170px;
   font-size: 14px;
   font-weight: lighter;
   color: #999999;
   margin-top: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contentCard3 .contentCard3_image {
@@ -222,10 +234,9 @@
 
 .MypageComment {
   display: flex;
-  margin: 20px 16px;
+  margin: 20px 0;
 }
 .MypageComment .MypageComment_img {
-  margin-left: 16px;
   background-repeat: no-repeat;
   background-size: cover;
   width: 70px;

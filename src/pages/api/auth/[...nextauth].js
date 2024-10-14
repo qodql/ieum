@@ -5,8 +5,6 @@ import GithubProvider from "next-auth/providers/github";
 import { db } from "@/lib/firebase";
 import { getDocs, query, where, collection, addDoc } from "firebase/firestore";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
 
 export const authOptions = {
   providers: [
@@ -55,14 +53,13 @@ export const authOptions = {
 
         if (account.provider === 'naver') {
           email = profile.response.email;
-        }
-        else if (account.provider === 'google' || account.provider === 'github') {
+        } else if (account.provider === 'google' || account.provider === 'github') {
           email = user.email;
         }
 
         const q = query(
           collection(db, "userInfo"),
-          where("info.email", "==", email) 
+          where("info.email", "==", email)
         );
         const querySnapshot = await getDocs(q);
 
@@ -77,19 +74,44 @@ export const authOptions = {
                 email: user.email,
                 provider: account.provider
               }
-            })
-          } else if (account.provider === 'naver') {
-            await addDoc(userRef, {
-              info: {
-                id: profile.response.id,
-                name: profile.response.name,
-                email: profile.response.email,
-                nickName: profile.response.nickname,
-                phoneNum: profile.response.mobile,
-                provider: account.provider,
-                image : '/img_member_profile.svg'
-              }
             });
+            await addDoc(collection(db, "readlist"), {
+              email: user.email,
+              readlist: {}
+            });
+            await addDoc(collection(db, "readwantlist"), {
+              email: user.email,
+              readlikelist: {}
+            });
+          } else if (account.provider === 'naver') {
+            try {
+              await addDoc(userRef, {
+                info: {
+                  id: profile.response.id,
+                  name: profile.response.name,
+                  email: profile.response.email,
+                  nickName: profile.response.nickname,
+                  phoneNum: profile.response.mobile,
+                  provider: account.provider,
+                  image: '/img_member_profile.svg'
+                }
+              });
+
+              await addDoc(collection(db, "readlist"), {
+                email: profile.response.email,
+                readlist: {}
+              });
+
+              await addDoc(collection(db, "readwantlist"), {
+                email: profile.response.email,
+                readlikelist: {}
+              });
+
+              console.log("Documents added successfully");
+            } catch (error) {
+              console.error("Error adding documents: ", error);
+              throw new Error('Failed to add documents');
+            }
           }
         }
         return true;
@@ -98,7 +120,7 @@ export const authOptions = {
 
     async jwt({ token, user, account, profile }) {
       console.log(profile);
-      
+
       if (account) {
         token.accessToken = account.access_token;
       } else if (user) {
