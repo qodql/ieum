@@ -1,13 +1,13 @@
+import loginStyles from '@/styles/css/page/member.module.scss';
 import React from 'react'
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useState } from "react";
 import { storage,db } from "@/lib/firebase";
-import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from "next/link";
 
 const Findid = () => {
 
-  const [findInfo, setFindInfo] = useState({phoneNum:'', name:'' });
+  const [findInfo, setFindInfo] = useState({phonenum:'', name:''});
   const [searchInfo, setSearchInfo] = useState([]);
   const infoFind = (edit)=>{
     setFindInfo({...findInfo, ...edit});
@@ -16,22 +16,20 @@ const Findid = () => {
 const contrastInfo = async ()=>{
  const q = query(
   collection(db,"userInfo"),
-  where("info.phoneNum", "==", findInfo.phoneNum),
+  where("info.phonenum", "==", findInfo.phonenum),
   where("info.name", "==" , findInfo.name),
  )
  const querySnapshot = await getDocs(q);
-
  const data = querySnapshot.docs.map((doc)=> doc.data());
  setSearchInfo(data);
+ 
 }
+
 
 const submitHandle = (e) => {
   e.preventDefault();
   contrastInfo();
 }
-
-
-
 
   return (
     <div className={loginStyles.findIdBox}>
@@ -52,7 +50,7 @@ const submitHandle = (e) => {
         className={loginStyles.userInput} 
         type='text'
         placeholder='휴대폰번호를 입력하세요'
-        onChange={(e)=>{infoFind({phoneNum:e.target.value})}}/>
+        onChange={(e)=>{infoFind({phonenum:e.target.value})}}/>
        <button className={loginStyles.certificationBtn}>휴대폰인증</button>
       </div>
       <span>인증번호</span>
@@ -71,13 +69,4 @@ const submitHandle = (e) => {
   </div>
   )
 }
-  
-const Findresult = ()=>{
-  
-  return(
-    <>
-    </>
-  )
-}
-
 export default Findid

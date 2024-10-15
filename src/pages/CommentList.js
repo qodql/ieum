@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Footer from './component/Footer'
 import s from '@/styles/css/page/comment.module.scss'
 import { useRouter } from 'next/router';
-import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useSession } from 'next-auth/react';
+let today = new Date();
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+let day = today.getDate();    
 
 const CommentList = () => {
-  const [comment, setComment] = useState('');
+  const textareaRef = useRef(null);
+  // const [comment, setComment] = useState('');
+  const {data:session} = useSession();
   const router = useRouter();
   const { itemId, itemCover, itemTitle } = router.query;
   console.log(itemId)
@@ -18,9 +26,10 @@ const CommentList = () => {
   }
 
   const commentBtn = async () => {
+    const comment = textareaRef.current.value;
     const q = query(
         collection(db, "comment"),
-        where("title", "==", item.title),
+        where("title", "==", itemTitle),
     );
     const querySnapshot = await getDocs(q);
     
@@ -40,7 +49,6 @@ const CommentList = () => {
     } 
   };    
   
-  console.log(comment);
 
   return (
     <>
@@ -52,12 +60,14 @@ const CommentList = () => {
       <div className={s.commetListWrite}>
         <h5>코멘트 작성</h5>
         <div className={s.commetListWriteBox}>
+          {
         <form onSubmit={(e)=> {
-          e.preventDefault();  commentBtn();
-          setComment(e.target[0].value);
+          e.preventDefault(); 
+           commentBtn();
           }}>
             <div className={s.commetListWriteCont}>
               <textarea
+                ref={textareaRef}
                 placeholder='코멘트를 작성해 주세요'
               />
               <div className={s.commetListWriteLetters}>
@@ -67,6 +77,8 @@ const CommentList = () => {
             </div>
             <button type='submit'>리뷰 등록</button>
           </form>
+
+          }
         </div>
       </div>
       <div className={s.commentCard_list}>
