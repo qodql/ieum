@@ -1,6 +1,7 @@
 //Header
 .header1{
     transition: .3s;
+    height: 68px;
     display: flex;
     padding: 20px 16px 8px;
     padding-top: 20px;
@@ -35,7 +36,7 @@
 }
 .header1Act{
     transition: .3s;
-    background-color: #fafafa;
+    background-color: #ffff;
 }
 .header2{
     position: relative;

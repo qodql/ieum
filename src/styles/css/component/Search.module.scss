@@ -1,12 +1,13 @@
 .headerSearch{
     position: relative;
     max-width: 205px;
+    border: none;
     input{
         max-width: 204px;
         padding: 11px 16px;
         border-radius: 20px;
         font-size: 12px;
-        border-color: #999999;
+        border: 1px solid #999;
         background: transparent;
     }
     .searchIcon{

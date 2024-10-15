@@ -6,12 +6,14 @@ import { ButtonAll } from './component/Button';
 import Footer from './component/Footer';
 import BookStore from './stores/BookStore';
 import { Rating } from '@mui/material';
+import Modal from './component/Modal';
 
 const Detail = () => {
     const router = useRouter();
     const { itemId } = router.query;
     const { mainItems } = BookStore();
     const [item, setItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (itemId) {
@@ -24,17 +26,22 @@ const Detail = () => {
     // 뒤로가기 
     const backBtn = () => {
         router.back(); 
-    };
+    }
     
     // 공유 버튼
     const shareBtn = () => {
-        if (navigator.share) {
-            navigator.share({
-                title: item.title,
-                text: item.description,
-                url: window.location.href
-            })
-        }
+        setIsModalOpen(true);
+    };
+
+    // 공유 버튼 닫기
+    const shareClose = () => {
+        setIsModalOpen(false);
+    };
+
+    // 공유 링크 복사
+    const copyLink = () => {
+        navigator.clipboard.writeText(window.location.href)
+            alert('링크가 복사되었습니다');
     };
 
     // 로딩
@@ -123,7 +130,7 @@ const Detail = () => {
                                 <i><img src='./interest.svg'/></i>
                                 <span>읽고싶어요</span>
                             </div>
-                            <div>
+                            <div onClick={()=> router.push('/CommentList')}>
                                 <i><img src='./comment.svg'/></i>
                                 <span>코멘트</span>
                             </div>
@@ -166,7 +173,7 @@ const Detail = () => {
                             </div>
                         </div>
                         <div className={detail.detailCommentWrap}>
-                            <div className={s.contentTitle}>
+                            <div className={`${s.contentTitle} ${detail.contentTitle}`}>
                                 <h2>코멘트</h2>
                                 <ButtonAll/>
                             </div>
@@ -175,7 +182,7 @@ const Detail = () => {
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
                                         <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <span>2024-10-11</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -185,7 +192,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        작가님의 책은 지금 곧바로 읽고 봐야하는 필독서!
                                     </p>
                                 </div>
                             </div>
@@ -193,8 +200,8 @@ const Detail = () => {
                                 <div><img src='./profile.png'/></div>
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
-                                        <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <p>고죠백종원</p>
+                                        <span>2024-10-07</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -204,7 +211,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        이야~ 책으로 어떻게 이런 맛을 내죠?
                                     </p>
                                 </div>
                             </div>
@@ -212,8 +219,8 @@ const Detail = () => {
                                 <div><img src='./profile.png'/></div>
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
-                                        <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <p>나주맛피자</p>
+                                        <span>2024-09-30</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -223,7 +230,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        아쉬워요. 무엇을 말하려고 하는지는 알겠으나 별로 와닿지는 않아요.
                                     </p>
                                 </div>
                             </div>
@@ -232,6 +239,7 @@ const Detail = () => {
                 </div>
             </div>
         </div>
+        <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />                               
         <Footer/>
     </>
   )

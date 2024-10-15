@@ -19,14 +19,14 @@ const Book = () => {
         itemApi('main', coverSize);
     }, [itemApi]);
 
-    // 헤더
+    // 네비게이션
     useEffect(() => {
         setCategoryTab(categoryQuery);
     }, [categoryQuery]);
 
     const categoryItems = ['Bestseller', 'ItemNewAll', 'BlogBest'];
 
-    // 카테고리 이름에 대한 변환 함수
+    // 카테고리 이름 변경
     const getCategoryLabel = (category) => {
         switch (category) {
             case 'Bestseller':
@@ -36,7 +36,7 @@ const Book = () => {
             case 'BlogBest':
                 return '블로거 베스트';
             default:
-                return '카테고리별';
+                return '베스트 셀러';
         }
     };
 
@@ -59,8 +59,6 @@ const Book = () => {
 
     // 순위 계산
     const rankItems = (item) => {
-        //console.log(item);
-        
         return item.map((v, i) => ({
             ...v,
             bestRank: v.bestRank || (i + 1), 
