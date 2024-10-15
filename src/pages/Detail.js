@@ -5,13 +5,25 @@ import detail from '@/styles/css/page/detail.module.scss'
 import { ButtonAll } from './component/Button';
 import Footer from './component/Footer';
 import BookStore from './stores/BookStore';
+import { useSession } from 'next-auth/react';
+import { db } from '@/lib/firebase';
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
 
 const Detail = () => {
+    const {data:session} = useSession();
     const router = useRouter();
     const { itemId } = router.query;
     const { mainItems } = BookStore();
     const [item, setItem] = useState(null);
+    const [comment, setComment] = useState('');
+    const [modalBtn, setModalBtn] = useState(false);
+    const [commentTitle, setCommenttitle] = useState('');
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();    
 
+    //데이터 불러오기
     useEffect(() => {
         if (itemId) {
             const foundItem = Object.values(mainItems).flatMap(category => category.item)
@@ -19,6 +31,7 @@ const Detail = () => {
             setItem(foundItem);
         }
     }, [itemId, mainItems]);
+    
 
     // 뒤로가기 
     const backBtn = () => {
@@ -44,11 +57,78 @@ const Detail = () => {
             </div>
         );
     }
+    
+    //읽는중 버튼
+    const authorize = async () => {
+        const q = query(
+            collection(db, "readlist"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "readlist"); // 컬렉션 참조 생성
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover
+            });
+        } else {
+            // 이미 존재하는 경우의 로직을 여기에 추가할 수 있습니다.
+            console.log("Document already exists.");
+        }
+    };
+    //읽고싶어요 버튼
 
-    console.log(item);
+    const readwantBtn = async () => {
+        const q = query(
+            collection(db, "readwantlist"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "readwantlist"); // 컬렉션 참조 생성
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover
+            });
+        } else {
+            alert("이미 등록된 책입니다.");
+        }
+    };
 
+    //코멘트 버튼
+    const commentBtn = async () => {
+        const q = query(
+            collection(db, "comment"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "comment");
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover,
+                comment: comment,
+                Creationdate: `${year}.${month}.${day}`
+            });
+        }
+        else {
+            alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
+        } 
+    };
+    console.log(comment);
+    
   return (
-    <>
+    <>  
+
         <div className={detail.subWrap}>
             <div className={detail.subTop}>
                 <a onClick={backBtn}><img src='./arrow-left.svg'/></a>
@@ -97,17 +177,43 @@ const Detail = () => {
                             <i><img src='./star-gray.svg'/></i>
                         </div>
                         <div className={detail.detailInfoIcon}>
-                            <div>
+                      
+                            <div onClick={readwantBtn}>
                                 <i><img src='./interest.svg'/></i>
                                 <span>읽고싶어요</span>
                             </div>
-                            <div>
+                            <div onClick={()=>setModalBtn(true)}>
                                 <i><img src='./comment.svg'/></i>
                                 <span>코멘트</span>
                             </div>
-                            <div>
+                            {/* 코멘트 모달창 */}
+                            {modalBtn === true ?
+                            <>
+                             <div className={detail.modalOverlay} onClick={() => setModalBtn(false)}></div>
+                            <div className={detail.modal}>
+                                <form onSubmit={(e)=> {e.preventDefault(); commentBtn(); setModalBtn(false);}}>
+                                    <div className={detail.labelBox}>
+                                        <label className={detail.modalLabel}>내용</label>
+                                        <div className={detail.closeBtn} style={{backgroundImage:`url(/icon_detail_modal_closeBtn.svg)`}}/>
+                                    </div>
+                                    <input type="text" />
+                                    <div>
+                                    <label>상세리뷰</label>
+                                    <input 
+                                    type="text" 
+                                    placeholder='다른 고객님께 도움이 되도록 책에 대한 솔직한 평가를 남겨주세요'
+                                    onChange={(e)=>setComment(e.target.value)}/>
+                                    </div>
+                                    <button type='submit'>저장하기</button>
+                                </form> 
+                            </div>
+                            </>
+                            : null
+
+                            }
+                            <div onClick={authorize}>
                                 <i><img src='./bookmark.svg'/></i>
-                                <span>읽는 중</span>
+                                <span>읽는중</span>
                             </div>
                             <div>
                                 <i><img src='./add.svg'/></i>

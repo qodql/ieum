@@ -62,7 +62,6 @@ export const authOptions = {
           where("info.email", "==", email)
         );
         const querySnapshot = await getDocs(q);
-
         if (querySnapshot.empty) {
           const userRef = collection(db, "userInfo");
 
@@ -119,7 +118,6 @@ export const authOptions = {
     },
 
     async jwt({ token, user, account, profile }) {
-      console.log(profile);
 
       if (account) {
         token.accessToken = account.access_token;

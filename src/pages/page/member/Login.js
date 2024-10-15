@@ -7,7 +7,6 @@ const Login = () => {
   const { data: session } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  console.log(session);
   
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -53,7 +52,6 @@ const Login = () => {
         <div>
           <button onClick={() => signOut()}>Sign out</button>  
         </div> : ''
-
       }
      </div>
   )
