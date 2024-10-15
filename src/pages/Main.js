@@ -3,10 +3,12 @@ import Footer from './component/Footer';
 import Header from './component/Header';
 import { ButtonAll, ButtonArrow } from './component/Button';
 import { CommentCard } from './component/contents/ContentCard';
-import { ContentListMain1, ContentListMain2, ContentListMain3 } from './component/contents/ContentList';
+import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from './component/contents/ContentList';
 import { useEffect, useState } from 'react';
 import BookStore from './stores/BookStore';
 import LoadingScreen from './component/loadingScreen'; 
+
+
 
 
 export default function Home() {
@@ -34,34 +36,13 @@ export default function Home() {
         fetchData();
     }, []);
 
-    //console.log(mainItems);
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
         <>
             <Header />
             <main>
-                <div className={s.banner}>
-                    <div className={s.bannerImg} style={{ backgroundImage: `url(./Maskgroup.png)` }}></div>
-                    <div className={s.bannerText}>
-                        <div className={s.bannerTitle}>
-                            <h2>알레스카 한의원</h2>
-                            <p>이소영 저/사계절</p>
-                        </div>
-                        <div className={s.bannerOverview}>
-                            <p>
-                                이소영 작가는 우연히 동양의학을
-                                접하게 되면서 몸과 마음, 병의
-                                관계성을 탐구해 나가는 과정에서 한 문장을 떠올렸다...
-                            </p>
-                        </div>
-                        <div className={s.bannerBot}>
-                            <p className={s.bannerLike}>87</p>
-                            <p className={s.bannerPage}>1/3</p>
-                        </div>
-                    </div>
-                </div>
-
+                <BannerBox mainItems={mainItems}/>                   
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
                         <h2>블로거 베스트셀러</h2>

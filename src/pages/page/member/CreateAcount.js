@@ -23,7 +23,9 @@ import Link from "next/link";
     <>
     {/* 회원가입 */}
     <div className={loginStyles.CreateAccountBox}>
-      <Link href='/page/member/Login' className={loginStyles.ieumLogo} style={{background:`url(/icon_login_ieum.svg)`}}/>
+      <Link href='/page/member/Login' 
+      className={loginStyles.ieumLogo} 
+      style={{backgroundImage:`url(../../IEUMLOGO.png)`}}/>
       <p className={loginStyles.createAccount}>회원가입</p>
       <form onSubmit={(e) => e.preventDefault()}>
         <span className={loginStyles.inputText}>이름</span>

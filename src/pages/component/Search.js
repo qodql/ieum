@@ -1,11 +1,13 @@
 import s from '@/styles/css/component/Search.module.scss'
 import BookStore from '../stores/BookStore'; 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Search = () => {
 
   const { searchResults, searchApi, loading } = BookStore();
   const [keyword, setKeyword] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     //console.log("검색 결과:", searchResults);
@@ -24,6 +26,7 @@ const Search = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     searchApi(keyword);
+    router.push(`/SearchList?k=${keyword}`)
   };
 
   return (
@@ -39,20 +42,6 @@ const Search = () => {
             className={s.searchIcon}
             style={{backgroundImage:`url(./Vector.svg)`}}></span>
         </form>
-
-        <div>
-        <ul>
-        {searchResults.item && searchResults.item.length > 0 ? (
-          searchResults.item.map((v) => (
-            <li key={v.itemId}>
-              <p>{v.title}</p>
-            </li>
-          ))
-        ) : (
-          <li><p></p></li>
-        )}
-      </ul>
-        </div>
     </div>
   )
 }

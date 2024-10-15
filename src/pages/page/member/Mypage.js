@@ -18,11 +18,13 @@ const Mypage = () => {
           className={loginStyles.backBtn}  
           style={{backgroundImage:`url(/icon_login_backbtn.svg)`}}
           />
-          <Link href='/page/member/Membercorrection'
-          className={loginStyles.profileImg}  
-          style={{backgroundImage:`url(/img_member_profile.svg)`}}/>
-          <p>이홍영님</p>
+          <div className={loginStyles.profile}>
+            <Link href='/page/member/Membercorrection'
+            className={loginStyles.profileImg}
+            style={{backgroundImage:`url(/img_member_profile.svg)`}}/>
+            <p>이홍영님</p>
           <span>{session == undefined || session == null ?'': session.user.email}</span>
+          </div>
         </div>
           <ul className={loginStyles.contentBox}>
             <li>
