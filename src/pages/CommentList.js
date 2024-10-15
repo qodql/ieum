@@ -1,13 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from './component/Footer'
 import s from '@/styles/css/page/comment.module.scss'
+import { useRouter } from 'next/router';
+import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
 const CommentList = () => {
-
+  const [comment, setComment] = useState('');
+  const router = useRouter();
+  const { itemId, itemCover, itemTitle } = router.query;
+  console.log(itemId)
+  console.log(itemCover)
+  console.log(itemTitle)
   // 뒤로가기 
+ 
   const backBtn = () => {
     router.back(); 
   }
+
+  const commentBtn = async () => {
+    const q = query(
+        collection(db, "comment"),
+        where("title", "==", item.title),
+    );
+    const querySnapshot = await getDocs(q);
+    
+    if (querySnapshot.empty) {
+        const docRef = collection(db, "comment");
+        await addDoc(docRef, {
+            email: session.user.email,
+            title: itemTitle,
+            bookid: itemId,
+            cover: itemCover,
+            comment: comment,
+            Creationdate: `${year}.${month}.${day}`
+        });
+    }
+    else {
+        alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
+    } 
+  };    
+  
+  console.log(comment);
 
   return (
     <>
@@ -15,10 +48,14 @@ const CommentList = () => {
         <span className={s.commentList_back} onClick={backBtn}></span>
         <h2>코멘트</h2>
       </div>
+      {/* 검색 */}
       <div className={s.commetListWrite}>
         <h5>코멘트 작성</h5>
         <div className={s.commetListWriteBox}>
-          <form onSubmit={''}>
+        <form onSubmit={(e)=> {
+          e.preventDefault();  commentBtn();
+          setComment(e.target[0].value);
+          }}>
             <div className={s.commetListWriteCont}>
               <textarea
                 placeholder='코멘트를 작성해 주세요'
@@ -28,7 +65,7 @@ const CommentList = () => {
                 <span>/100</span>
               </div>
             </div>
-            <button>리뷰 등록</button>
+            <button type='submit'>리뷰 등록</button>
           </form>
         </div>
       </div>

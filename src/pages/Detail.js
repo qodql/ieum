@@ -31,7 +31,6 @@ const Detail = () => {
 
         const cateNum = '';
         const coverSize = 'Big';
-        console.log(itemId)
         async function fetchData(){
             await itemApi('main', cateNum, coverSize);
         }
@@ -80,6 +79,14 @@ const Detail = () => {
             </div>
         );
     }
+//코멘트리스트로 보내는 정보
+    const commentMove = (item) => {
+        // console.log(item)
+        router.push({
+            pathname: '/CommentList',
+            query:  { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
+        });
+    };
     
     //읽는중 버튼
     const authorize = async () => {
@@ -226,16 +233,15 @@ const Detail = () => {
                                 <i><img src='./interest.svg'/></i>
                                 <span>읽고싶어요</span>
                             </div>
-                            <div onClick={()=>setModalBtn(true)}>
+                            <div onClick={()=>commentMove(item)}>
                                 <i><img src='./comment.svg'/></i>
                                 <span>코멘트</span>
                             </div>
                             {/* 코멘트 모달창 */}
                             {modalBtn === true ?
                             <>
-                             <div className={detail.modalOverlay} onClick={() => setModalBtn(false)}></div>
                             <div className={detail.modal}>
-                                <form onSubmit={(e)=> {e.preventDefault(); commentBtn(); setModalBtn(false);}}>
+                                <form onSubmit={(e)=> {e.preventDefault(); commentBtn();}}>
                                     <div className={detail.labelBox}>
                                         <label className={detail.modalLabel}>내용</label>
                                         <div className={detail.closeBtn} style={{backgroundImage:`url(/icon_detail_modal_closeBtn.svg)`}}/>
