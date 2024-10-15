@@ -35,7 +35,7 @@ const submitHandle = (e) => {
 
   return (
     <div className={loginStyles.findIdBox}>
-       <div className={loginStyles.ieumLogo} style={{backgroundImage:`url(/icon_login_ieum.svg)`
+       <div className={loginStyles.ieumLogo} style={{backgroundImage:`url(../../IEUMLOGO.png)`
       }}></div>
       <p>아이디 찾기</p>
     {/* 아이디 찾기 */}

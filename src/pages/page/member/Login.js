@@ -22,7 +22,7 @@ const Login = () => {
   
   return (
      <div className={loginStyles.loginBox}>
-      <div className={loginStyles.loginLogo} style={{backgroundImage:`url(/icon_login_ieum.svg)`}}/>
+      <div className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}/>
       <p>로그인</p>
       <form onSubmit={handleLogin}>
         <input 

@@ -4,8 +4,62 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import s from '@/styles/css/component/content/contentList.module.scss'
 import BookStore from '@/pages/stores/BookStore';
+import { useRouter } from 'next/router';
+
+
+
+
+const BannerBox = (props) => {
+  const router = useRouter();
+  const detailMove = (item) => {
+    router.push({
+        pathname: '/Detail',
+        query: { itemId: item.itemId },
+    });
+  };
+
+  return (
+    <Swiper
+    slidesPerView={'1'}
+    spaceBetween={50}
+    className={`${s.banner} mySwiper`}>
+      {
+      props.mainItems.Bestseller.item.slice(0,3).map((idx, i)=>
+          <SwiperSlide className={s.bannerBox} key={idx.itemId}>
+            <div className={s.bannerImg} 
+            onClick={() => detailMove(idx)}
+            style={{ backgroundImage: `url(${idx.cover})` }}
+            ></div>
+            <div className={s.bannerText}>
+                <div className={s.bannerTitle}>
+                    <h2>{idx.title}</h2>
+                    <p>{idx.auther}</p>
+                </div>
+                <div className={s.bannerOverview}>
+                    <p>
+                        {idx.description}
+                    </p>
+                </div>
+                <div className={s.bannerBot}>
+                    <p className={s.bannerPage}>{i+1}/3</p>
+                </div>
+            </div>
+          </SwiperSlide>   
+        )
+      }
+    </Swiper>
+  )
+}
 
 const ContentListMain1 = (props) => {
+  
+  const router = useRouter();
+  const detailMove = (item) => {
+    router.push({
+        pathname: '/Detail',
+        query: { itemId: item.itemId },
+    });
+  };
 
   return (
     <Swiper
@@ -13,8 +67,8 @@ const ContentListMain1 = (props) => {
     spaceBetween={50}
     className={`${s.content1} mySwiper`}>
       {
-        props.mainItems.BlogBest.item.map((item)=>
-        <SwiperSlide key={item.itemId}>
+        props.mainItems.BlogBest.item.slice(0,7).map((item)=>
+        <SwiperSlide key={item.itemId} onClick={() => detailMove(item)}>
           <ContentCard1 item={item}/>
         </SwiperSlide>
         )
@@ -24,14 +78,23 @@ const ContentListMain1 = (props) => {
 }
 
 const ContentListMain2 = (props) => {
+  const router = useRouter();
+  const detailMove = (item) => {
+    router.push({
+        pathname: '/Detail',
+        query: { itemId: item.itemId },
+    });
+  };
+
+
   return (
     <Swiper
     slidesPerView={'2'}
     spaceBetween={16}
     className={` ${s.content2} mySwiper`}>
       {
-        props.mainItems.ItemNewAll.item.map((item)=>
-          <SwiperSlide key={item.itemId}>
+        props.mainItems.ItemNewAll.item.slice(0,8).map((item)=>
+          <SwiperSlide key={item.itemId} onClick={() => detailMove(item)}>
             <ContentCard2 item={item}/>
           </SwiperSlide>
         )
@@ -41,6 +104,15 @@ const ContentListMain2 = (props) => {
 }
 
 const ContentListMain3 = (props) => {
+
+
+  const router = useRouter();
+  const detailMove = (item) => {
+    router.push({
+        pathname: '/Detail',
+        query: { itemId: item.itemId },
+    });
+  };
   // const [cate, setCate] = useState('1');
   const {category, itemApi, loading} = BookStore();
 
@@ -82,8 +154,8 @@ const ContentListMain3 = (props) => {
     spaceBetween={100}
     className={`${s.content3} mySwiper`}>
       {
-        category.ItemEditorChoice.item.map((item)=>
-          <SwiperSlide key={item.itemId}>
+        category.ItemEditorChoice.item.slice(0,7).map((item)=>
+          <SwiperSlide key={item.itemId} onClick={() => detailMove(item)}>
             <ContentCard3 item={item}/>
           </SwiperSlide>
         )
@@ -93,4 +165,4 @@ const ContentListMain3 = (props) => {
 }
 
 
-export {ContentListMain1, ContentListMain2, ContentListMain3}
+export {ContentListMain1, ContentListMain2, ContentListMain3, BannerBox}

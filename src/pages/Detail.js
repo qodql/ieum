@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
 import s from '@/styles/css/page/main.module.scss'
 import detail from '@/styles/css/page/detail.module.scss'
 import { ButtonAll } from './component/Button';
@@ -9,13 +9,27 @@ import BookStore from './stores/BookStore';
 const Detail = () => {
     const router = useRouter();
     const { itemId } = router.query;
-    const { mainItems } = BookStore();
+    const { mainItems, itemApi } = BookStore();
     const [item, setItem] = useState(null);
 
     useEffect(() => {
-        if (itemId) {
+
+        const cateNum = '';
+        const coverSize = 'Big';
+        console.log(itemId)
+        async function fetchData(){
+            await itemApi('main', cateNum, coverSize);
+        }
+        fetchData();
+    }, []);
+
+
+
+    useEffect(() => {
+        if (itemId && mainItems) {
             const foundItem = Object.values(mainItems).flatMap(category => category.item)
-                .find(i => i.itemId === Number(itemId));
+            .find(i => i.itemId === Number(itemId));
+
             setItem(foundItem);
         }
     }, [itemId, mainItems]);
@@ -35,8 +49,8 @@ const Detail = () => {
             })
         }
     };
-    console.log(item);
-
+    
+    // console.log(item);
     // 로딩
     if (!item) {
         return (
