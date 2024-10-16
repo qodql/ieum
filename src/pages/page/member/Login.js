@@ -54,8 +54,6 @@ const Login = () => {
       <div className={loginStyles.linkTextBox}>
         <Link href='/page/member/CreateAcount' className={loginStyles.linkText}>회원가입</Link>
         <Link href='/page/member/Findid' className={loginStyles.linkText}>아이디찾기</Link>
-        <Link href='/page/member/Mypage' className={loginStyles.linkText}>테스트1</Link>
-        <Link href='/page/member/Membercorrection' className={loginStyles.linkText}>테스트2</Link>
       </div>
       <div className={loginStyles.externalLoginBox}>
         <div
