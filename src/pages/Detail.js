@@ -13,10 +13,12 @@ import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase
 
 const Detail = () => {
     const {data:session} = useSession();
+
     const router = useRouter();
-    const { itemId } = router.query;
-    const { mainItems, itemApi } = BookStore();
+    const { itemId, mainCateNum } = router.query;
+    const { category, itemApi } = BookStore();
     const [item, setItem] = useState(null);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [comment, setComment] = useState('');
     const [modalBtn, setModalBtn] = useState(false);
@@ -27,26 +29,30 @@ const Detail = () => {
     let day = today.getDate();    
 
     //데이터 불러오기
+    console.log(mainCateNum)
     useEffect(() => {
-
-        const cateNum = '';
+        
+        const cateNum = mainCateNum;
         const coverSize = 'Big';
+        console.log(cateNum)
         async function fetchData(){
-            await itemApi('main', cateNum, coverSize);
+            await itemApi('cate', cateNum, coverSize);
         }
-        fetchData();
+            fetchData();
     }, []);
 
 
 
     useEffect(() => {
-        if (itemId && mainItems) {
-            const foundItem = Object.values(mainItems).flatMap(category => category.item)
+        if (itemId && category) {
+            console.log(Object.values(category))
+            console.log(itemId)
+            const foundItem = Object.values(category).flatMap(category => category.item)
             .find(i => i.itemId === Number(itemId));
 
             setItem(foundItem);
         }
-    }, [itemId, mainItems]);
+    }, [itemId, category]);
     
 
     // 뒤로가기 
@@ -92,6 +98,7 @@ const Detail = () => {
     const authorize = async () => {
         const q = query(
             collection(db, "readlist"),
+            where("email", "==", session.user.email),
             where("title", "==", item.title),
         );
         const querySnapshot = await getDocs(q);
@@ -154,7 +161,6 @@ const Detail = () => {
             alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
         } 
     };
-    console.log(comment);
     
   return (
     <>  

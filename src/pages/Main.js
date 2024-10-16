@@ -16,7 +16,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true); 
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
-    const { mainItems, category, itemApi } = BookStore();
+    const { mainItems, itemApi } = BookStore();
     const categoryNum = (num) => {
         setCate(num);
     };

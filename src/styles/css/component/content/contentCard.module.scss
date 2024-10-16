@@ -243,10 +243,13 @@
         text-align: center;
         width: 115px;
         height: 130px;
+        gap: 20px;
         .MypageCard_image{
             background-repeat: no-repeat;
             width: 103px;
             height: 118px;
+            background-size: contain;
+            margin: 0 auto;
         }
     }
     .MypageCard_title{
@@ -254,6 +257,10 @@
         font-size: 12px;
         font-weight: 500;
         color: #333;
+        width: 100px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
 }
 

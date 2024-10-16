@@ -23,9 +23,6 @@ const BookStore = create((set) => ({
     ItemEditorChoice: { item: [] }   
   },
 
-  // 로딩 상태
-  hasLoadedOnce: false, // 첫 로딩 여부
-
   // 리스트 데이터
   items: [],         // 리스트 데이터
   searchResults: [], // 검색 결과
@@ -64,10 +61,7 @@ const BookStore = create((set) => ({
       set({ error: '에러', loading: false });
     }
   },
-
-  // 첫 로딩 설정
-  setHasLoadedOnce: (hasLoadedOnce) => set({ hasLoadedOnce }),
-
+  
 }));
 
 export default BookStore;

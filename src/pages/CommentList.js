@@ -12,36 +12,66 @@ let day = today.getDate();
 
 const CommentList = () => {
   const textareaRef = useRef(null);
-  // const [comment, setComment] = useState('');
   const {data:session} = useSession();
   const router = useRouter();
   const { itemId, itemCover, itemTitle } = router.query;
-  console.log(itemId)
-  console.log(itemCover)
-  console.log(itemTitle)
+  const [commentList, setCommentList] = useState({});
   // 뒤로가기 
  
   const backBtn = () => {
     router.back(); 
   }
+  //코멘트 불러오기
+  useEffect(() => {
+    const fetchComments = async () => {
+      const q = query(
+        collection(db, "comment"),
+        where("title", "==", itemTitle)
+      );
+      const querySnapshot = await getDocs(q);
+      const comments = querySnapshot.docs.map(doc => doc.data());
+      setCommentList(comments);
+    };
+      fetchComments();
+  }, [itemTitle]);
+  console.log(commentList)
 
+  //코멘트 등록
   const commentBtn = async () => {
     const comment = textareaRef.current.value;
     const q = query(
         collection(db, "comment"),
+        where("email", "==", session.user.email),
         where("title", "==", itemTitle),
     );
+    const q2 = query(collection(db, "userInfo"), where("info.email", "==", session.user.email));
+
     const querySnapshot = await getDocs(q);
-    
+    const querySnapshot2 = await getDocs(q2);
+    console.log(querySnapshot2, 'querySnapshot2');
+    let userImage = null;
+      if (!querySnapshot2.empty) {
+        const userInfo = querySnapshot2.docs.map(doc => doc.data());
+        console.log(userInfo[0].info, '===================='); // userInfo 데이터 구조 확인
+        if (userInfo.length > 0 && userInfo[0].info.image) {
+          userImage = userInfo[0].info.image;
+        } else {
+          console.log('No image field found in userInfo'); // image 필드가 없는 경우 로그 출력
+        }
+      } else {
+        console.log('No userInfo found'); // userInfo가 없는 경우 로그 출력
+      }
     if (querySnapshot.empty) {
         const docRef = collection(db, "comment");
-        await addDoc(docRef, {
+        await addDoc(docRef, { 
             email: session.user.email,
             title: itemTitle,
             bookid: itemId,
             cover: itemCover,
             comment: comment,
-            Creationdate: `${year}.${month}.${day}`
+            Creationdate: `${year}.${month}.${day}`,
+            userImage: userImage
+
         });
     }
     else {
@@ -81,6 +111,8 @@ const CommentList = () => {
           }
         </div>
       </div>
+      {
+
       <div className={s.commentCard_list}>
         <h5>작성된 코멘트 (30)</h5>
         <div className={s.detailComment}>
@@ -198,6 +230,7 @@ const CommentList = () => {
           </div>
         </div>
       </div>
+      }
       <Footer/>
     </>
   )
