@@ -8,7 +8,7 @@ import BookStore from '@/pages/stores/BookStore';
 
 const ContentListMain1 = () => {
 
-  const {books, Bestsellers} = BookStore()
+  const {Bestsellers} = BookStore()
 
   // useEffect(()=>{
   //   Bestsellers()
@@ -42,7 +42,7 @@ const ContentListMain1 = () => {
 
 const ContentListMain2 = () => {
 
-  const {books, Bestsellers} = BookStore()
+  const {Bestsellers} = BookStore()
 
   useEffect(()=>{
     async function fetchData(){
