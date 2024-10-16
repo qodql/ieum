@@ -335,7 +335,8 @@
     font-weight: bold;
     margin-bottom: 28px;
   }
-  &>span{
+
+  .labelText{
     font-size: 16px;
     font-weight: 500;
     display: block;
@@ -348,6 +349,7 @@
     margin: 16px auto;
     background-size: contain;
   }
+  
   .nicknameChangeBox{
     &>span{
       display: block;

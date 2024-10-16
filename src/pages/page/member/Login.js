@@ -7,7 +7,6 @@ const Login = () => {
   const { data: session } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  console.log(session);
   
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -21,7 +20,8 @@ const Login = () => {
     e.preventDefault();
     const result = await signIn('credentials', { 
       email, 
-      password 
+      password,
+      callbackUrl: '/'
     });
 
     if (result.error) {
@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <div className={loginStyles.loginBox}>
-      <div className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}/>
+      <div onClick={()=> location.href='/'} className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}/>
       <p>로그인</p>
       <form onSubmit={handleLogin}>
         <input 

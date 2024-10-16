@@ -36,7 +36,9 @@ const Footer = () => {
             
             <li onClick={()=>{
                session ? location.href = '/page/member/Mypage'
-               : alert('로그인이 필요한 서비스입니다') }}  className={s.footerMenu_li}>
+               : location.href = '/page/member/Login'
+               alert('로그인이 필요한 서비스입니다 로그인 페이지로 이동하겠습니다')}}  
+               className={s.footerMenu_li}>
                 <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
                 <p className={s.footerText}>MY</p>
             </li>
