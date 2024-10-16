@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Footer from './component/Footer'
+import Footer from '../component/Footer'
 import s from '@/styles/css/page/comment.module.scss'
 import { useRouter } from 'next/router';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';

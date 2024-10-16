@@ -1,12 +1,12 @@
 import s from '@/styles/css/page/main.module.scss';
-import Footer from './component/Footer';
-import Header from './component/Header';
-import { ButtonAll, ButtonArrow } from './component/Button';
-import { CommentCard } from './component/contents/ContentCard';
-import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from './component/contents/ContentList';
+import Footer from '../component/Footer';
+import Header from '../component/Header';
+import { ButtonAll, ButtonArrow } from '../component/Button';
+import { CommentCard } from '../component/contents/ContentCard';
+import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from '../component/contents/ContentList';
 import { useEffect, useState } from 'react';
-import BookStore from './stores/BookStore';
-import LoadingScreen from './component/loadingScreen'; 
+import BookStore from '../stores/BookStore';
+import LoadingScreen from '../component/loadingScreen'; 
 
 
 
