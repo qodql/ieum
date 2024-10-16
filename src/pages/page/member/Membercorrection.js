@@ -54,7 +54,7 @@ const Membercorrection = () => {
       />
       <h2>회원수정</h2>
       <form onSubmit={correctionChange}>
-        <span>이메일</span>
+        <span className={loginStyles.labelText}>이메일</span>
         <input
           type="text"
           placeholder={session ? session.user.email : '이메일을 입력하세요'}
@@ -62,7 +62,7 @@ const Membercorrection = () => {
           className={loginStyles.userInput}
         />
 
-        <span>회원수정</span>
+        <span className={loginStyles.labelText}>회원수정</span>
         <div className={loginStyles.nicknameChangeBox}>
           <input
             type="text"
@@ -73,7 +73,7 @@ const Membercorrection = () => {
           <button type="button">중복확인</button>
         </div>
 
-        <span>변경할 비밀번호</span>
+        <span className={loginStyles.labelText}>변경할 비밀번호</span>
         <input
           type="password"
           placeholder="변경할 비밀번호를 입력하세요"
@@ -81,14 +81,14 @@ const Membercorrection = () => {
           onChange={(e) => handleCorrection({ password: e.target.value })}
         />
 
-        <span>비밀번호 확인</span>
+        <span className={loginStyles.labelText}>비밀번호 확인</span>
         <input
           type="password"
           placeholder="변경할 비밀번호를 다시 입력하세요"
           className={loginStyles.userInput}
         />
 
-        <span>핸드폰번호</span>
+        <span className={loginStyles.labelText}>핸드폰번호</span>
         <input
           type="text"
           placeholder="010-6660-1578"

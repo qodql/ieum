@@ -21,7 +21,8 @@ const Login = () => {
     e.preventDefault();
     const result = await signIn('credentials', { 
       email, 
-      password 
+      password,
+      callbackUrl: '/'
     });
 
     if (result.error) {
