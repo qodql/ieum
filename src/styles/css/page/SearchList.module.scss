@@ -1,13 +1,24 @@
+.book{
+    margin-top: 126px;
+    .bookBanner{
+        margin: 0 16px;
+        h2{}
+        .bookBanner_Icon{
+            height: 125px;
+            background-color: #2e8b57;
+        }
+    }
+    .bookList{}
+}
 .headerSearch{
     position: relative;
     max-width: 205px;
-    border: none;
     input{
         max-width: 204px;
         padding: 11px 16px;
         border-radius: 20px;
         font-size: 12px;
-        border: 1px solid #999;
+        border-color: #999999;
         background: transparent;
     }
     .searchIcon{

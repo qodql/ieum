@@ -8,8 +8,7 @@ import Link from "next/link";
 
  function CreateAccount() {
   const userid = uuidv4();
-  const [info, setInfo] = useState({name:'',email:'', password:'',phoneNum:'',nickName:'',id:''});
-  const [userInfo , setUserInfo ] = useState({name:'',phoneNum:''});
+  const [info, setInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
   const userData = async ()=>{
     await addDoc(collection(db,"userInfo"), {
       info,
@@ -19,17 +18,14 @@ import Link from "next/link";
   const insertInfo = (edit)=>{
     setInfo({...info, ...edit, id:userid})
   };
-  const infoFind = (edit)=>{
-    setUserInfo({...info, ...edit});
-  }
-  const findUserInfo = ()=>{
-    
-  }
+
   return (
     <>
     {/* 회원가입 */}
     <div className={loginStyles.CreateAccountBox}>
-      <Link href='/page/member/Login' className={loginStyles.ieumLogo} style={{background:`url(/icon_login_ieum.svg)`}}/>
+      <Link href='/page/member/Login' 
+      className={loginStyles.ieumLogo} 
+      style={{backgroundImage:`url(../../IEUMLOGO.png)`}}/>
       <p className={loginStyles.createAccount}>회원가입</p>
       <form onSubmit={(e) => e.preventDefault()}>
         <span className={loginStyles.inputText}>이름</span>
@@ -62,7 +58,7 @@ import Link from "next/link";
         type="text" 
         className={loginStyles.userInput} 
         placeholder="핸드폰번호를 입력하세요"
-        onChange={(e)=> insertInfo({phoneNum:e.target.value})}/>
+        onChange={(e)=> insertInfo({phonenum:e.target.value})}/>
         <span className={loginStyles.inputText}>인증번호</span>
         <div className={loginStyles.duplicationBox}>
           <input
@@ -77,7 +73,7 @@ import Link from "next/link";
           type="text" 
           className={loginStyles.userInput} 
           placeholder="닉네임을 입력하세요"
-          onChange={(e)=> insertInfo({nickName:e.target.value})}/>
+          onChange={(e)=> insertInfo({nickname:e.target.value})}/>
           <button className={loginStyles.certificationBtn}>중복확인</button>
         </div>
         <ul className={loginStyles.termsList}>

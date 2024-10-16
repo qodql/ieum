@@ -1,35 +1,186 @@
-import React from 'react'
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
 import s from '@/styles/css/page/main.module.scss'
 import detail from '@/styles/css/page/detail.module.scss'
-import { ButtonAll, ButtonArrow } from './component/Button';
+import { ButtonAll } from './component/Button';
 import Footer from './component/Footer';
+import BookStore from './stores/BookStore';
+import { Rating } from '@mui/material';
+import Modal from './component/Modal';
+import { useSession } from 'next-auth/react';
+import { db } from '@/lib/firebase';
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
 
 const Detail = () => {
+    const {data:session} = useSession();
+    const router = useRouter();
+    const { itemId } = router.query;
+    const { mainItems, itemApi } = BookStore();
+    const [item, setItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [comment, setComment] = useState('');
+    const [modalBtn, setModalBtn] = useState(false);
+    const [commentTitle, setCommenttitle] = useState('');
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();    
+
+    //데이터 불러오기
+    useEffect(() => {
+
+        const cateNum = '';
+        const coverSize = 'Big';
+        async function fetchData(){
+            await itemApi('main', cateNum, coverSize);
+        }
+        fetchData();
+    }, []);
+
+
+
+    useEffect(() => {
+        if (itemId && mainItems) {
+            const foundItem = Object.values(mainItems).flatMap(category => category.item)
+            .find(i => i.itemId === Number(itemId));
+
+            setItem(foundItem);
+        }
+    }, [itemId, mainItems]);
+    
+
+    // 뒤로가기 
+    const backBtn = () => {
+        router.back(); 
+    }
+    
+    // 공유 버튼
+    const shareBtn = () => {
+        setIsModalOpen(true);
+    };
+
+    // 공유 버튼 닫기
+    const shareClose = () => {
+        setIsModalOpen(false);
+    };
+
+    // 공유 링크 복사
+    const copyLink = () => {
+        navigator.clipboard.writeText(window.location.href)
+            alert('링크가 복사되었습니다');
+    };
+    
+    // console.log(item);
+    // 로딩
+    if (!item) {
+        return (
+            <div className={s.loading}>
+                <img src="/icon/loading.gif" alt="Loading..." />
+            </div>
+        );
+    }
+//코멘트리스트로 보내는 정보
+    const commentMove = (item) => {
+        // console.log(item)
+        router.push({
+            pathname: '/CommentList',
+            query:  { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
+        });
+    };
+    
+    //읽는중 버튼
+    const authorize = async () => {
+        const q = query(
+            collection(db, "readlist"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "readlist"); // 컬렉션 참조 생성
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover
+            });
+        } else {
+            // 이미 존재하는 경우의 로직을 여기에 추가할 수 있습니다.
+            console.log("Document already exists.");
+        }
+    };
+    //읽고싶어요 버튼
+
+    const readwantBtn = async () => {
+        const q = query(
+            collection(db, "readwantlist"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "readwantlist"); // 컬렉션 참조 생성
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover
+            });
+        } else {
+            alert("이미 등록된 책입니다.");
+        }
+    };
+
+    //코멘트 버튼
+    const commentBtn = async () => {
+        const q = query(
+            collection(db, "comment"),
+            where("title", "==", item.title),
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            const docRef = collection(db, "comment");
+            await addDoc(docRef, {
+                email: session.user.email,
+                title: item.title,
+                bookid: item.itemId,
+                cover: item.cover,
+                comment: comment,
+                Creationdate: `${year}.${month}.${day}`
+            });
+        }
+        else {
+            alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
+        } 
+    };
+    console.log(comment);
+    
   return (
-    <>
+    <>  
+
         <div className={detail.subWrap}>
             <div className={detail.subTop}>
-                <a><img src='./arrow-left.svg'/></a>
-                <a><img src='./share.svg'/></a>
+                <a onClick={backBtn}><img src='./arrow-left.svg'/></a>
+                <a onClick={shareBtn}><img src='./share.svg'/></a>
             </div>
             <div className={detail.detail}>
                 <div className={detail.detailThumbArea}>
                     <div className={detail.detailThumbBg}>
-                        <img src='./trend.jpg'/>
+                        <img src={item.cover} alt={item.title}/>
                     </div>
                     <div className={detail.detailThumbBox}>
                         <div className={detail.detailThumb}>
-                            <img src='./trend.jpg'/>
+                            <img src={item.cover} alt={item.title}/>
                         </div>
                         <div className={detail.detailThumbInfo}>
                             <div className={detail.detailThumbIcon}>
                                 <span>베스트</span>
                                 <span>편집자추천</span>
                             </div>
-                            <h5 className={detail.detailThumbTit}>트렌드 코리아 2025</h5>
-                            <p className={detail.detailTumbOverview}>2025 대한민국 소비트렌드 전망</p>
-                            <span className={detail.detailThumbWriter}>김난도, 전미영, 최지혜, 권정윤, 한다혜, 이혜원, 이준영, 이향은, 추예린, 전다현</span>
-                            <span className={detail.detailThumbType}>국내도서&gt;경제경영&gt;트렌드/미래전망&gt;트렌드/미래전망 일반</span>
+                            <h5 className={detail.detailThumbTit}>{item.title}</h5>
+                            <span className={detail.detailThumbWriter}>{item.author}</span>
+                            <span className={detail.detailThumbType}>{item.categoryName}</span>
                         </div>
                     </div>
                     <div className={detail.detailInfoArea}>
@@ -47,25 +198,72 @@ const Detail = () => {
                                 <span>105</span>
                             </div>
                         </div>
+                        {/* <div className={detail.detailInfoStar}>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                            <i><img src='./star-gray.svg'/></i>
+                        </div> */}
                         <div className={detail.detailInfoStar}>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                        </div>
+                                    <Rating
+                                        name="simple-controlled"
+                                        precision={0.5}
+                                        sx={{
+                                            '& .MuiRating-icon': {
+                                                fontSize: '48px',
+                                                borderRadius: '50%',
+                                                transition: 'color 0.3s ease',
+                                            },
+                                            '& .MuiRating-iconHover': {
+                                                color: '#FFC700',
+                                            },
+                                            '& .MuiRating-iconFilled': {
+                                                color: '#FFC700',
+                                            },
+                                            '& .MuiRating-iconEmpty': {
+                                                color: '#EAEAEA',
+                                            },
+                                        }}
+                                    />
+                                </div>
                         <div className={detail.detailInfoIcon}>
-                            <div>
+                      
+                            <div onClick={readwantBtn}>
                                 <i><img src='./interest.svg'/></i>
                                 <span>읽고싶어요</span>
                             </div>
-                            <div>
+                            <div onClick={()=>commentMove(item)}>
                                 <i><img src='./comment.svg'/></i>
                                 <span>코멘트</span>
                             </div>
-                            <div>
+                            {/* 코멘트 모달창 */}
+                            {modalBtn === true ?
+                            <>
+                            <div className={detail.modal}>
+                                <form onSubmit={(e)=> {e.preventDefault(); commentBtn();}}>
+                                    <div className={detail.labelBox}>
+                                        <label className={detail.modalLabel}>내용</label>
+                                        <div className={detail.closeBtn} style={{backgroundImage:`url(/icon_detail_modal_closeBtn.svg)`}}/>
+                                    </div>
+                                    <input type="text" />
+                                    <div>
+                                    <label>상세리뷰</label>
+                                    <input 
+                                    type="text" 
+                                    placeholder='다른 고객님께 도움이 되도록 책에 대한 솔직한 평가를 남겨주세요'
+                                    onChange={(e)=>setComment(e.target.value)}/>
+                                    </div>
+                                    <button type='submit'>저장하기</button>
+                                </form> 
+                            </div>
+                            </>
+                            : null
+
+                            }
+                            <div onClick={authorize}>
                                 <i><img src='./bookmark.svg'/></i>
-                                <span>읽는 중</span>
+                                <span>읽는중</span>
                             </div>
                             <div>
                                 <i><img src='./add.svg'/></i>
@@ -74,17 +272,15 @@ const Detail = () => {
                         </div>
                         <div className={detail.detailInfo}>
                             <p className={detail.detailInfoTit}>기본 정보</p>
-                            <span>국내도서&gt;경제경영&gt;트렌드/미래전망&gt;트렌드/미래전망 일반</span>
+                            <span>{item.categoryName}</span>
                             <p className={detail.detailInfoDescription}>
-                                역대급 무더위가 대한민국을 강타한 2024년 여름, 지구는 역사상 가장 뜨거운 날의 기록을 연달아 경신했다.<br/><br/>
-                                지금 우리는 ‘역대급’이라는 말 자체가 역대급으로 많이 쓰이는 시대를 살고 있다. 그만큼 우리 사회의 역동성이 크다는 뜻이기도 하다.<br/><br/>
-                                근 20년 동안 우리 사회의 추이와 소비 활동의 여러 모습을 추적, 관찰해온 트렌드 코리아 팀은 대한민국이 그 어느 때보다도 더 특유의 역동성과 역량을 바탕으로 전에 없는 다양성을 표출하는 모습을 목격하고 이를 책에 담고자 했다.
+                                {item.description}
                             </p>
                         </div>
                         <div className={detail.detailInfoBox}>
                             <div>
                                 <span>출판일</span>
-                                <span>2024-09-25</span>
+                                <span>{item.pubDate}</span>
                             </div>
                             <div>
                                 <span>페이지</span>
@@ -92,7 +288,7 @@ const Detail = () => {
                             </div>
                             <div>
                                 <span>출판사</span>
-                                <span>미래의 창</span>
+                                <span>{item.publisher}</span>
                             </div>
                         </div>
                         <div className={detail.detailInfoPlace}>
@@ -104,7 +300,7 @@ const Detail = () => {
                             </div>
                         </div>
                         <div className={detail.detailCommentWrap}>
-                            <div className={s.contentTitle}>
+                            <div className={`${s.contentTitle} ${detail.contentTitle}`}>
                                 <h2>코멘트</h2>
                                 <ButtonAll/>
                             </div>
@@ -113,7 +309,7 @@ const Detail = () => {
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
                                         <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <span>2024-10-11</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -123,7 +319,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        작가님의 책은 지금 곧바로 읽고 봐야하는 필독서!
                                     </p>
                                 </div>
                             </div>
@@ -131,8 +327,8 @@ const Detail = () => {
                                 <div><img src='./profile.png'/></div>
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
-                                        <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <p>고죠백종원</p>
+                                        <span>2024-10-07</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -142,7 +338,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        이야~ 책으로 어떻게 이런 맛을 내죠?
                                     </p>
                                 </div>
                             </div>
@@ -150,8 +346,8 @@ const Detail = () => {
                                 <div><img src='./profile.png'/></div>
                                 <div className={detail.detailCommentInfo}>
                                     <div className={detail.detailCommentNickName}>
-                                        <p>나야들기름</p>
-                                        <span>2024-10-22</span>
+                                        <p>나주맛피자</p>
+                                        <span>2024-09-30</span>
                                     </div>
                                     <div className={detail.detailCommentStar}>
                                         <img src='./star.svg'></img>
@@ -161,7 +357,7 @@ const Detail = () => {
                                         <img src='./star.svg'></img>
                                     </div>
                                     <p className={detail.detailCommentCont}>
-                                        송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서!
+                                        아쉬워요. 무엇을 말하려고 하는지는 알겠으나 별로 와닿지는 않아요.
                                     </p>
                                 </div>
                             </div>
@@ -170,6 +366,7 @@ const Detail = () => {
                 </div>
             </div>
         </div>
+        <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />                               
         <Footer/>
     </>
   )

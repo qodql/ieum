@@ -1,18 +1,137 @@
-import NextAuth from "next-auth"  
+import NextAuth from "next-auth";
 import NaverProvider from "next-auth/providers/naver";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
+import { db } from "@/lib/firebase";
+import { getDocs, query, where, collection, addDoc } from "firebase/firestore";
+import CredentialsProvider from "next-auth/providers/credentials";
+
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
     NaverProvider({
       clientId: process.env.NAVER_CLIENT_ID,
-      clientSecret: process.env.NAVER_CLIENT_SECRET
+      clientSecret: process.env.NAVER_CLIENT_SECRET,
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    CredentialsProvider({
+      name: 'Email and Password',
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        const q = query(
+          collection(db, "userInfo"),
+          where("info.email", "==", credentials.email),
+          where("info.password", "==", credentials.password)
+        );
+        const querySnapshot = await getDocs(q);
+        let user = null;
+        querySnapshot.docs.map((doc) => {
+          user = doc.data();
+        });
+        if (user) {
+          return user.info;
+        } else {
+          throw new Error('Invalid credentials');
+        }
+      },
     })
   ],
-}
 
-export default NextAuth(authOptions)
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      if (account.provider === 'naver' || account.provider === 'google' || account.provider === 'github') {
+        let email;
+
+        if (account.provider === 'naver') {
+          email = profile.response.email;
+        } else if (account.provider === 'google' || account.provider === 'github') {
+          email = user.email;
+        }
+
+        const q = query(
+          collection(db, "userInfo"),
+          where("info.email", "==", email)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          const userRef = collection(db, "userInfo");
+
+          if (account.provider === 'google' || account.provider === 'github') {
+            await addDoc(userRef, {
+              info: {
+                id: user.id,
+                nickname: user.name,
+                email: user.email,
+                provider: account.provider
+              }
+            });
+            await addDoc(collection(db, "readlist"), {
+              email: user.email,
+              readlist: {}
+            });
+            await addDoc(collection(db, "readwantlist"), {
+              email: user.email,
+              readlikelist: {}
+            });
+          } else if (account.provider === 'naver') {
+            try {
+              await addDoc(userRef, {
+                info: {
+                  id: profile.response.id,
+                  name: profile.response.name,
+                  email: profile.response.email,
+                  nickName: profile.response.nickname,
+                  phoneNum: profile.response.mobile,
+                  provider: account.provider,
+                  image: '/img_member_profile.svg'
+                }
+              });
+
+              await addDoc(collection(db, "readlist"), {
+                email: profile.response.email,
+                readlist: {}
+              });
+
+              await addDoc(collection(db, "readwantlist"), {
+                email: profile.response.email,
+                readlikelist: {}
+              });
+
+              console.log("Documents added successfully");
+            } catch (error) {
+              console.error("Error adding documents: ", error);
+              throw new Error('Failed to add documents');
+            }
+          }
+        }
+        return true;
+      }
+    },
+
+    async jwt({ token, user, account, profile }) {
+
+      if (account) {
+        token.accessToken = account.access_token;
+      } else if (user) {
+        token.accessToken = user.id;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      return session;
+    }
+  }
+};
+
+export default NextAuth(authOptions);

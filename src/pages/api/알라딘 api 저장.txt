@@ -3,6 +3,8 @@ https://docs.google.com/document/d/1mX-WxuoGs8Hy-QalhHcvuV17n50uGI2Sg_GHofgiePE/
 
 - 앱키
 ttbbengby1506001
+ttbalsgus30741452001
+ttbhongyeong5751628001
 
 - 검색
 http://www.aladin.co.kr/ttb/api/ItemSearch.aspx
@@ -10,7 +12,7 @@ http://www.aladin.co.kr/ttb/api/ItemSearch.aspx
 
 QueryType
 ItemNewAll : 신간 전체 리스트
-ItemEditorChoice : 편집자 추천 리스트
+ItemEditorChoice : 편집자 추천 리스트 // 카테고리가 있어야함
 Bestseller : 베스트셀러
 BlogBest : 블로거 베스트셀러
 
@@ -33,11 +35,12 @@ Version: API 버전. 최신 버전인 20131101을 사용.
 
 categoryId
 경제 170
-문학 8982
+문학 1
 추리/미스터리 2556
-종교 3125
+에세이 55889
 철학 8516
 판타지 4132
+에세이 55889
 
 &categoryId=${cateNum}
 

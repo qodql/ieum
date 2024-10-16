@@ -5,7 +5,7 @@ const Membercorrection = () => {
   return (
     
     <div className={loginStyles.memberCorrection}>
-      <div className={loginStyles.ieumLogo} style={{backgroundImage:`url(/icon_login_ieum.svg)`
+      <div className={loginStyles.ieumLogo} style={{backgroundImage:`url(../../IEUMLOGO.png)`
       }}/>
       <h2>회원수정</h2>
       <span>이메일</span>
