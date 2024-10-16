@@ -1,7 +1,7 @@
 import React from 'react'
 import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from 'next/link';
-import { MypageCard, MypageComment } from '@/pages/component/contents/ContentCard';
+import { MypageCard, MypageComment } from '@/component/contents/ContentCard';
 import { getDocs } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
 

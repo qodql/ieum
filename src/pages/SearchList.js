@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { ContentList_card } from './component/contents/ContentCard'
+import { ContentList_card } from '../component/contents/ContentCard'
 import s from '../styles/css/page/SearchList.module.scss'
-import BookStore from './stores/BookStore';
-import Header from './component/Header';
-import Footer from './component/Footer';
+import BookStore from '../stores/BookStore';
+import Header from '../component/Header';
+import Footer from '../component/Footer';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
 

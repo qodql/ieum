@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import s from '@/styles/css/page/main.module.scss'
 import detail from '@/styles/css/page/detail.module.scss'
-import { ButtonAll } from './component/Button';
-import Footer from './component/Footer';
-import BookStore from './stores/BookStore';
+import { ButtonAll } from '../component/Button';
+import Footer from '../component/Footer';
+import BookStore from '../stores/BookStore';
 import { Rating } from '@mui/material';
-import Modal from './component/Modal';
+import Modal from '../component/Modal';
 import { useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
