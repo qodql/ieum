@@ -1,3 +1,10 @@
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: transparent;
+}
 .book{
     margin-top: 126px;
     .bookBanner{
@@ -8,7 +15,6 @@
             background-color: #2e8b57;
         }
     }
-    .bookList{}
 }
 .headerSearch{
     position: relative;

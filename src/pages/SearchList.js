@@ -52,7 +52,7 @@ const SearchList = () => {
                     {searchResults.item && searchResults.item.length > 0 ? (
                     searchResults.item.map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} />
+                            <ContentList_card item={item} showBookmark={false} />
                         </div>
                     ))
                 ) : (

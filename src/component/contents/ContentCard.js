@@ -3,7 +3,6 @@ import s from '@/styles/css/component/content/contentCard.module.scss'
 
 
 const ContentCard1 = (props) => {
-    // console.log(props)
     return (
         <div className={s.contentCard1}>
             <span className={s.bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{props.item.bestRank}</span>
@@ -13,7 +12,6 @@ const ContentCard1 = (props) => {
 }
 
 const ContentCard2 = (props) => {
-    // console.log(props.item.categoryName.slice(0,6))
     return (
         <div className={s.contentCard2}>
             <div className={s.contentCard2_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
@@ -57,13 +55,16 @@ const CommentCard = () => {
 }
 
 
-const ContentList_card = ({item}) => {
-    //console.log(item);
+const ContentList_card = ({item, showBookmark }) => {
     return (
         <div className={s.ContentList_card}>
             <div className={s.ContentList_card_main}>
                 <div className={s.ContentList_card_img}>
-                    <span className={s.ContentList_card_bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{item.bestRank}</span>
+                {showBookmark && (
+                        <span className={s.ContentList_card_bookmark} style={{ backgroundImage: `url(./bookmark.png)` }}>
+                            {item.bestRank}
+                        </span>
+                    )}
                     <div className={s.ContentList_card_mainImg} style={{ backgroundImage: `url(${item.cover})` }}></div>
                 </div>
                 <div className={s.ContentList_card_text}>
@@ -121,7 +122,6 @@ const MypageCard2 = (props) => {
 
 //Mypage commentCard
 const MypageComment = (props) => {
-    console.log(props);
     return (
         <div className={s.MypageComment}>
             <div className={s.MypageComment_img} style={{backgroundImage:`url(${props.item.cover})`}}></div>

@@ -91,7 +91,7 @@ const Book = () => {
                 <div className={list.bookList}>
                     {mainItems[categoryTab]?.item && rankItems(mainItems[categoryTab].item).map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} />
+                            <ContentList_card item={item} showBookmark={true}/>
                         </div>
                     ))}
                 </div>

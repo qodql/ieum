@@ -5,12 +5,14 @@ import { MypageCard, MypageCard2, MypageComment } from '@/component/contents/Con
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
+import { useRouter } from 'next/router';
 
 const Mypage = () => {
   const {data : session} = useSession({});
   const [readList, setReadList] = useState({});
   const [readWantList, setReadWantList] = useState({});
   const [commentList, setCommentList] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     if(session){
@@ -58,7 +60,13 @@ const Mypage = () => {
         fetchComments();
       }
   }, [session]);
-console.log(commentList);
+
+    // 뒤로가기 
+    const backBtn = () => {
+      router.back(); 
+  }
+
+
 
   return (
     <>    
@@ -66,6 +74,7 @@ console.log(commentList);
       <div className={loginStyles.mypageBox}>
         <div className={loginStyles.profileBox}>
           <div 
+          onClick={backBtn}
           className={loginStyles.backBtn}  
           style={{backgroundImage:`url(/icon_login_backbtn.svg)`}}
           />
