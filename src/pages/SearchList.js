@@ -13,7 +13,6 @@ const SearchList = () => {
     const { searchResults, searchApi, loading } = BookStore();
     const [keyword, setKeyword] = useState('');
     const searchKeyword = searchParams.get('k')
-    console.log(searchKeyword);
     useEffect(() => {
         async function fetchData(){
                 await searchApi(searchParams.get('k'))
@@ -23,7 +22,6 @@ const SearchList = () => {
             }
         }, [searchKeyword]);
         
-        console.log(searchResults.item);
 
     const detailMove = (item) => {
         router.push({

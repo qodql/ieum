@@ -19,6 +19,8 @@ const BannerBox = (props) => {
     });
   };
 
+  console.log(props.mainItems);
+
   return (
     <Swiper
     slidesPerView={'1'}
@@ -119,7 +121,7 @@ const ContentListMain3 = (props) => {
 
   useEffect( () => {
     
-    const coverSize = 'Big'; 3
+    const coverSize = 'Big'; 
     async function fetchData(){
       await itemApi('cate', props.cate, coverSize);
     }
@@ -127,11 +129,11 @@ const ContentListMain3 = (props) => {
         fetchData();
     }
   }, [props.cate]);
-  console.log(props.cate)
+  
   const mainCateNum = props.cate
 
   // 로딩
-  if (loading) {
+  if (loading || !category.ItemEditorChoice.item) {
     return (
         <div className={s.loading}>
             <img src="/icon/loading.gif" alt="Loading..." />

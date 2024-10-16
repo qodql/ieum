@@ -28,6 +28,7 @@ export default function Home() {
 
         async function fetchData() {
             await itemApi('main', cateNum, coverSize);
+        
             setTimeout(() => {
                 setLoadingfadeOut(true);
                 setTimeout(() => setLoading(false), 500);
