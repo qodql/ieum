@@ -82,7 +82,7 @@ const CommentList = () => {
         </div>
       </div>
       <div className={s.commentCard_list}>
-        <h5>작성된 코멘트 (30)</h5>
+        <h5>작성된 코멘트 (6)</h5>
         <div className={s.detailComment}>
           <div><img src='./profile.png'/></div>
           <div className={s.detailCommentInfo}>
