@@ -1,11 +1,11 @@
 //Footer
 .footer{
-    border-top: 1px solid;
+    border-top: 1px solid #999;
     padding: 20px 0;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #fafafa;
+    background-color: #fff;
     transition: .3s;
     z-index: 5;
     max-width: 390px;

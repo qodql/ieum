@@ -7,6 +7,7 @@ import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from '
 import { useEffect, useState } from 'react';
 import BookStore from '../stores/BookStore';
 import LoadingScreen from '../component/loadingScreen'; 
+import MockupComponent from '@/component/MockupComponent';
 
 
 
@@ -41,6 +42,7 @@ export default function Home() {
 
     return (
         <>
+        <MockupComponent>
             <Header />
             <main>
                 <BannerBox mainItems={mainItems}/>                   
@@ -99,6 +101,7 @@ export default function Home() {
                 </div>
             </main>
             <Footer />
+            </MockupComponent>
         </>
     );
 }
