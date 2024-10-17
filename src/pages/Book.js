@@ -35,6 +35,8 @@ const Book = () => {
                 return '신간 베스트';
             case 'BlogBest':
                 return '블로거 베스트';
+            case 'ItemEditorChoice':
+                return '편집자 추천 베스트';
             default:
                 return '베스트 셀러';
         }

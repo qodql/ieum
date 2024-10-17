@@ -14,7 +14,7 @@ import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase
 const Detail = () => {
     const {data:session} = useSession();
     const router = useRouter();
-    const { itemId } = router.query;
+    const { itemId, categoryId } = router.query;
     const { mainItems, itemApi } = BookStore();
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,16 +28,13 @@ const Detail = () => {
 
     //데이터 불러오기
     useEffect(() => {
-
-        const cateNum = '';
+        const cateNum = '1';
         const coverSize = 'Big';
         async function fetchData(){
-            await itemApi('main', cateNum, coverSize);
+            await itemApi('cate', cateNum, coverSize);
         }
         fetchData();
     }, []);
-
-
 
     useEffect(() => {
         if (itemId && mainItems) {
@@ -79,9 +76,11 @@ const Detail = () => {
             </div>
         );
     }
-//코멘트리스트로 보내는 정보
+
+    console.log(item);
+
+    //코멘트리스트로 보내는 정보
     const commentMove = (item) => {
-        // console.log(item)
         router.push({
             pathname: '/CommentList',
             query:  { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
@@ -154,7 +153,6 @@ const Detail = () => {
             alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
         } 
     };
-    console.log(comment);
     
   return (
     <>  

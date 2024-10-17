@@ -8,9 +8,6 @@ import { useEffect, useState } from 'react';
 import BookStore from '../stores/BookStore';
 import LoadingScreen from '../component/loadingScreen'; 
 
-
-
-
 export default function Home() {
     const [cate, setCate] = useState('1');
     const [loading, setLoading] = useState(true); 

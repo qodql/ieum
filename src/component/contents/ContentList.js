@@ -104,22 +104,15 @@ const ContentListMain2 = (props) => {
 }
 
 const ContentListMain3 = (props) => {
-
-
   const router = useRouter();
   const detailMove = (item) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId , categoryId: props.cate},
     });
   };
-  // const [cate, setCate] = useState('1');
-  const {category, itemApi, loading} = BookStore();
 
-  // // const sendCateNum = ()=>{
-  // //   props.categoryNum(props.cate)
-  // // }
-  // // sendCateNum();
+  const {category, itemApi, loading} = BookStore();
 
   useEffect( () => {
     
@@ -133,11 +126,6 @@ const ContentListMain3 = (props) => {
   }, [props.cate]);
 
   
-  // if (loading) return <div className={s.loading}>
-  //                       <p className={s.loadingText}>Loading...</p>
-  //                     </div>
-
-  // 로딩
   if (loading) {
     return (
         <div className={s.loading}>
@@ -146,8 +134,6 @@ const ContentListMain3 = (props) => {
     );
   }
 
-  //console.log(props)
-
   return (
     <Swiper 
     slidesPerView={'3'}
@@ -155,7 +141,7 @@ const ContentListMain3 = (props) => {
     className={`${s.content3} mySwiper`}>
       {
         category.ItemEditorChoice.item.slice(0,7).map((item)=>
-          <SwiperSlide key={item.itemId} onClick={() => detailMove(item)}>
+          <SwiperSlide key={item.itemId} onClick={() => detailMove(item,props.cate)}>
             <ContentCard3 item={item}/>
           </SwiperSlide>
         )
