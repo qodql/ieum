@@ -3,7 +3,7 @@ import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from 'next/link';
 import { MypageCard, MypageCard2, MypageComment } from '@/component/contents/ContentCard';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { useRouter } from 'next/router';
 
@@ -82,6 +82,13 @@ const Mypage = () => {
             <p>{session ? session.user.name : ""
             }</p>
           <span>{session == undefined || session == null ?'': session.user.email}</span>
+          {
+           <span onClick={async () => {
+            await signOut({ redirect: false });
+            window.location.href = '/'; // 원하는 URL로 변경
+          }}>로그아웃</span>
+
+          }
           </div>
         </div>
           <ul className={loginStyles.contentBox}>

@@ -40,26 +40,14 @@ const Footer = () => {
                 <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
                 <p className={s.footerText}>MY</p>
             </li>
-            : <li onClick={()=> {(alert('로그인이 필요한 서비스입니다. 로그인페이지로 이동하겠습니다'))
-                location.href = '/page/member/Login'; ;}}
+            : <li onClick={()=> {location.href = '/page/member/Login'; ;}}
             className={s.footerMenu_li}>
              <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
              <p className={s.footerText}>로그인</p>
          </li>
             }
 
-            {session ? 
-            <li  onClick={()=>signOut()} className={s.footerMenu_li}>
-                <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer4.png)`}}></span>
-                <p className={s.footerText}>로그아웃</p>
-            </li>      
-            :  
-            <li className={s.footerMenu_li}>
-            <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer4.png)`}}></span>
-            <p className={s.footerText}>메뉴</p>
-        </li>        
 
-            }
             </ul>
         </footer>
     )
