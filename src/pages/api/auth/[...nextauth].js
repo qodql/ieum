@@ -7,6 +7,7 @@ import { getDocs, query, where, collection, addDoc } from "firebase/firestore";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
+  secret: '968416519848645165',
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,

@@ -1,14 +1,15 @@
 .CreateAccountBox {
   max-width: 390px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 40px 16px;
 }
 .CreateAccountBox .ieumLogo {
-  width: calc(100% - 198px);
-  height: 57px;
+  width: 43%;
+  height: 40px;
   background-repeat: no-repeat;
-  margin: 80px auto 16px auto;
+  margin: 16px auto;
   display: block;
+  background-size: contain;
 }
 .CreateAccountBox .createAccount {
   font-size: 36px;
@@ -24,7 +25,6 @@
   margin-top: 32px;
 }
 .CreateAccountBox form .userInput {
-  background-color: #fafafa;
   display: block;
   width: 358px;
   height: 43px;
@@ -113,10 +113,11 @@
   font-size: 80px;
 }
 .loginBox .loginLogo {
-  width: calc(100% - 198px);
-  height: 57px;
+  width: 45%;
+  height: 40px;
   background-repeat: no-repeat;
   margin: 80px auto 0px auto;
+  background-size: contain;
 }
 .loginBox .loginInput {
   display: block;
@@ -178,7 +179,7 @@
 .findIdBox {
   width: 390px;
   padding: 0 16px;
-  margin: 0 auto;
+  margin: 60px auto;
 }
 .findIdBox > p {
   text-align: center;
@@ -188,14 +189,13 @@
   margin-bottom: 32px;
 }
 .findIdBox .ieumLogo {
-  width: calc(100% - 198px);
-  height: 57px;
+  width: 35%;
+  height: 35px;
   background-repeat: no-repeat;
-  margin: 80px auto 16px auto;
-  display: block;
+  margin: 16px auto;
+  background-size: contain;
 }
 .findIdBox form .userInput {
-  background-color: #fafafa;
   display: block;
   width: 100%;
   height: 43px;
@@ -245,7 +245,7 @@
 }
 .mypageBox .profileBox {
   width: 100%;
-  height: 188px;
+  height: 250px;
   background-color: #F5F5DC;
 }
 .mypageBox .profileBox .backBtn {
@@ -256,20 +256,23 @@
   top: 16px;
   left: 16px;
 }
-.mypageBox .profileBox .profileImg {
-  width: 100%;
+.mypageBox .profileBox .profile {
+  margin-top: 100px;
+}
+.mypageBox .profileBox .profile .profileImg {
+  width: 55px;
   height: 55px;
   background-repeat: no-repeat;
   margin-top: 36px;
   margin-left: 32px;
   display: block;
 }
-.mypageBox .profileBox > p {
+.mypageBox .profileBox .profile > p {
   font-size: 20px;
   font-weight: 500;
   margin-left: 32px;
 }
-.mypageBox .profileBox > span {
+.mypageBox .profileBox .profile > span {
   font-size: 12px;
   color: #999999;
   margin-left: 32px;
@@ -296,6 +299,8 @@
   display: flex;
   margin-top: 12px;
   margin-bottom: 40px;
+  gap: 20px;
+  overflow: hidden;
 }
 .mypageBox .contentBox .contentText {
   font-size: 12px;
@@ -306,7 +311,7 @@
 .memberCorrection {
   width: 390px;
   padding: 0 16px;
-  margin: 0 auto;
+  margin: 60px auto;
 }
 .memberCorrection > h2 {
   text-align: center;
@@ -314,18 +319,18 @@
   font-weight: bold;
   margin-bottom: 28px;
 }
-.memberCorrection > span {
+.memberCorrection .labelText {
   font-size: 16px;
   font-weight: 500;
   display: block;
   margin-top: 16px;
 }
 .memberCorrection .ieumLogo {
-  width: calc(100% - 198px);
-  height: 57px;
+  width: 38%;
+  height: 35px;
   background-repeat: no-repeat;
-  margin: 80px auto 16px auto;
-  display: block;
+  margin: 16px auto;
+  background-size: contain;
 }
 .memberCorrection .nicknameChangeBox > span {
   display: block;
@@ -334,7 +339,6 @@
   margin-top: 16px;
 }
 .memberCorrection .userInput {
-  background-color: #fafafa;
   display: block;
   width: 358px;
   height: 43px;

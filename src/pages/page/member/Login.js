@@ -4,10 +4,9 @@ import Link from 'next/link';
 import loginStyles from '@/styles/css/page/member.module.scss';
 
 const Login = () => {
-  const { data: session } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   function handleEmailChange(e) {
     setEmail(e.target.value);
   }
@@ -23,15 +22,15 @@ const Login = () => {
       password,
       callbackUrl: '/'
     });
+    console.log("Sign In Result:", result); 
 
     if (result.error) {
       console.error('Error signing in:', result.error);
-      alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+      alert("로그인 중 오류가 발생했습니다.");
     } else {
-      window.location.href = '/';
+      window.location.href = result.url; 
     }
   }
-
   return (
     <div className={loginStyles.loginBox}>
       <div onClick={()=> location.href='/'} className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}/>
@@ -72,11 +71,6 @@ const Login = () => {
           className={loginStyles.loginIcon}
         />
       </div>
-      {session && (
-        <div>
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>
-      )}
     </div>
   );
 };
