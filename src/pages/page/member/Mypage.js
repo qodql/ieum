@@ -6,6 +6,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { signOut, useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { useRouter } from 'next/router';
+import Footer from '../../../component/Footer';
 
 const Mypage = () => {
   const {data : session} = useSession({});
@@ -144,6 +145,7 @@ const Mypage = () => {
       </div>
 
   }
+  <Footer/>
   </>
 
   )

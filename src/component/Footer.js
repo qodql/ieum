@@ -18,7 +18,7 @@ const Footer = () => {
     }, [position]);
     const searchPush = () => {
         router.push('/SearchList?k=한강');
-        location.href = '/SearchList?k=한강';
+        // location.href = '/SearchList?k=한강';
     }
 
     const handleScroll = useCallback(() => {
@@ -33,32 +33,30 @@ const Footer = () => {
             <ul className={s.footerMenu}>
             <li className={s.footerMenu_li}>
                 <Link href="/">
-                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer1.png)`}}></span>
+                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(/footer1.png)`}}></span>
                     <p className={s.footerText}>홈</p>
                 </Link>
             </li>
             <li className={s.footerMenu_li}>
-                <a onClick={searchPush}>
-                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer2.png)`}}></span>
+                <Link href="/SearchList?k=한강">
+                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(/footer2.png)`}}></span>
                     <p className={s.footerText}>검색</p>
-                </a>
+                </Link>
 
             </li>
             {
                 session ?
-            <li onClick={()=>{location.href = '/page/member/Mypage';}}
-               className={s.footerMenu_li}>
-                  <Link href="/">
-                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
+            <li className={s.footerMenu_li}>
+                  <Link href="/page/member/Mypage">
+                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(/footer3.png)`}}></span>
                     <p className={s.footerText}>MY</p>
                 </Link>
             </li>
-            : <li onClick={()=> {location.href = '/page/member/Login'; ;}}
-            className={s.footerMenu_li}>
-            <a href='#'>
-             <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
+            : <li className={s.footerMenu_li}>
+            <Link href='/page/member/Login'>
+             <span className={s.footerMenu_icon} style={{backgroundImage:`url(/footer3.png)`}}></span>
              <p className={s.footerText}>로그인</p>
-             </a>
+             </Link>
          </li>
             }
 

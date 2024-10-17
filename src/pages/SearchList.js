@@ -13,6 +13,9 @@ const SearchList = () => {
     const { searchResults, searchApi, loading } = BookStore();
     const [keyword, setKeyword] = useState('');
     const searchKeyword = searchParams.get('k')
+
+    
+
     useEffect(() => {
         async function fetchData(){
                 await searchApi(searchParams.get('k'))
@@ -31,13 +34,14 @@ const SearchList = () => {
     };
 
     // 로딩
-    if (loading) {
-    return (
-        <div className={s.loading}>
-            <img src="/icon/loading.gif" alt="Loading..." />
-        </div>
-    );
+    if (!searchResults.item) {
+        return (
+            <div className={s.loading}>
+                <img src="/icon/loading.gif" alt="Loading..." />
+            </div>
+        );
     }
+
     return (
         <>
             <Header />
@@ -47,7 +51,7 @@ const SearchList = () => {
                 </div>
 
                 <div className={s.bookList}>
-                    {searchResults.item && searchResults.item.length > 0 ? (
+                {searchResults.item && searchResults.item.length > 0 ? (
                     searchResults.item.map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
                             <ContentList_card item={item} showBookmark={false} />
