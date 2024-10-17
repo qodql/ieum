@@ -34,7 +34,6 @@ const CommentList = () => {
     };
       fetchComments();
   }, [itemTitle]);
-  console.log(commentList)
 
   //코멘트 등록
   const commentBtn = async () => {

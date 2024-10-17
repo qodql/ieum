@@ -5,6 +5,7 @@ import { db } from '@/lib/firebase';
 import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
+
 const Membercorrection = () => {
   const { data: session } = useSession({});
   const [correction, setCorrection] = useState({ nickname: '', password: '' });
@@ -15,6 +16,24 @@ const Membercorrection = () => {
 
   const backBtn = () => {
     router.back(); 
+  }
+
+  const nicknameCheck = async (e) => {
+    e.preventDefault();
+    if (!session) {
+      console.error('No session found');
+      return;
+    }
+    const q = query(
+      collection(db, 'userInfo'),
+      where('info.nickname', '==', correction.nickname)
+    )
+    const querySnapshot = await getDocs(q);
+    if(!querySnapshot.empty) {
+     alert('이미 사용중인 닉네임입니다.');
+      return;
+    }
+    else{ alert('사용가능한 닉네임입니다.');}
   }
 
   const correctionChange = async (e) => {
@@ -28,6 +47,7 @@ const Membercorrection = () => {
       collection(db, 'userInfo'),
       where('info.email', '==', session.user.email)
     );
+
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
       console.error('No matching documents found');
@@ -36,7 +56,6 @@ const Membercorrection = () => {
 
     const docId = querySnapshot.docs[0].id;
     const docRef = doc(db, 'userInfo', docId);
-    console.log(querySnapshot.docs.map((doc) => doc.data()));
 
     await setDoc(docRef, {
       info: {
@@ -62,7 +81,7 @@ const Membercorrection = () => {
           className={loginStyles.userInput}
         />
 
-        <span className={loginStyles.labelText}>회원수정</span>
+        <span className={loginStyles.labelText}>닉네임 수정</span>
         <div className={loginStyles.nicknameChangeBox}>
           <input
             type="text"
@@ -70,7 +89,7 @@ const Membercorrection = () => {
             className={loginStyles.userInput}
             onChange={(e) => handleCorrection({ nickname: e.target.value })}
           />
-          <button type="button">중복확인</button>
+          <button onClick={nicknameCheck} type="button">중복확인</button>
         </div>
 
         <span className={loginStyles.labelText}>변경할 비밀번호</span>
