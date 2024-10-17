@@ -10,7 +10,7 @@ const Search = () => {
   const router = useRouter();
 
   useEffect(() => {
-    //console.log("검색 결과:", searchResults);
+
   }, [searchResults]);
 
  

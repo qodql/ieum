@@ -19,7 +19,6 @@ const BannerBox = (props) => {
     });
   };
 
-  console.log(props.mainItems);
 
   return (
     <Swiper

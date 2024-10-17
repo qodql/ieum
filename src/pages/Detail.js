@@ -190,8 +190,6 @@ const Detail = () => {
                                     <span>(12명)</span>
                                 </div>
                                 <div className={detail.detailInfoLikes}>
-                                    <i><img src='./like.png' /></i>
-                                    <span>105</span>
                                 </div>
                             </div>
                             <div className={detail.detailInfoStar}>

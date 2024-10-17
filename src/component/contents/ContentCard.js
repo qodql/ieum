@@ -84,7 +84,6 @@ const ContentList_card = ({item, showBookmark }) => {
             </div>
             <div className={s.ContentList_card_foot}>
                 <p className={s.ContentList_card_Like}>
-                    123
                 </p>
                 <p className={s.ContentList_card_category}>
                     {item.categoryName}
@@ -96,7 +95,7 @@ const ContentList_card = ({item, showBookmark }) => {
 
 //Mypage contentsCard
 const MypageCard = (props) => {
-    console.log(props.item);
+
     return (
         <div className={s.MypageCard}>
             <div className={s.MypageCard_box}>

@@ -22,7 +22,7 @@ const Login = () => {
       password,
       callbackUrl: '/'
     });
-    console.log("Sign In Result:", result); 
+
 
     if (result.error) {
       console.error('Error signing in:', result.error);
