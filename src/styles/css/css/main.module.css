@@ -1,11 +1,91 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: transparent;
+}
+
+.loadingScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #2E8B57;
+  animation: loadingfadeIn 0.5s forwards;
+}
+
+@keyframes loadingfadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 9;
+}
+.modalOverlay .modalContent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  transform: translateY(100%);
+}
+.modalOverlay .modalContent.open {
+  transform: translateY(0);
+}
+.modalOverlay .modalContent h3 {
+  text-align: center;
+}
+.modalOverlay .modalContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+.modalOverlay .modalContent ul li {
+  margin: 10px 0;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 16px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.modalOverlay .modalContent button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background: #2E8B57;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .contentTitle {
-  margin: 0 16px;
-  margin-top: 48px;
+  margin: 40px 16px 16px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }
 .contentTitle h2 {
-  font-size: 20;
+  font-size: 20px;
   font-weight: 600;
   color: #111111;
 }
@@ -13,7 +93,7 @@
   border: none;
   color: #333;
   font-size: 12px;
-  background-color: #fafafa;
+  background-color: transparent;
 }
 
 .banner {
@@ -24,60 +104,6 @@
   display: flex;
   width: 100%;
   height: 225px;
-}
-.banner .bannerImg {
-  width: 133px;
-  height: 197px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  flex-shrink: 0;
-  margin: 16px;
-}
-.banner .bannerText {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  margin-right: 36px;
-}
-.banner .bannerText .bannerTitle {
-  margin-top: 16px;
-}
-.banner .bannerText .bannerTitle h2 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #fafafa;
-}
-.banner .bannerText .bannerTitle p {
-  font-size: 12px;
-  color: #fafafa;
-}
-.banner .bannerOverview {
-  margin-top: 40px;
-}
-.banner .bannerOverview p {
-  font-size: 12px;
-  color: #fafafa;
-}
-.banner .bannerBot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-.banner .bannerBot .bannerLike {
-  font-size: 12px;
-  color: #fafafa;
-}
-.banner .bannerBot .bannerLike::before {
-  content: url(../../../../public/Like.png);
-  margin-right: 4px;
-}
-.banner .bannerBot .bannerPage {
-  font-size: 12px;
-  color: #fafafa;
-}
-.banner .bannerBot .bannerPage::after {
-  content: url(../../../../public/arrow.png);
-  margin-left: 4px;
 }
 
 .mainContent3 .c3Category {
@@ -93,5 +119,5 @@
   border: none;
   color: #666;
   font-size: 16px;
-  background-color: #fafafa;
+  background-color: transparent;
 }

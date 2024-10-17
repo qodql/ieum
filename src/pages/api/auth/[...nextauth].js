@@ -7,6 +7,7 @@ import { getDocs, query, where, collection, addDoc } from "firebase/firestore";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
+  secret: '968416519848645165',
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
@@ -47,16 +48,29 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (account.provider === 'naver' || account.provider === 'google' || account.provider === 'github') {
+    async signIn({ user, account, profile, email, credentials }) {
+      if (account.provider === 'credentials') {
+        // 자체 로그인 처리
+        const q = query(
+          collection(db, "userInfo"),
+          where("info.email", "==", credentials.email),
+          where("info.password", "==", credentials.password)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          throw new Error('Invalid credentials');
+        }
+        return true;
+      } else if (account.provider === 'naver' || account.provider === 'google' || account.provider === 'github') {
+        // 외부 로그인 제공자 처리
         let email;
-
+  
         if (account.provider === 'naver') {
           email = profile.response.email;
         } else if (account.provider === 'google' || account.provider === 'github') {
           email = user.email;
         }
-
+  
         const q = query(
           collection(db, "userInfo"),
           where("info.email", "==", email)
@@ -64,7 +78,7 @@ export const authOptions = {
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
           const userRef = collection(db, "userInfo");
-
+  
           if (account.provider === 'google' || account.provider === 'github') {
             await addDoc(userRef, {
               info: {
@@ -73,14 +87,6 @@ export const authOptions = {
                 email: user.email,
                 provider: account.provider
               }
-            });
-            await addDoc(collection(db, "readlist"), {
-              email: user.email,
-              readlist: {}
-            });
-            await addDoc(collection(db, "readwantlist"), {
-              email: user.email,
-              readlikelist: {}
             });
           } else if (account.provider === 'naver') {
             try {
@@ -95,17 +101,7 @@ export const authOptions = {
                   image: '/img_member_profile.svg'
                 }
               });
-
-              await addDoc(collection(db, "readlist"), {
-                email: profile.response.email,
-                readlist: {}
-              });
-
-              await addDoc(collection(db, "readwantlist"), {
-                email: profile.response.email,
-                readlikelist: {}
-              });
-
+  
               console.log("Documents added successfully");
             } catch (error) {
               console.error("Error adding documents: ", error);
@@ -115,10 +111,10 @@ export const authOptions = {
         }
         return true;
       }
+      return false;
     },
-
+  
     async jwt({ token, user, account, profile }) {
-
       if (account) {
         token.accessToken = account.access_token;
       } else if (user) {
@@ -126,7 +122,7 @@ export const authOptions = {
       }
       return token;
     },
-
+  
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       return session;

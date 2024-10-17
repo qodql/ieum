@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Header from './component/Header'
-import Footer from './component/Footer'
-import { ContentList_card } from './component/contents/ContentCard'
+import Header from '../component/Header'
+import Footer from '../component/Footer'
+import { ContentList_card } from '../component/contents/ContentCard'
 import list from '../styles/css/page/book.module.scss'
 import s from '../styles/css/page/main.module.scss'
-import BookStore from './stores/BookStore';
+import BookStore from '../stores/BookStore';
 import { useRouter } from 'next/router';
 
 const Book = () => {
@@ -91,7 +91,7 @@ const Book = () => {
                 <div className={list.bookList}>
                     {mainItems[categoryTab]?.item && rankItems(mainItems[categoryTab].item).map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} />
+                            <ContentList_card item={item} showBookmark={true}/>
                         </div>
                     ))}
                 </div>

@@ -1,6 +1,6 @@
 .subWrap {
   width: 100%;
-  height: 1600px;
+  height: 1400px;
   box-sizing: border-box;
 }
 .subWrap .subTop {
@@ -14,7 +14,7 @@
 }
 .subWrap .detail .detailThumbArea {
   width: 100%;
-  height: 360px;
+  height: 480px;
   position: relative;
   background: rgba(0, 0, 0, 0.5);
 }
@@ -31,7 +31,7 @@
 }
 .subWrap .detail .detailThumbArea .detailThumbBox {
   width: 100%;
-  padding: 100px 16px 32px;
+  padding: 92px 16px 32px;
   z-index: 9;
   display: flex;
   gap: 16px;
@@ -40,7 +40,11 @@
   width: 100%;
 }
 .subWrap .detail .detailThumbArea .detailThumbBox .detailThumb img {
-  width: 100%;
+  width: 136px;
+  height: 200px;
+}
+.subWrap .detail .detailThumbArea .detailThumbBox .detailThumbInfo {
+  width: 150%;
 }
 .subWrap .detail .detailThumbArea .detailThumbBox .detailThumbInfo .detailThumbIcon {
   display: flex;
@@ -65,7 +69,7 @@
   font-size: 18px;
   font-weight: 500;
   color: #fafafa;
-  padding-bottom: 8px;
+  padding-bottom: 32px;
 }
 .subWrap .detail .detailThumbArea .detailThumbBox .detailThumbInfo .detailTumbOverview {
   font-size: 14px;
@@ -84,7 +88,7 @@
 .subWrap .detail .detailThumbArea .detailInfoArea {
   width: 100%;
   background-color: #fff;
-  border-radius: 16px;
+  border-radius: 16px 16px 0 0;
 }
 .subWrap .detail .detailThumbArea .detailInfoArea .detailInfoMark {
   padding: 24px 16px 16px;
@@ -140,6 +144,43 @@
 .subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon div span {
   font-size: 13px;
   color: #333;
+}
+.subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon .modalOverlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9998;
+}
+.subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon .modal {
+  padding: 16px;
+  display: block;
+  position: fixed;
+  background-color: #fff;
+  width: 358px;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  border-radius: 8px;
+  border: 1px solid #333333;
+}
+.subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon .modal .labelBox {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon .modal .labelBox .closeBtn {
+  width: 20px;
+  height: 20px;
+}
+.subWrap .detail .detailThumbArea .detailInfoArea .detailInfoIcon .modal .labelBox .modalLabel {
+  font-size: 16px;
+  font-weight: 700;
 }
 .subWrap .detail .detailThumbArea .detailInfoArea .detailInfo {
   padding: 24px 16px 32px;
@@ -204,10 +245,10 @@
   gap: 12px;
 }
 .subWrap .detail .detailThumbArea .detailInfoArea .detailCommentWrap {
-  padding: 28px 16px 80px;
+  padding: 28px 16px 60px;
 }
 .subWrap .detail .detailThumbArea .detailInfoArea .detailCommentWrap .contentTitle {
-  margin: 0 !important;
+  margin: 0;
 }
 .subWrap .detail .detailThumbArea .detailInfoArea .detailCommentWrap .detailComment {
   display: flex;

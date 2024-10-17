@@ -3,7 +3,8 @@ import { ContentCard1, ContentCard2, ContentCard3 } from './ContentCard'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import s from '@/styles/css/component/content/contentList.module.scss'
-import BookStore from '@/pages/stores/BookStore';
+
+import BookStore from '../../stores/BookStore';
 import { useRouter } from 'next/router';
 
 
@@ -17,6 +18,7 @@ const BannerBox = (props) => {
         query: { itemId: item.itemId },
     });
   };
+
 
   return (
     <Swiper
@@ -79,10 +81,10 @@ const ContentListMain1 = (props) => {
 
 const ContentListMain2 = (props) => {
   const router = useRouter();
-  const detailMove = (item) => {
+  const detailMove = (item, cate) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId},
     });
   };
 
@@ -107,23 +109,18 @@ const ContentListMain3 = (props) => {
 
 
   const router = useRouter();
-  const detailMove = (item) => {
+  const detailMove = (item,mainCateNum) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId, mainCateNum: mainCateNum  },
     });
   };
-  // const [cate, setCate] = useState('1');
-  const {category, itemApi, loading} = BookStore();
 
-  // // const sendCateNum = ()=>{
-  // //   props.categoryNum(props.cate)
-  // // }
-  // // sendCateNum();
+  const {category, itemApi, loading} = BookStore();
 
   useEffect( () => {
     
-    const coverSize = 'Big'; 3
+    const coverSize = 'Big'; 
     async function fetchData(){
       await itemApi('cate', props.cate, coverSize);
     }
@@ -131,22 +128,17 @@ const ContentListMain3 = (props) => {
         fetchData();
     }
   }, [props.cate]);
-
   
-  // if (loading) return <div className={s.loading}>
-  //                       <p className={s.loadingText}>Loading...</p>
-  //                     </div>
+  const mainCateNum = props.cate
 
   // 로딩
-  if (loading) {
+  if (loading || !category.ItemEditorChoice.item) {
     return (
         <div className={s.loading}>
             <img src="/icon/loading.gif" alt="Loading..." />
         </div>
     );
   }
-
-  //console.log(props)
 
   return (
     <Swiper 
@@ -155,7 +147,7 @@ const ContentListMain3 = (props) => {
     className={`${s.content3} mySwiper`}>
       {
         category.ItemEditorChoice.item.slice(0,7).map((item)=>
-          <SwiperSlide key={item.itemId} onClick={() => detailMove(item)}>
+          <SwiperSlide key={item.itemId} onClick={() => detailMove(item, mainCateNum)}>
             <ContentCard3 item={item}/>
           </SwiperSlide>
         )

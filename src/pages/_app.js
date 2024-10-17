@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import store from './stores/BookStore';
+import store from '../stores/BookStore';
 import { SessionProvider } from "next-auth/react"
 import Head from 'next/head';
 

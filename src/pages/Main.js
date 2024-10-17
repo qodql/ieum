@@ -1,12 +1,12 @@
 import s from '@/styles/css/page/main.module.scss';
-import Footer from './component/Footer';
-import Header from './component/Header';
-import { ButtonAll, ButtonArrow } from './component/Button';
-import { CommentCard } from './component/contents/ContentCard';
-import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from './component/contents/ContentList';
+import Footer from '../component/Footer';
+import Header from '../component/Header';
+import { ButtonAll, ButtonArrow } from '../component/Button';
+import { CommentCard } from '../component/contents/ContentCard';
+import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from '../component/contents/ContentList';
 import { useEffect, useState } from 'react';
-import BookStore from './stores/BookStore';
-import LoadingScreen from './component/loadingScreen'; 
+import BookStore from '../stores/BookStore';
+import LoadingScreen from '../component/loadingScreen'; 
 
 
 
@@ -16,7 +16,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true); 
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
-    const { mainItems, category, itemApi } = BookStore();
+    const { mainItems, itemApi } = BookStore();
     const categoryNum = (num) => {
         setCate(num);
     };
@@ -28,6 +28,7 @@ export default function Home() {
 
         async function fetchData() {
             await itemApi('main', cateNum, coverSize);
+        
             setTimeout(() => {
                 setLoadingfadeOut(true);
                 setTimeout(() => setLoading(false), 500);

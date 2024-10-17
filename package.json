@@ -19,6 +19,7 @@
     "express": "^4.21.1",
     "firebase": "^10.14.0",
     "firestore": "^1.1.6",
+    "ncrypt": "^1.0.7",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
     "ngrok": "^5.0.0-beta.2",

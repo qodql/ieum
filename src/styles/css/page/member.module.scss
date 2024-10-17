@@ -21,7 +21,16 @@
       display: block;
       font-weight: 500;
       margin : 12px 0 ;
-
+    }
+    .passwordCheck{
+      font-size: 12px;
+      color: rgb(255, 11, 11);
+      margin-top: 8px;
+    }
+    .passwordCheckok{
+      font-size: 12px;
+      color: #999999;
+      margin-top: 8px;
     }
     &>span:nth-of-type(1){
       margin-top: 32px;
@@ -274,7 +283,7 @@
     .profile{
       margin-top: 100px;
       .profileImg{
-        width: 100%;
+        width: 55px;
         height: 55px;
         background-repeat: no-repeat;
         margin-top: 36px;
@@ -314,6 +323,8 @@
       display: flex;
       margin-top: 12px;
       margin-bottom: 40px;
+      gap: 20px;
+      overflow: hidden;
     }
     .contentText{
       font-size: 12px;
@@ -334,7 +345,8 @@
     font-weight: bold;
     margin-bottom: 28px;
   }
-  &>span{
+
+  .labelText{
     font-size: 16px;
     font-weight: 500;
     display: block;
@@ -347,6 +359,7 @@
     margin: 16px auto;
     background-size: contain;
   }
+  
   .nicknameChangeBox{
     &>span{
       display: block;

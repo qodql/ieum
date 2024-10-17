@@ -3,7 +3,6 @@ import s from '@/styles/css/component/content/contentCard.module.scss'
 
 
 const ContentCard1 = (props) => {
-    // console.log(props)
     return (
         <div className={s.contentCard1}>
             <span className={s.bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{props.item.bestRank}</span>
@@ -13,7 +12,6 @@ const ContentCard1 = (props) => {
 }
 
 const ContentCard2 = (props) => {
-    // console.log(props.item.categoryName.slice(0,6))
     return (
         <div className={s.contentCard2}>
             <div className={s.contentCard2_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
@@ -57,13 +55,16 @@ const CommentCard = () => {
 }
 
 
-const ContentList_card = ({item}) => {
-    //console.log(item);
+const ContentList_card = ({item, showBookmark }) => {
     return (
         <div className={s.ContentList_card}>
             <div className={s.ContentList_card_main}>
                 <div className={s.ContentList_card_img}>
-                    <span className={s.ContentList_card_bookmark} style={{backgroundImage:`url(./bookmark.png)`}}>{item.bestRank}</span>
+                {showBookmark && (
+                        <span className={s.ContentList_card_bookmark} style={{ backgroundImage: `url(./bookmark.png)` }}>
+                            {item.bestRank}
+                        </span>
+                    )}
                     <div className={s.ContentList_card_mainImg} style={{ backgroundImage: `url(${item.cover})` }}></div>
                 </div>
                 <div className={s.ContentList_card_text}>
@@ -83,7 +84,6 @@ const ContentList_card = ({item}) => {
             </div>
             <div className={s.ContentList_card_foot}>
                 <p className={s.ContentList_card_Like}>
-                    123
                 </p>
                 <p className={s.ContentList_card_category}>
                     {item.categoryName}
@@ -94,34 +94,48 @@ const ContentList_card = ({item}) => {
 }
 
 //Mypage contentsCard
-const MypageCard = () => {
+const MypageCard = (props) => {
+
     return (
         <div className={s.MypageCard}>
             <div className={s.MypageCard_box}>
-                <div className={s.MypageCard_image} style={{backgroundImage:`url(/image2.png)`}}></div>
+                <div className={s.MypageCard_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
             </div>
-            <p className={s.MypageCard_title}>시대예보:호명사회</p>
+            <p className={s.MypageCard_title}>{props.item.title}</p>
+        </div>
+    )
+}
+
+//Mypage2 contentsCard
+const MypageCard2 = (props) => {
+
+    return (
+        <div className={s.MypageCard}>
+            <div className={s.MypageCard_box}>
+                <div className={s.MypageCard_image} style={{backgroundImage:`url(${props.item.cover})`}}></div>
+            </div>
+            <p className={s.MypageCard_title}>{props.item.title}</p>
         </div>
     )
 }
 
 //Mypage commentCard
-const MypageComment = () => {
+const MypageComment = (props) => {
     return (
         <div className={s.MypageComment}>
-            <div className={s.MypageComment_img} style={{backgroundImage:`url(/image2.png)`}}></div>
+            <div className={s.MypageComment_img} style={{backgroundImage:`url(${props.item.cover})`}}></div>
             <div className={s.MypageComment_text}>
                 <p className={s.MypageComment_date}>
-                    2024.10.02
+                    {props.item.Creationdate}
                 </p>
                 <h2 className={s.MypageComment_title}>
-                    시대예보:호명사회
+                    {props.item.title}
                 </h2>
                 <p className={s.MypageComment_rate}>
                     ★★★★☆
                 </p>
                 <p className={s.MypageComment_review}>
-                    재밌는 책이었다 아주 재미있었다 너무 재미있었다 대박이다
+                    {props.item.comment}
                 </p>
             </div>
             <span className={s.MypageComment_more} style={{backgroundImage:`url(/more.png)`}}></span>        
@@ -130,4 +144,4 @@ const MypageComment = () => {
 }
 
 
-export {ContentCard1, ContentCard2, ContentCard3, CommentCard, ContentList_card, MypageCard, MypageComment}
+export {ContentCard1, ContentCard2, ContentCard3, CommentCard, ContentList_card, MypageCard, MypageComment, MypageCard2}

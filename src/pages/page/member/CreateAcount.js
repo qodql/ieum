@@ -1,4 +1,4 @@
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, where, query } from "firebase/firestore";
 import { useState } from "react";
 import { storage,db } from "@/lib/firebase";
 import { v4 as uuidv4 } from 'uuid';
@@ -8,17 +8,47 @@ import Link from "next/link";
 
  function CreateAccount() {
   const userid = uuidv4();
-  const [info, setInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
+  const [addinfo, setAddInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
+  const [passwordCheck, setPasswordCheck] = useState('');
   const userData = async ()=>{
     await addDoc(collection(db,"userInfo"), {
-      info,
+      addinfo,
     })
-    alert("이음의 회원이 되신걸 환영합니다")
+    location.href = '/';
   }
   const insertInfo = (edit)=>{
-    setInfo({...info, ...edit, id:userid})
+    setAddInfo({...addinfo, ...edit, id:userid})
   };
 
+  //중복 버튼 클릭시 닉네임 중복확인
+  const nicknameCheck = async (e) => {
+    e.preventDefault(); 
+    const q = query(
+      collection(db, 'userInfo'),
+      where('info.nickname', '==', addinfo.nickname)
+    );
+    const querySnapshot = await getDocs(q);
+    if(!querySnapshot.empty) {
+     alert('이미 사용중인 닉네임입니다.');
+      return;
+    }
+    else{ alert('사용가능한 닉네임입니다.');}
+  }
+
+  const emailCheck = async (e) => {
+    e.preventDefault(); 
+    const q = query(
+      collection(db, 'userInfo'),
+      where('info.email', '==', addinfo.email)
+    );
+    const querySnapshot = await getDocs(q);
+    if(!querySnapshot.empty) {
+     alert('이미 사용중인 닉네임입니다.');
+      return;
+    }
+    else{ alert('사용가능한 닉네임입니다.');}
+  }
+  
   return (
     <>
     {/* 회원가입 */}
@@ -36,14 +66,16 @@ import Link from "next/link";
         onChange={(e) => insertInfo({name:e.target.value})}/>
 
         <span className={loginStyles.inputText}>이메일</span>
-        <input 
-        type="text" 
-        className={loginStyles.userInput}
-        placeholder="이메일을 입력하세요"
-        onChange={(e)=> insertInfo({email:e.target.value})}/>
-
+        <div className={loginStyles.duplicationBox}>
+          <input 
+          type="text" 
+          className={loginStyles.userInput} 
+          placeholder="이메일을 입력하세요"
+          onChange={(e)=> insertInfo({email:e.target.value})}/>
+          <button onClick={emailCheck} className={loginStyles.certificationBtn}>중복확인</button>
+        </div>
         <span className={loginStyles.inputText}>비밀번호</span>
-        <input 
+        <input
         type="password" 
         className={loginStyles.userInput}
         placeholder="비밀번호를 입력하세요" 
@@ -52,7 +84,11 @@ import Link from "next/link";
         <input 
         type="password" 
         placeholder="같은 비밀번호를 입력하세요"
-        className={loginStyles.userInput}/> 
+        className={loginStyles.userInput}
+        onChange={(e)=> setPasswordCheck(e.target.value)
+        }/> 
+        {addinfo.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
+         : <span className={loginStyles.passwordCheckok}>비밀번호가 일치합니다.</span>}
         <span className={loginStyles.inputText}>핸드폰번호</span>
         <input 
         type="text" 
@@ -74,7 +110,7 @@ import Link from "next/link";
           className={loginStyles.userInput} 
           placeholder="닉네임을 입력하세요"
           onChange={(e)=> insertInfo({nickname:e.target.value})}/>
-          <button className={loginStyles.certificationBtn}>중복확인</button>
+          <button onClick={nicknameCheck} className={loginStyles.certificationBtn}>중복확인</button>
         </div>
         <ul className={loginStyles.termsList}>
           <li>

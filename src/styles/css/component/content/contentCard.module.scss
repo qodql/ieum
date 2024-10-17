@@ -225,13 +225,13 @@
             font-size: 13px;
         }
         .ContentList_card_Like::before{
-            content: url(../../../../../public/Like.png);
+
             margin-right: 8px;
         }
         .ContentList_card_category{
             width: 220px;
             font-size: 13px;
-            margin-left: 20px;
+            margin-left: 52px;
             color: rgba(0, 0, 0, 50%);
         }
     }
@@ -243,10 +243,13 @@
         text-align: center;
         width: 115px;
         height: 130px;
+        gap: 20px;
         .MypageCard_image{
             background-repeat: no-repeat;
             width: 103px;
             height: 118px;
+            background-size: contain;
+            margin: 0 auto;
         }
     }
     .MypageCard_title{
@@ -254,6 +257,10 @@
         font-size: 12px;
         font-weight: 500;
         color: #333;
+        width: 100px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
 }
 

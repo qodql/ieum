@@ -60,9 +60,15 @@ header{
   width: 100%;
   top: 0;
   z-index: 5;
+  max-width: 390px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 main{
-  margin-top: 126px;
+  margin: 106px auto 0px;
+  max-width: 390px;
+  overflow: hidden;
+
 }
 
 

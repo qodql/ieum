@@ -5,22 +5,15 @@ import { useRouter } from 'next/router';
 
 const Search = () => {
 
-  const { searchResults, searchApi, loading } = BookStore();
+  const { searchResults, searchApi } = BookStore();
   const [keyword, setKeyword] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    //console.log("검색 결과:", searchResults);
+
   }, [searchResults]);
 
-  // 로딩
-  if (loading) {
-    return (
-        <div className={s.loading}>
-            <img src="/icon/loading.gif" alt="Loading..." />
-        </div>
-    );
-  }
+ 
 
   // 검색
   const handleSearch = (e) => {
@@ -33,7 +26,7 @@ const Search = () => {
     <div>
         <form className={s.headerSearch} onSubmit={handleSearch}>
             <input 
-              type="search" 
+              type="text" 
               name="search" 
               placeholder="도서 이름을 입력해 주세요"
               onChange={(e) => setKeyword(e.target.value)}

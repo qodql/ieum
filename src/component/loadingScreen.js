@@ -1,5 +1,5 @@
 import React from 'react';
-import s from '../../styles/css/page/main.module.scss';
+import s from '@/styles/css/page/main.module.scss';
 
 const loadingScreen = ({ loadingfadeOut }) => {
     return (

@@ -8,26 +8,33 @@
     background-color: #fafafa;
     transition: .3s;
     z-index: 5;
+    max-width: 390px;
+    left: 50%;
+    transform: translateX(-50%);
     .footerMenu{
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin: 0 48px;
         .footerMenu_li{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .footerMenu_icon{
-                width: 24px;
-                height: 24px;
-                background: center;
-                background-repeat: no-repeat;                
+            a{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .footerMenu_icon{
+                    width: 24px;
+                    height: 24px;
+                    background: center;
+                    background-repeat: no-repeat;                
+                }
+                .footerText{}
             }
-            .footerText{}
+          
         }
     }
 }
 .footerAct{
     transition: .3s;
-    transform: translateY(100%);
+    transform: translate(-50%, 100%);
+    left: 50%;
 }
