@@ -48,8 +48,7 @@ const Footer = () => {
                     <p className={s.footerText}>MY</p>
                 </Link>
             </li>
-            : <li onClick={()=> {(alert('로그인이 필요한 서비스입니다. 로그인페이지로 이동하겠습니다'))
-                location.href = '/page/member/Login'; ;}}
+            : <li onClick={()=> {location.href = '/page/member/Login'; ;}}
             className={s.footerMenu_li}>
             <a href='#'>
              <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer3.png)`}}></span>
@@ -58,22 +57,7 @@ const Footer = () => {
          </li>
             }
 
-            {session ? 
-            <li  onClick={()=>signOut()} className={s.footerMenu_li}>
-                <Link href="/">
-                <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer4.png)`}}></span>
-                <p className={s.footerText}>로그아웃</p>
-                </Link>
-            </li>      
-            :  
-            <li className={s.footerMenu_li}>
-                <a href='#'>
-                    <span className={s.footerMenu_icon} style={{backgroundImage:`url(./footer4.png)`}}></span>
-                    <p className={s.footerText}>로그아웃</p>
-            </a>
-        </li>        
 
-            }
             </ul>
         </footer>
     )

@@ -1,5 +1,5 @@
 import loginStyles from '@/styles/css/page/member.module.scss';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useState } from "react";
 import { storage,db } from "@/lib/firebase";
@@ -8,7 +8,7 @@ import Link from "next/link";
 const Findid = () => {
 
   const [findInfo, setFindInfo] = useState({phonenum:'', name:''});
-  const [searchInfo, setSearchInfo] = useState([]);
+  const [searchInfo, setSearchInfo] = useState({});
   const infoFind = (edit)=>{
     setFindInfo({...findInfo, ...edit});
   }
@@ -26,10 +26,20 @@ const contrastInfo = async ()=>{
 }
 
 
-const submitHandle = (e) => {
+const submitHandle = async (e) => {
   e.preventDefault();
-  contrastInfo();
+  await contrastInfo(); // 비동기 작업이 완료될 때까지 기다림
 }
+
+useEffect(() => {
+  if (searchInfo.length > 0) {
+    alert(`찾으시는 아이디는 ${searchInfo[0].info.email}입니다.`);
+  } else if (searchInfo.length === 0) {
+    alert('일치하는 정보가 없습니다.');
+  }
+}, [searchInfo]);
+
+
 
   return (
     <div className={loginStyles.findIdBox}>
@@ -60,12 +70,6 @@ const submitHandle = (e) => {
       placeholder='인증번호를 입력하세요'/>
       <button type='submit' className={loginStyles.findBtn}>아이디 찾기</button>
     </form>
-    {searchInfo.length > 0 && (
-        <div>
-          <h2>검색 결과</h2>
-          <pre>{JSON.stringify(searchInfo, null, 2)}</pre>
-        </div>
-      )}
   </div>
   )
 }
