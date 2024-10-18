@@ -65,9 +65,13 @@ header{
   transform: translateX(-50%);
 }
 main{
-  margin: 102px auto 0px;
+  margin: 100px 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);;
   max-width: 390px;
   overflow: hidden;
+  z-index: -1;
 }
 
 

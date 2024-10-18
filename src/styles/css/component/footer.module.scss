@@ -4,11 +4,10 @@
     padding: 20px 0;
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 390px;
     background-color: #fff;
     transition: .3s;
-    z-index: 5;
-    max-width: 390px;
+    z-index: -1;
     left: 50%;
     transform: translateX(-50%);
     .footerMenu{
