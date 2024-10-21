@@ -8,16 +8,16 @@ import Link from "next/link";
 
  function CreateAccount() {
   const userid = uuidv4();
-  const [addinfo, setAddInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
+  const [info, setInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
   const [passwordCheck, setPasswordCheck] = useState('');
   const userData = async ()=>{
     await addDoc(collection(db,"userInfo"), {
-      addinfo,
+      info,
     })
     location.href = '/';
   }
   const insertInfo = (edit)=>{
-    setAddInfo({...addinfo, ...edit, id:userid})
+    setInfo({...info, ...edit, id:userid})
   };
 
   //중복 버튼 클릭시 닉네임 중복확인
@@ -25,7 +25,7 @@ import Link from "next/link";
     e.preventDefault(); 
     const q = query(
       collection(db, 'userInfo'),
-      where('info.nickname', '==', addinfo.nickname)
+      where('info.nickname', '==', info.nickname)
     );
     const querySnapshot = await getDocs(q);
     if(!querySnapshot.empty) {
@@ -39,7 +39,7 @@ import Link from "next/link";
     e.preventDefault(); 
     const q = query(
       collection(db, 'userInfo'),
-      where('info.email', '==', addinfo.email)
+      where('info.email', '==', info.email)
     );
     const querySnapshot = await getDocs(q);
     if(!querySnapshot.empty) {
@@ -87,7 +87,7 @@ import Link from "next/link";
         className={loginStyles.userInput}
         onChange={(e)=> setPasswordCheck(e.target.value)
         }/> 
-        {addinfo.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
+        {info.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
          : <span className={loginStyles.passwordCheckok}>비밀번호가 일치합니다.</span>}
         <span className={loginStyles.inputText}>핸드폰번호</span>
         <input 
