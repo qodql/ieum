@@ -2,14 +2,14 @@
 .footer{
     border-top: 1px solid #999;
     padding: 20px 0;
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 108px;
     width: 390px;
     background-color: #fff;
     transition: .3s;
     z-index: -1;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%);
     .footerMenu{
         display: flex;
         align-items: center;
@@ -26,7 +26,6 @@
                     background: center;
                     background-repeat: no-repeat;                
                 }
-                .footerText{}
             }
           
         }

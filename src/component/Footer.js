@@ -18,7 +18,6 @@ const Footer = () => {
     }, [position]);
     const searchPush = () => {
         router.push('/SearchList?k=한강');
-        // location.href = '/SearchList?k=한강';
     }
 
     const handleScroll = useCallback(() => {

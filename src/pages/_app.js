@@ -12,7 +12,6 @@ export default function App({
     <SessionProvider session={session} store={store}>
        <Head>
         <link rel="icon" href="/icon/favicon.png" /> 
-        <link rel="manifest" href="/manifest.json"/>
       </Head>
       <Component {...pageProps} />
     </SessionProvider>
