@@ -56,13 +56,12 @@ span{
 }
 
 header{
+  width: 390px;
   position: fixed;
-  width: 100%;
   top: 0;
-  z-index: 5;
-  max-width: 390px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 3;
 }
 
 main{
@@ -71,7 +70,8 @@ main{
   transform: translateX(-50%);
   max-width: 390px;
   overflow: hidden;
-  z-index: -1;
+  z-index: 2;
+  margin-top: 98px;
 }
 
 

@@ -10,8 +10,6 @@ import LoadingScreen from '../component/loadingScreen';
 import MockupComponent from '@/component/MockupComponent';
 
 
-
-
 export default function Home() {
     const [cate, setCate] = useState('1');
     const [loading, setLoading] = useState(true); 
@@ -22,7 +20,6 @@ export default function Home() {
         setCate(num);
     };
 
-    // mainItems
     useEffect(() => {
         const cateNum = '';
         const coverSize = 'Big';
@@ -43,8 +40,8 @@ export default function Home() {
     return (
         <>
         <MockupComponent>
-            <Header />
-            <main>
+            <Header/>
+            <main >
                 <BannerBox mainItems={mainItems}/>                   
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
@@ -100,8 +97,8 @@ export default function Home() {
                     <CommentCard />
                 </div>
             </main>
-            <Footer />
-            </MockupComponent>
+            <Footer/>
+        </MockupComponent>
         </>
     );
 }

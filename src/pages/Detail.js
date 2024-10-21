@@ -10,6 +10,7 @@ import Modal from '../component/Modal';
 import { useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import MockupComponent from '@/component/MockupComponent';
 
 const Detail = () => {
     const { data: session } = useSession();
@@ -155,6 +156,7 @@ const Detail = () => {
 
     return (
         <>
+        <MockupComponent>
             <div className={detail.subWrap}>
                 <div className={detail.subTop}>
                     <a onClick={backBtn}><img src='./arrow-left.svg' /></a>
@@ -369,6 +371,7 @@ const Detail = () => {
             </div>
             <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />
             <Footer />
+            </MockupComponent>
         </>
     );
 };
