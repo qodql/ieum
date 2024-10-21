@@ -70,6 +70,7 @@ const Book = () => {
         <>
         <MockupComponent>
             <Header />
+            <main>
             <div className={list.book}>
                 <div className={list.bookBanner}>
                     <h2>
@@ -98,6 +99,7 @@ const Book = () => {
                     ))}
                 </div>
             </div>
+            </main>
             <Footer />
             </MockupComponent>
         </>

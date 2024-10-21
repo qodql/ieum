@@ -13,7 +13,9 @@ export default function App({
        <Head>
         <link rel="icon" href="/icon/favicon.png" /> 
       </Head>
+     
       <Component {...pageProps} />
+     
     </SessionProvider>
   )
 }

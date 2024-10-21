@@ -8,10 +8,10 @@ const MockupComponent = ({ children }) => {
           alt="Mockup"
           width={438}
           height={900}
-          style={{ border: 'none', backgroundColor:'transparent', position:'fixed', zIndex:'3',pointerEvents:'none'}}
+          style={{ border: 'none', backgroundColor:'transparent', position:'absolute', zIndex:'3',pointerEvents:'none'}}
           priority
         />
-      <div style={{ position: 'absolute', inset: '8% 0% 3%', overflow: 'auto', scrollbarWidth:'none', maxHeight:'741px'}}>
+      <div style={{ position: 'relative',  overflow: 'hidden',  height:'900px', width:'390px'}}>
         {children}
       </div> 
     </div>

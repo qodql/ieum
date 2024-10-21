@@ -57,10 +57,9 @@ span{
 
 header{
   width: 390px;
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0%;
   z-index: 3;
 }
 
@@ -68,12 +67,14 @@ main{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  max-width: 390px;
-  overflow: hidden;
+  width: 100%;
   z-index: 2;
-  margin-top: 98px;
+  margin-top: 178px;
+  height:700px;
+  overflow-y:auto; scrollbar-width:none;
+  overflow-x:hidden;
+  padding-bottom:80px;
 }
-
 
 @media (prefers-color-scheme: dark) {
   html {
