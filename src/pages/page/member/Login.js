@@ -3,10 +3,14 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import loginStyles from '@/styles/css/page/member.module.scss';
 import MockupComponent from '@/component/MockupComponent';
+import comment from '@/styles/css/page/comment.module.scss'
+import Footer from '@/component/Footer';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -24,20 +28,27 @@ const Login = () => {
       callbackUrl: '/'
     });
 
-
     if (result.error) {
-      console.error('Error signing in:', result.error);
       alert("로그인 중 오류가 발생했습니다.");
     } else {
       window.location.href = result.url; 
     }
   }
+
+  // 뒤로가기 
+  const backBtn = () => {
+    router.back(); 
+  }
+
   return (
     <MockupComponent>
-      <main>
+       <main style={{marginTop:'48px', height:'850px'}}>
+      <div className={comment.commentList_title}>
+          <span className={comment.commentList_back} onClick={backBtn}></span>
+          <h2>로그인</h2>
+        </div>
         <div className={loginStyles.loginBox}>
-          <div onClick={()=> location.href='/'} className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}/>
-          <p>로그인</p>
+          <div onClick={()=> location.href='/'} className={loginStyles.loginLogo} style={{ backgroundImage: `url(../../IEUMLOGO.svg)` }}/>
           <form onSubmit={handleLogin}>
             <input
               className={loginStyles.loginInput}
@@ -76,6 +87,7 @@ const Login = () => {
           </div>
         </div>
       </main>
+      <Footer/>
     </MockupComponent>
   );
 };

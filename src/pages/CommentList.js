@@ -23,6 +23,7 @@ const CommentList = () => {
   const backBtn = () => {
     router.back(); 
   }
+
   //코멘트 불러오기
   useEffect(() => {
     const fetchComments = async () => {
@@ -80,7 +81,6 @@ const CommentList = () => {
     } 
   };    
   
-
   return (
     <MockupComponent>
      <main style={{marginTop:'24px', height:'850px'}}>
