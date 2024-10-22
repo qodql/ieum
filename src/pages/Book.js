@@ -69,7 +69,7 @@ const Book = () => {
     return (
         <>
         <MockupComponent>
-            <Header />
+            <Header/>
             <main>
             <div className={list.book}>
                 <div className={list.bookBanner}>

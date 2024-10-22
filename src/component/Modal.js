@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from '@/styles/css/page/main.module.scss';
 
 const Modal = ({ isModalOpen, shareClose, copyLink }) => {
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.classList.add('no-scroll');
+            document.querySelector('main').classList.add('modal-open');
+        } else {
+            document.body.classList.remove('no-scroll');
+            document.querySelector('main').classList.remove('modal-open'); 
+        }
+    
+        return () => {
+            document.body.classList.remove('no-scroll');
+            document.querySelector('main').classList.remove('modal-open');
+        };
+    }, [isModalOpen]);
+    
+
     if (!isModalOpen) return null;
 
     return (
@@ -15,11 +31,6 @@ const Modal = ({ isModalOpen, shareClose, copyLink }) => {
                             트위터로 공유
                         </a>
                     </li>
-                    {/* <li>
-                        <a href={`https://talk.kakao.com/share?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
-                            카카오톡으로 공유
-                        </a>
-                    </li> */}
                 </ul>
                 <button onClick={shareClose}>닫기</button>
             </div>

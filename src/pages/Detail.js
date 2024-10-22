@@ -68,6 +68,7 @@ const Detail = () => {
 
         fetchRead();
     }, [session, readState, readWantState, item]);
+    
 
     // 뒤로가기
     const backBtn = () => {

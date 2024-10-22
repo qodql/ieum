@@ -6,6 +6,7 @@ import Header from '../component/Header';
 import Footer from '../component/Footer';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
+import MockupComponent from '@/component/MockupComponent';
 
 const SearchList = () => {
     const searchParams = useSearchParams();
@@ -43,31 +44,32 @@ const SearchList = () => {
     }
 
     return (
-        <>
+        <MockupComponent>
             <Header />
-            <div className={s.book}>
-                <div className={s.bookBanner}>
-                    <h2>검색 결과</h2>
-                </div>
-
-                <div className={s.bookList}>
-                {searchResults.item && searchResults.item.length > 0 ? (
-                    searchResults.item.map((item) => (
-                        <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} showBookmark={false} />
+                <main style={{marginTop:'80px', height:'800px'}}>
+                    <div className={s.book}>
+                        <div className={s.bookBanner}>
+                            <h2>검색 결과</h2>
                         </div>
-                    ))
-                ) : (
-                    (()=>{
-                        alert('검색결과가 없습니다.')
-                        router.back();
-                    })()
-                )
-                    }
-                </div>
-            </div>
+                        <div className={s.bookList}>
+                        {searchResults.item && searchResults.item.length > 0 ? (
+                            searchResults.item.map((item) => (
+                                <div key={item.itemId} onClick={() => detailMove(item)}>
+                                    <ContentList_card item={item} showBookmark={false} />
+                                </div>
+                            ))
+                        ) : (
+                            (()=>{
+                                alert('검색결과가 없습니다.')
+                                router.back();
+                            })()
+                        )
+                            }
+                        </div>
+                    </div>
+                </main>
             <Footer />
-        </>
+        </MockupComponent>
     )
 }
 
