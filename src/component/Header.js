@@ -4,11 +4,11 @@ import Search from './Search';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const Header = () => {
+const Header = (props) => {
     const [position, setPosition] = useState(0);
     const [visible, setVisible] = useState(true);
     const router = useRouter();
-
+    console.log(props)
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -21,7 +21,6 @@ const Header = () => {
         setVisible(moving < 100 ? true : false); 
         setPosition(moving);
     }, [position]);
-    
 
     return (
         <header>

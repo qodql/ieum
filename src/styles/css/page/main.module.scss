@@ -135,9 +135,6 @@
         align-items: center;
         gap: 16px;
         .c3Category_li:first-of-type{
-            >.c3Category_btn{
-                color: #111111;
-            }
         }
         .c3Category_li{
             .c3Category_btn{
@@ -148,4 +145,11 @@
             }
         }
     }
+}
+.active{
+    border: none;
+    color: #111111;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: transparent;
 }

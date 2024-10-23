@@ -14,12 +14,17 @@ import LoadingScreen from '../component/loadingScreen';
 export default function Home() {
     const [cate, setCate] = useState('1');
     const [loading, setLoading] = useState(true); 
+    const [active, setActive] = useState(true)
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
     const { mainItems, itemApi } = BookStore();
     const categoryNum = (num) => {
         setCate(num);
     };
+
+    const activeBtn = () => {
+        setActive(false)
+    }
 
     // mainItems
     useEffect(() => {
@@ -36,7 +41,6 @@ export default function Home() {
         }
         fetchData();
     }, []);
-
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
@@ -67,22 +71,22 @@ export default function Home() {
                     </div>
                     <ul className={s.c3Category}>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('1') }}>문학</button>
+                            <button className={`${cate === '1' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('1') }}>문학</button>
                         </li>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('170') }}>경제</button>
+                            <button className={`${cate === '170' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('170') }}>경제</button>
                         </li>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('2556') }}>추리</button>
+                            <button className={`${cate === '2556' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('2556') }}>추리</button>
                         </li>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('55889') }}>종교</button>
+                            <button className={`${cate === '55889' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('55889') }}>종교</button>
                         </li>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('8516') }}>에세이</button>
+                            <button className={`${cate === '8516' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('8516') }}>에세이</button>
                         </li>
                         <li className={s.c3Category_li}>
-                            <button className={s.c3Category_btn} onClick={() => { categoryNum('4132') }}>판타지</button>
+                            <button className={`${cate === '4132' ?  s.active : s.c3Category_btn}`} onClick={() => { categoryNum('4132') }}>판타지</button>
                         </li>
                     </ul>
                     <ContentListMain3 
