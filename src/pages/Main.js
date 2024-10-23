@@ -7,8 +7,7 @@ import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from '
 import { useEffect, useState } from 'react';
 import BookStore from '../stores/BookStore';
 import LoadingScreen from '../component/loadingScreen'; 
-
-
+import MockupComponent from '@/component/MockupComponent';
 
 
 export default function Home() {
@@ -22,9 +21,6 @@ export default function Home() {
         setCate(num);
     };
 
-    const activeBtn = () => {
-        setActive(false)
-    }
 
     // mainItems
     useEffect(() => {
@@ -45,8 +41,9 @@ export default function Home() {
 
     return (
         <>
-            <Header />
-            <main>
+        <MockupComponent>
+            <Header/>
+            <main >
                 <BannerBox mainItems={mainItems}/>                   
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
@@ -102,7 +99,8 @@ export default function Home() {
                     <CommentCard />
                 </div>
             </main>
-            <Footer />
+            <Footer/>
+        </MockupComponent>
         </>
     );
 }

@@ -5,6 +5,7 @@ import { ContentList_card } from '../component/contents/ContentCard'
 import list from '../styles/css/page/book.module.scss'
 import s from '../styles/css/page/main.module.scss'
 import BookStore from '../stores/BookStore';
+import MockupComponent from '@/component/MockupComponent';
 import { useRouter } from 'next/router';
 
 const Book = () => {
@@ -69,7 +70,9 @@ const Book = () => {
 
     return (
         <>
-            <Header categoryTab={categoryTab}/>
+        <MockupComponent>
+            <Header/>
+            <main>
             <div className={list.book}>
                 <div className={list.bookBanner}>
                     <h2>
@@ -98,7 +101,9 @@ const Book = () => {
                     ))}
                 </div>
             </div>
+            </main>
             <Footer />
+            </MockupComponent>
         </>
     );
 };
