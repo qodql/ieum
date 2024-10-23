@@ -195,28 +195,7 @@ const Detail = () => {
                                     <div className={detail.detailInfoLikes}>
                                     </div>
                                 </div>
-                                <div className={detail.detailInfoStar}>
-                                    <Rating
-                                        name="simple-controlled"
-                                        precision={0.5}
-                                        sx={{
-                                            '& .MuiRating-icon': {
-                                                fontSize: '48px',
-                                                borderRadius: '50%',
-                                                transition: 'color 0.3s ease',
-                                            },
-                                            '& .MuiRating-iconHover': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconFilled': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconEmpty': {
-                                                color: '#EAEAEA',
-                                            },
-                                        }}
-                                    />
-                                </div>
+                               
                                 <div className={detail.detailInfoIcon}>
                                     {session ? (
                                         <div onClick={() => {
@@ -269,10 +248,6 @@ const Detail = () => {
                                             <span>읽는중</span>
                                         </div>
                                     )}
-                                    <div>
-                                        <i><img src='./add.svg' /></i>
-                                        <span>더보기</span>
-                                    </div>
                                 </div>
                                 <div className={detail.detailInfo}>
                                     <p className={detail.detailInfoTit}>기본 정보</p>

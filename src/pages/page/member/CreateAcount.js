@@ -88,7 +88,7 @@ import MockupComponent from "@/component/MockupComponent";
             className={loginStyles.userInput}
             onChange={(e)=> setPasswordCheck(e.target.value)
             }/>
-            {addinfo.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
+            {info.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
             : <span className={loginStyles.passwordCheckok}>비밀번호가 일치합니다.</span>}
             <span className={loginStyles.inputText}>핸드폰번호</span>
             <input
@@ -136,4 +136,3 @@ import MockupComponent from "@/component/MockupComponent";
 }
 
 export default CreateAccount
-

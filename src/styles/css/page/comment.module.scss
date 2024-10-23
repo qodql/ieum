@@ -22,10 +22,17 @@
         font-size: 16px;
         font-weight: 600;
         color: #333;
-        margin-bottom: 12px;
     }
     .commetListWriteBox{
         form{
+            .detailInfoStar{
+                margin: 8px 0;
+                // border-bottom: 1px solid #eaeaea;
+                // border-top: 1px solid #eee;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
             button{
                 width: 100%;
                 height: 36px;
@@ -81,7 +88,7 @@
             .detailCommentNickName{
                 display: flex;
                 align-items: flex-end;
-                gap: 4px;
+                gap: 8px;
                 p{
                     font-size: 14px;
                     color: #333;
