@@ -65,6 +65,8 @@ const Book = () => {
             bestRank: v.bestRank || (i + 1), 
         }));
     };
+    // setCategoryTab(v)
+    
 
     return (
         <>
@@ -81,8 +83,8 @@ const Book = () => {
                     {categoryItems.map((v) => (
                         <button
                             key={v}
-                            className={categoryTab === v ? list.activeTab : list.tab}
-                            onClick={() => setCategoryTab(v)}
+                            className={router.query === v ? list.activeTab : list.tab}
+                            onClick={() => router.push({ pathname: '/Book', query: { category: v } })}
                         >
                             <img src={`./icon/${v}.png`} alt={v}
                                 className={list.tabImage} 

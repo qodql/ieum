@@ -49,6 +49,9 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+
+
+      
       if (account.provider === 'credentials') {
         // 자체 로그인 처리
         const q = query(
