@@ -62,9 +62,8 @@ export const authOptions = {
         }
         return true;
       } else if (account.provider === 'naver' || account.provider === 'google' || account.provider === 'github') {
-        // 외부 로그인 제공자 처리
         let email;
-  
+        
         if (account.provider === 'naver') {
           email = profile.response.email;
         } else if (account.provider === 'google' || account.provider === 'github') {
