@@ -7,7 +7,6 @@ import { db } from '@/lib/firebase';
 import { useSession } from 'next-auth/react';
 import MockupComponent from '@/component/MockupComponent';
 import { Rating } from '@mui/material';
-import detail from '@/styles/css/page/detail.module.scss';
 
 let today = new Date();
 let year = today.getFullYear();
@@ -21,6 +20,7 @@ const CommentList = () => {
   const { itemId, itemCover, itemTitle } = router.query;
   const [commentList, setCommentList] = useState([]);
   const [ratingValue, setRatingValue] = useState(0);
+  const [commentLength, setCommentLength] = useState(0);
 
   // 뒤로가기
   const backBtn = () => {
@@ -43,13 +43,21 @@ const CommentList = () => {
 
   // 코멘트 등록
   const commentBtn = async () => {
-
     if (!session) {
       alert('로그인이 필요한 서비스입니다.');
       return;
     }
   
     const comment = textareaRef.current.value;
+
+    if (comment.length > 100) {
+      alert('코멘트는 100자 이하로 작성해 주세요.');
+      return;
+    }else if (!comment.trim()) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+
     const q = query(
       collection(db, 'comment'),
       where('email', '==', session.user.email),
@@ -91,8 +99,14 @@ const CommentList = () => {
       });
       fetchComments();
     } else {
-      alert('이미 해당 작품에는 코멘트를 작성하셨습니다.');
+      alert('해당 작품에는 이미 코멘트를 작성하셨습니다.');
     }
+  };
+
+  //글자수 체크
+  const textareaChange = () => {
+    const comment = textareaRef.current.value;
+    setCommentLength(comment.length);
   };
 
   return (
@@ -138,9 +152,10 @@ const CommentList = () => {
                 />
               </div>
               <div className={s.commetListWriteCont}>
-                <textarea ref={textareaRef} placeholder="코멘트를 작성해 주세요" />
+                <textarea ref={textareaRef} placeholder="코멘트를 작성해 주세요" 
+                onChange={textareaChange}/>
                 <div className={s.commetListWriteLetters}>
-                  <span>0</span>
+                  <span>{commentLength}</span>
                   <span>/100</span>
                 </div>
               </div>
@@ -161,7 +176,21 @@ const CommentList = () => {
                   <span>{comment.Creationdate}</span>
                 </div>
                 <div className={s.detailCommentStar}>
-                  <Rating value={comment.rating} readOnly precision={0.5} />
+                  <Rating value={comment.rating} readOnly 
+                  precision={0.5} 
+                  sx={{
+                    '& .MuiRating-icon': {
+                      fontSize: '14px',
+                      borderRadius: '50%',
+                    },
+                    '& .MuiRating-iconFilled': {
+                      color: '#FFC700'
+                    },
+                    '& .MuiRating-iconEmpty': {
+                      color: '#FFC700'
+                    }
+                  }}
+                  />
                 </div>
                 <p className={s.detailCommentCont}>{comment.comment}</p>
               </div>

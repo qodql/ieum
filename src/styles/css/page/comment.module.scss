@@ -72,6 +72,12 @@
 
 .commentCard_list{
     margin: 0 16px 60px;
+    &.commentCard_list2{
+        margin: 0;
+        .detailComment{
+            border-top: none;
+        }
+    }
     h5{
         font-size: 16px;
         font-weight: 600;

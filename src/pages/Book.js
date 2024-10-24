@@ -56,7 +56,7 @@ const Book = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { itemId: item.itemId },
+            query: { itemId: item.itemId, itemTitle: item.title},
         });
     };
 
@@ -69,7 +69,6 @@ const Book = () => {
     };
     // setCategoryTab(v)
     
-
     return (
         <>
         <MockupComponent>
