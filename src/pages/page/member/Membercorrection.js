@@ -5,6 +5,7 @@ import { db } from '@/lib/firebase';
 import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import MockupComponent from '@/component/MockupComponent';
+import Footer from '@/component/Footer';
 
 
 const Membercorrection = () => {
@@ -70,11 +71,10 @@ const Membercorrection = () => {
     <MockupComponent>
       <main style={{marginTop:'24px', height:'850px'}}>
         <div className={loginStyles.memberCorrection}>
-          <div
-            className={loginStyles.ieumLogo}
-            style={{ backgroundImage: `url(../../IEUMLOGO.png)` }}
-          />
-          <h2>회원수정</h2>
+          <div className={loginStyles.commentList_title}>
+            <span className={loginStyles.commentList_back} onClick={backBtn}></span>
+            <h2>회원수정</h2>
+          </div>
           <form onSubmit={correctionChange}>
             <span className={loginStyles.labelText}>이메일</span>
             <input
@@ -124,6 +124,7 @@ const Membercorrection = () => {
           </form>
         </div>
       </main>
+      <Footer/>
     </MockupComponent>
   );
 };

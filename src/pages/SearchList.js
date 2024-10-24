@@ -30,7 +30,7 @@ const SearchList = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { itemId: item.itemId },
+            query: { searchItemId: item.itemId },
         });
     };
 
@@ -42,7 +42,7 @@ const SearchList = () => {
             </div>
         );
     }
-
+    console.log(searchResults)
     return (
         <MockupComponent>
             <Header />

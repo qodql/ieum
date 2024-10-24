@@ -15,8 +15,8 @@ import MockupComponent from '@/component/MockupComponent';
 const Detail = () => {
     const { data: session } = useSession();
     const router = useRouter();
-    const { itemId, mainCateNum } = router.query;
-    const { category, itemApi } = BookStore();
+    const { searchItemId, itemId, mainCateNum } = router.query;
+    const { category, itemApi, searchApi } = BookStore();
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [comment, setComment] = useState('');
@@ -24,6 +24,9 @@ const Detail = () => {
     const [commentTitle, setCommenttitle] = useState('');
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
+
+
+
 
     // 데이터 불러오기
     useEffect(() => {
@@ -34,15 +37,17 @@ const Detail = () => {
         }
         fetchData();
     }, []);
-
     useEffect(() => {
         if (itemId && category) {
             const foundItem = Object.values(category).flatMap(category => category.item)
                 .find(i => i.itemId === Number(itemId));
             setItem(foundItem);
+        }else{
+            // const foundItem2 = Object.values
         }
-    }, [itemId, category]);
+    }, [itemId, item]);
 
+    console.log(mainCateNum)
     // 유저가 이미 북마크를 추가했는지 확인하는 함수
     useEffect(() => {
         const fetchRead = async () => {
@@ -100,7 +105,16 @@ const Detail = () => {
         );
     }
 
+    //신간 아이콘 내보내기
+    const pubDate = new Date(item.pubDate)
+    
+    const date = new Date()
+    const futureDate = new Date()
+    date.setDate(date.getDate() - 21)
+    futureDate.setDate(futureDate.getDate() + 14)
     // 코멘트리스트로 보내는 정보
+
+
     const commentMove = (item) => {
         router.push({
             pathname: '/CommentList',
@@ -155,6 +169,9 @@ const Detail = () => {
         }
     };
 
+    console.log(futureDate >= pubDate && pubDate >= date);
+    console.log(futureDate, pubDate , date);
+    
     return (
         <MockupComponent>
             <main style={{marginTop:'20px', height:'850px'}}>
@@ -173,13 +190,26 @@ const Detail = () => {
                                     <img src={item.cover} alt={item.title} />
                                 </div>
                                 <div className={detail.detailThumbInfo}>
-                                    <div className={detail.detailThumbIcon}>
-                                        <span>베스트</span>
-                                        <span>편집자추천</span>
-                                    </div>
                                     <h5 className={detail.detailThumbTit}>{item.title}</h5>
                                     <span className={detail.detailThumbWriter}>{item.author}</span>
                                     <span className={detail.detailThumbType}>{item.categoryName}</span>
+                                    <div className={detail.detailThumbIcon}>
+                                        {
+                                            item.bestRank ? 
+                                            <p>베스트<br/>{item.bestRank}&nbsp;위</p>
+                                            : <></>
+                                        }
+                                        {
+                                            item.customerReviewRank > 0 ? 
+                                            <p>블로거<br/>{item.customerReviewRank}&nbsp;위</p>
+                                            : <></>
+                                        }
+                                        {
+                                            futureDate >= pubDate && pubDate >= date ? 
+                                            <p>신&nbsp;간</p>
+                                            : <></>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                             <div className={detail.detailInfoArea}>
@@ -287,8 +317,8 @@ const Detail = () => {
                                         <span>{item.pubDate}</span>
                                     </div>
                                     <div>
-                                        <span>페이지</span>
-                                        <span>400p</span>
+                                        <span>가격(정가)</span>
+                                        <span>{item.priceStandard}원</span>
                                     </div>
                                     <div>
                                         <span>출판사</span>

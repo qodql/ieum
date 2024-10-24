@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <MockupComponent>
        <main style={{marginTop:'48px', height:'850px'}}>
-      <div className={comment.commentList_title}>
+        <div className={comment.commentList_title}>
           <span className={comment.commentList_back} onClick={backBtn}></span>
           <h2>로그인</h2>
         </div>

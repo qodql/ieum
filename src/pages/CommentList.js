@@ -80,7 +80,7 @@ const CommentList = () => {
         alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
     } 
   };    
-  
+
   return (
     <MockupComponent>
      <main style={{marginTop:'24px', height:'850px'}}>

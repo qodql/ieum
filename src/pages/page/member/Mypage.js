@@ -7,6 +7,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { useRouter } from 'next/router';
 import Footer from '../../../component/Footer';
+import LoadingScreen from '../../../component/loadingScreen'; 
 import MockupComponent from '@/component/MockupComponent';
 
 const Mypage = () => {
@@ -14,6 +15,7 @@ const Mypage = () => {
   const [readList, setReadList] = useState({});
   const [readWantList, setReadWantList] = useState({});
   const [commentList, setCommentList] = useState({});
+  const [loadingfadeOut, setLoadingfadeOut] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Mypage = () => {
       router.back(); 
   }
 
-
+  // if(!readList || !readWantList || !commentList){return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;}
   return (
     <MockupComponent>
       <main style={{marginTop:'24px', height:'850px'}}>  
@@ -121,7 +123,7 @@ const Mypage = () => {
                 <span className={loginStyles.contentText}>이홍영님께서 설정한 읽고 싶은 책 리스트를 모아봤어요</span>
                 <div className={loginStyles.mypageCardBox}>
                   {
-                    readList.length > 0 ? readWantList.map((item, idx)=>
+                    readWantList.length > 0 ? readWantList.map((item, idx)=>
                       <MypageCard2 item={item} key={idx}/>
                     )
                     : ""

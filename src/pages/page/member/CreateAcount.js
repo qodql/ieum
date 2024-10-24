@@ -5,12 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from "next/link";
 import MockupComponent from "@/component/MockupComponent";
+import { useRouter } from 'next/router';
+import Footer from "@/component/Footer";
 
 
  function CreateAccount() {
   const userid = uuidv4();
   const [info, setInfo] = useState({name:'',email:'', password:'',phonenum:'',nickname:'',id:''});
   const [passwordCheck, setPasswordCheck] = useState('');
+  const router = useRouter();
   const userData = async ()=>{
     await addDoc(collection(db,"userInfo"), {
       info,
@@ -49,16 +52,21 @@ import MockupComponent from "@/component/MockupComponent";
     }
     else{ alert('사용가능한 닉네임입니다.');}
   }
-  
+    // 뒤로가기 
+    const backBtn = () => {
+      router.back(); 
+    }
+
+
   return (
     <MockupComponent>
       <main style={{marginTop:'20px', height:'850px'}}>
         {/* 회원가입 */}
         <div className={loginStyles.CreateAccountBox}>
-          <Link href='/page/member/Login'
-          className={loginStyles.ieumLogo}
-          style={{backgroundImage:`url(../../IEUMLOGO.png)`}}/>
-          <p className={loginStyles.createAccount}>회원가입</p>
+          <div className={loginStyles.commentList_title}>
+            <span className={loginStyles.commentList_back} onClick={backBtn}></span>
+            <h2>회원가입</h2>
+          </div>
           <form onSubmit={(e) => e.preventDefault()}>
             <span className={loginStyles.inputText}>이름</span>
             <input
@@ -88,7 +96,7 @@ import MockupComponent from "@/component/MockupComponent";
             className={loginStyles.userInput}
             onChange={(e)=> setPasswordCheck(e.target.value)
             }/>
-            {addinfo.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
+            {info.password !== passwordCheck ? <span className={loginStyles.passwordCheck}>비밀번호가 일치하지 않습니다.</span>
             : <span className={loginStyles.passwordCheckok}>비밀번호가 일치합니다.</span>}
             <span className={loginStyles.inputText}>핸드폰번호</span>
             <input
@@ -131,6 +139,7 @@ import MockupComponent from "@/component/MockupComponent";
           </form>
         </div>
       </main> 
+      <Footer/>
     </MockupComponent>
   )
 }
