@@ -33,10 +33,10 @@ import Footer from "@/component/Footer";
     );
     const querySnapshot = await getDocs(q);
     if(!querySnapshot.empty) {
-     alert('이미 사용중인 닉네임입니다.');
+     alert('이미 사용 중인 닉네임입니다.');
       return;
     }
-    else{ alert('사용가능한 닉네임입니다.');}
+    else{ alert('사용 가능한 닉네임입니다.');}
   }
 
   const emailCheck = async (e) => {
@@ -47,10 +47,10 @@ import Footer from "@/component/Footer";
     );
     const querySnapshot = await getDocs(q);
     if(!querySnapshot.empty) {
-     alert('이미 사용중인 닉네임입니다.');
+     alert('이미 사용 중인 아이디입니다.');
       return;
     }
-    else{ alert('사용가능한 닉네임입니다.');}
+    else{ alert('사용 가능한 아이디입니다.');}
   }
     // 뒤로가기 
     const backBtn = () => {
@@ -145,4 +145,3 @@ import Footer from "@/component/Footer";
 }
 
 export default CreateAccount
-

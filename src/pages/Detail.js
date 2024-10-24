@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import s from '@/styles/css/page/main.module.scss';
+import commentS from '@/styles/css/page/comment.module.scss';
 import detail from '@/styles/css/page/detail.module.scss';
-import { ButtonAll } from '../component/Button';
 import Footer from '../component/Footer';
 import BookStore from '../stores/BookStore';
 import { Rating } from '@mui/material';
@@ -15,13 +15,12 @@ import MockupComponent from '@/component/MockupComponent';
 const Detail = () => {
     const { data: session } = useSession();
     const router = useRouter();
-    const { searchItemId, itemId, mainCateNum } = router.query;
-    const { category, itemApi, searchApi } = BookStore();
+    const { itemId, mainCateNum, itemTitle} = router.query;
+    const { category, itemApi } = BookStore();
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [comment, setComment] = useState('');
-    const [modalBtn, setModalBtn] = useState(false);
-    const [commentTitle, setCommenttitle] = useState('');
+    const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
 
@@ -73,8 +72,23 @@ const Detail = () => {
 
         fetchRead();
     }, [session, readState, readWantState, item]);
-    
 
+    // 코멘트 불러오기
+    const fetchComments = async () => {
+        const q = query(collection(db, 'comment'), where('title', '==', itemTitle));
+        const querySnapshot = await getDocs(q);
+        console.log(querySnapshot.docs);
+        const comments = querySnapshot.docs.map((doc) => doc.data());
+        setCommentList(comments);
+    };
+
+    useEffect(() => {
+        if (itemTitle) {
+            fetchComments();
+        }
+    }, [itemTitle]);
+    
+    
     // 뒤로가기
     const backBtn = () => {
         router.back();
@@ -99,9 +113,11 @@ const Detail = () => {
     // 로딩
     if (!item) {
         return (
-            <div className={s.loading}>
-                <img src="/icon/loading.gif" alt="Loading..." />
-            </div>
+            <MockupComponent>
+                <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
         );
     }
 
@@ -225,28 +241,7 @@ const Detail = () => {
                                     <div className={detail.detailInfoLikes}>
                                     </div>
                                 </div>
-                                <div className={detail.detailInfoStar}>
-                                    <Rating
-                                        name="simple-controlled"
-                                        precision={0.5}
-                                        sx={{
-                                            '& .MuiRating-icon': {
-                                                fontSize: '48px',
-                                                borderRadius: '50%',
-                                                transition: 'color 0.3s ease',
-                                            },
-                                            '& .MuiRating-iconHover': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconFilled': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconEmpty': {
-                                                color: '#EAEAEA',
-                                            },
-                                        }}
-                                    />
-                                </div>
+                               
                                 <div className={detail.detailInfoIcon}>
                                     {session ? (
                                         <div onClick={() => {
@@ -299,10 +294,6 @@ const Detail = () => {
                                             <span>읽는중</span>
                                         </div>
                                     )}
-                                    <div>
-                                        <i><img src='./add.svg' /></i>
-                                        <span>더보기</span>
-                                    </div>
                                 </div>
                                 <div className={detail.detailInfo}>
                                     <p className={detail.detailInfoTit}>기본 정보</p>
@@ -336,64 +327,44 @@ const Detail = () => {
                                 <div className={detail.detailCommentWrap}>
                                     <div className={`${s.contentTitle} ${detail.contentTitle}`}>
                                         <h2>코멘트</h2>
-                                        <ButtonAll />
+                                        <a onClick={() => commentMove(item)}>
+                                            <button>전체보기</button>
+                                        </a>
                                     </div>
-                                    <div className={detail.detailComment}>
-                                        <div><img src='./profile.png' /></div>
-                                        <div className={detail.detailCommentInfo}>
-                                            <div className={detail.detailCommentNickName}>
-                                                <p>나야들기름</p>
-                                                <span>2024-10-11</span>
-                                            </div>
-                                            <div className={detail.detailCommentStar}>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                            </div>
-                                            <p className={detail.detailCommentCont}>
-                                                작가님의 책은 지금 곧바로 읽고 봐야하는 필독서!
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className={detail.detailComment}>
-                                        <div><img src='./profile.png' /></div>
-                                        <div className={detail.detailCommentInfo}>
-                                            <div className={detail.detailCommentNickName}>
-                                                <p>고죠백종원</p>
-                                                <span>2024-10-07</span>
-                                            </div>
-                                            <div className={detail.detailCommentStar}>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                            </div>
-                                            <p className={detail.detailCommentCont}>
-                                                이야~ 책으로 어떻게 이런 맛을 내죠?
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className={detail.detailComment}>
-                                        <div><img src='./profile.png' /></div>
-                                        <div className={detail.detailCommentInfo}>
-                                            <div className={detail.detailCommentNickName}>
-                                                <p>나주맛피자</p>
-                                                <span>2024-09-30</span>
-                                            </div>
-                                            <div className={detail.detailCommentStar}>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                                <img src='./star.svg'></img>
-                                            </div>
-                                            <p className={detail.detailCommentCont}>
-                                                아쉬워요. 무엇을 말하려고 하는지는 알겠으나 별로 와닿지는 않아요.
-                                            </p>
-                                        </div>
+                                    <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
+                                        {
+                                            commentList.map((comment, index) => (
+                                                <div key={index} className={commentS.detailComment}>
+                                                    <div>
+                                                        <img src={comment.userImage || './profile.png'} alt="Profile" />
+                                                    </div>
+                                                    <div className={commentS.detailCommentInfo}>
+                                                        <div className={commentS.detailCommentNickName}>
+                                                        <p>{comment.nickname}</p>
+                                                        <span>{comment.Creationdate}</span>
+                                                        </div>
+                                                        <div className={commentS.detailCommentStar}>
+                                                        <Rating value={comment.rating} readOnly 
+                                                        precision={0.5} 
+                                                        sx={{
+                                                            '& .MuiRating-icon': {
+                                                              fontSize: '14px',
+                                                              borderRadius: '50%',
+                                                            },
+                                                            '& .MuiRating-iconFilled': {
+                                                              color: '#FFC700'
+                                                            },
+                                                            '& .MuiRating-iconEmpty': {
+                                                              color: '#FFC700'
+                                                            }
+                                                        }}
+                                                        />
+                                                        </div>
+                                                        <p className={commentS.detailCommentCont}>{comment.comment}</p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>

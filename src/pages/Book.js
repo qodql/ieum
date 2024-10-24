@@ -44,9 +44,11 @@ const Book = () => {
     // 로딩
     if (loading) {
         return (
-            <div className={s.loading}>
-                <img src="/icon/loading.gif" alt="Loading..." />
-            </div>
+            <MockupComponent>
+                <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
         );
     }
 
@@ -54,7 +56,7 @@ const Book = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { itemId: item.itemId },
+            query: { itemId: item.itemId, itemTitle: item.title},
         });
     };
 
@@ -67,7 +69,6 @@ const Book = () => {
     };
     // setCategoryTab(v)
     
-
     return (
         <>
         <MockupComponent>
