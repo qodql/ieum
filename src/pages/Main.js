@@ -16,11 +16,10 @@ export default function Home() {
     const [active, setActive] = useState(true)
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
-    const { mainItems, itemApi, } = BookStore();
+    const { mainItems, itemApi } = BookStore();
     const categoryNum = (num) => {
         setCate(num);
     };
-
 
     // mainItems
     useEffect(() => {
@@ -37,6 +36,7 @@ export default function Home() {
         }
         fetchData();
     }, []);
+
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (

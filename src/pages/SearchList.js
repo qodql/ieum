@@ -16,7 +16,6 @@ const SearchList = () => {
     const searchKeyword = searchParams.get('k')
 
     
-
     useEffect(() => {
         async function fetchData(){
                 await searchApi(searchParams.get('k'))
@@ -30,7 +29,7 @@ const SearchList = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { searchItemId: item.itemId },
+            query: { searchItemId: item.itemId, itemTitle: item.title },
         });
     };
 
@@ -44,6 +43,7 @@ const SearchList = () => {
             </MockupComponent>
         );
     }
+
     return (
         <MockupComponent>
             <Header />

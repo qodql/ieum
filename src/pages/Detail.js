@@ -23,9 +23,6 @@ const Detail = () => {
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
 
-
-
-
     // 데이터 불러오기
     useEffect(() => {
         const cateNum = mainCateNum;
@@ -35,6 +32,7 @@ const Detail = () => {
         }
         fetchData();
     }, []);
+
     useEffect(() => {
         if (itemId && category) {
             const foundItem = Object.values(category).flatMap(category => category.item)
@@ -76,17 +74,15 @@ const Detail = () => {
     const fetchComments = async () => {
         const q = query(collection(db, 'comment'), where('title', '==', itemTitle));
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot.docs);
         const comments = querySnapshot.docs.map((doc) => doc.data());
         setCommentList(comments);
     };
 
-    // useEffect(() => {
-    //     if (itemTitle) {
-    //         fetchComments();
-    //     }
-    // }, [itemTitle]);
-    
+    useEffect(() => {
+        if (itemTitle) {
+            fetchComments();
+        }
+    }, [itemTitle]);
     
     // 뒤로가기
     const backBtn = () => {
@@ -122,14 +118,12 @@ const Detail = () => {
 
     //신간 아이콘 내보내기
     const pubDate = new Date(item.pubDate)
-    
     const date = new Date()
     const futureDate = new Date()
     date.setDate(date.getDate() - 21)
     futureDate.setDate(futureDate.getDate() + 14)
+    
     // 코멘트리스트로 보내는 정보
-
-
     const commentMove = (item) => {
         router.push({
             pathname: '/CommentList',
@@ -232,7 +226,7 @@ const Detail = () => {
                                             <i><img src='./star.svg' alt="star" /></i>
                                             <span>4.0</span>
                                         </p>
-                                        <span>(12명)</span>
+                                        <span>({commentList.length})</span>
                                     </div>
                                     <div className={detail.detailInfoLikes}>
                                     </div>
