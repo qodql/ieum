@@ -19,7 +19,6 @@ const Detail = () => {
     const { category, itemApi } = BookStore();
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [comment, setComment] = useState('');
     const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
@@ -44,9 +43,9 @@ const Detail = () => {
         }else{
             // const foundItem2 = Object.values
         }
-    }, [itemId, item]);
+    }, [itemId, category]);
 
-    console.log(mainCateNum)
+
     // 유저가 이미 북마크를 추가했는지 확인하는 함수
     useEffect(() => {
         const fetchRead = async () => {
@@ -82,11 +81,11 @@ const Detail = () => {
         setCommentList(comments);
     };
 
-    useEffect(() => {
-        if (itemTitle) {
-            fetchComments();
-        }
-    }, [itemTitle]);
+    // useEffect(() => {
+    //     if (itemTitle) {
+    //         fetchComments();
+    //     }
+    // }, [itemTitle]);
     
     
     // 뒤로가기
@@ -184,9 +183,6 @@ const Detail = () => {
             alert("이미 등록된 책입니다.");
         }
     };
-
-    console.log(futureDate >= pubDate && pubDate >= date);
-    console.log(futureDate, pubDate , date);
     
     return (
         <MockupComponent>

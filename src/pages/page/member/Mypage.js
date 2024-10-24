@@ -126,7 +126,7 @@ const Mypage = () => {
                 <span className={loginStyles.contentText}>{session ? session.user.name : ""}님께서 설정한 읽고 싶은 책 리스트를 모아봤어요</span>
                 <div className={loginStyles.mypageCardBox}>
                   {
-                    readList.length > 0 ? readWantList.slice(0,3).map((item, idx)=>
+                    readWantList.length > 0 ? readWantList.slice(0,3).map((item, idx)=>
                       <MypageCard2 item={item} key={idx}/>
                     )
                     : ""
@@ -137,7 +137,7 @@ const Mypage = () => {
               <li>
                 <div className={loginStyles.contentList}>
                   <span>내가 쓴 코멘트</span>
-                  <div onClick={handleMoreClick}>더보기</div>
+                  <a onClick={handleMoreClick}>더보기</a>
                 </div>
                 <span className={loginStyles.contentText}>{session ? session.user.name : ""}님께서 작성한 코멘트를 볼 수 있어요</span>
                 {
