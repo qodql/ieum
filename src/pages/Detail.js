@@ -22,6 +22,8 @@ const Detail = () => {
     const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
+    const [averageRating, setAverageRating] = useState(0);
+
 
     // 데이터 불러오기
     useEffect(() => {
@@ -76,6 +78,16 @@ const Detail = () => {
         const querySnapshot = await getDocs(q);
         const comments = querySnapshot.docs.map((doc) => doc.data());
         setCommentList(comments);
+
+        //별점 평균 값
+        const ratings = comments
+        .map(comment => comment.rating)
+        .filter(rating => typeof rating === 'number' && !isNaN(rating));
+
+        const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
+        const avgRating = ratings.length > 0 ? (totalRating / ratings.length).toFixed(1) : 0;
+
+        setAverageRating(avgRating);
     };
 
     useEffect(() => {
@@ -224,9 +236,9 @@ const Detail = () => {
                                         <span>평균</span>
                                         <p>
                                             <i><img src='./star.svg' alt="star" /></i>
-                                            <span>4.0</span>
+                                            <span>{averageRating}</span>
                                         </p>
-                                        <span>({commentList.length})</span>
+                                        <span>({commentList.length}명)</span>
                                     </div>
                                     <div className={detail.detailInfoLikes}>
                                     </div>
