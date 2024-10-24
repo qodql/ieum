@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import loginStyles from '@/styles/css/page/member.module.scss';
 import Link from 'next/link';
 import { MypageCard, MypageCard2, MypageComment } from '@/component/contents/ContentCard';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, getDocs, query, where } from 'firebase/firestore';
 import { signOut, useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
 import { useRouter } from 'next/router';
@@ -12,10 +12,10 @@ import MockupComponent from '@/component/MockupComponent';
 
 const Mypage = () => {
   const {data : session} = useSession({});
-  const [readList, setReadList] = useState({});
-  const [readWantList, setReadWantList] = useState({});
-  const [commentList, setCommentList] = useState({});
-  const [loadingfadeOut, setLoadingfadeOut] = useState(false);
+  const [readList, setReadList] = useState([]);
+  const [readWantList, setReadWantList] = useState([]);
+  const [commentList, setCommentList] = useState([]);
+  const [commentPage, setCommentPage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -65,6 +65,9 @@ const Mypage = () => {
       }
   }, [session]);
 
+  const handleMoreClick = () => {
+    setCommentPage(!commentPage);
+  };
     // 뒤로가기 
     const backBtn = () => {
       router.back(); 
@@ -77,25 +80,25 @@ const Mypage = () => {
       {
         <div className={loginStyles.mypageBox}>
           <div className={loginStyles.profileBox}>
-            <div 
-            onClick={backBtn}
-            className={loginStyles.backBtn}  
-            style={{backgroundImage:`url(/icon_login_backbtn.svg)`}}
-            />
+            <div className={loginStyles.btnBox}>
+              <div 
+              onClick={backBtn}
+              className={loginStyles.backBtn}  
+              style={{backgroundImage:`url(/icon_login_backbtn.svg)`}}
+              />
+              {
+            <span onClick={async () => {
+              await signOut({ redirect: false });
+              window.location.href = '/';
+            }}>로그아웃</span>
+            }
+            </div>
             <div className={loginStyles.profile}>
               <Link href='/page/member/Membercorrection'
               className={loginStyles.profileImg}
               style={{backgroundImage:`url(/img_member_profile.svg)`}}/>
-              <p>{session ? session.user.name : ""
-              }</p>
+              <p>{session ? session.user.name : ""}</p>
             <span>{session == undefined || session == null ?'': session.user.email}</span>
-            {
-            <span onClick={async () => {
-              await signOut({ redirect: false });
-              window.location.href = '/'; // 원하는 URL로 변경
-            }}>로그아웃</span>
-
-            }
             </div>
           </div>
             <ul className={loginStyles.contentBox}>
@@ -104,10 +107,10 @@ const Mypage = () => {
                   <span>읽는중</span>
                   <Link href='/'>더보기</Link>
                 </div>
-                <span className={loginStyles.contentText}>이홍영님께서 설정한 읽고 있는 책들의 리스트에요</span>
+                <span className={loginStyles.contentText}>{session ? session.user.name : ""}님께서 설정한 읽고 있는 책들의 리스트에요</span>
                 <div className={loginStyles.mypageCardBox}>
                   {
-                  readList.length > 0 ?  readList.map((item, idx)=>
+                  readList.length > 0 ?  readList.slice(0,3).map((item, idx)=>
                       <MypageCard key={idx} item={item}/>
                     )
                     : ""
@@ -120,10 +123,10 @@ const Mypage = () => {
                   <span>읽고싶어요</span>
                   <Link href='/'>더보기</Link>
                 </div>
-                <span className={loginStyles.contentText}>이홍영님께서 설정한 읽고 싶은 책 리스트를 모아봤어요</span>
+                <span className={loginStyles.contentText}>{session ? session.user.name : ""}님께서 설정한 읽고 싶은 책 리스트를 모아봤어요</span>
                 <div className={loginStyles.mypageCardBox}>
                   {
-                    readWantList.length > 0 ? readWantList.map((item, idx)=>
+                    readList.length > 0 ? readWantList.slice(0,3).map((item, idx)=>
                       <MypageCard2 item={item} key={idx}/>
                     )
                     : ""
@@ -134,21 +137,49 @@ const Mypage = () => {
               <li>
                 <div className={loginStyles.contentList}>
                   <span>내가 쓴 코멘트</span>
-                  <Link href='/'>더보기</Link>
+                  <div onClick={handleMoreClick}>더보기</div>
                 </div>
-                <span className={loginStyles.contentText}>이홍영님께서 작성한 코멘트를 볼 수 있어요</span>
+                <span className={loginStyles.contentText}>{session ? session.user.name : ""}님께서 작성한 코멘트를 볼 수 있어요</span>
                 {
-                    commentList.length > 0 ? commentList.map((item, idx)=>
+                    commentList.length > 0 ? commentList.slice(0,3).map((item, idx)=>
                       <MypageComment item={item} key={idx}/>
                     )
                     : ""
-                  }
+                }
               </li>
             </ul>
-        </div>
+        {
+          commentPage === true ? 
+          <>
+          <div className={loginStyles.morePage}>
+            <div className={loginStyles.headerBox}>
+              <div 
+              onClick={handleMoreClick}
+              className={loginStyles.moreBackBtn}  
+              style={{backgroundImage:`url(/icon_login_backbtn.svg)`}}
+              />
+              <h2>코멘트</h2>
+            </div>  
+            <span className={loginStyles.myCommentstext}>내가 작성한 코멘트({commentList.length})</span>
+          <ul>
+            <li className={loginStyles.myComentList}>
+            {
+              commentList.length > 0 ? commentList.map((item, idx)=>
+                <MypageComment item={item} key={idx}/>
+              ) : ""
+            }
+            </li>
+          </ul>
+          </div>
+        </>
+        : null
+        }
+       </div>
+      
       }
       </main> 
       <Footer/>
+        
     </MockupComponent>
 
   )
