@@ -43,6 +43,12 @@ const CommentList = () => {
 
   // 코멘트 등록
   const commentBtn = async () => {
+
+    if (!session) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+  
     const comment = textareaRef.current.value;
     const q = query(
       collection(db, 'comment'),
@@ -155,7 +161,7 @@ const CommentList = () => {
                   <span>{comment.Creationdate}</span>
                 </div>
                 <div className={s.detailCommentStar}>
-                  <Rating value={comment.rating} readOnly precision={0.5} /> {/* 저장된 별점 표시 */}
+                  <Rating value={comment.rating} readOnly precision={0.5} />
                 </div>
                 <p className={s.detailCommentCont}>{comment.comment}</p>
               </div>

@@ -3,17 +3,25 @@ import s from '@/styles/css/page/main.module.scss';
 
 const Modal = ({ isModalOpen, shareClose, copyLink }) => {
     useEffect(() => {
+        const mainElement = document.querySelector('main');
+    
         if (isModalOpen) {
             document.body.classList.add('no-scroll');
-            document.querySelector('main').classList.add('modal-open');
-        } else {
+            if (mainElement) {
+                mainElement.classList.add('modal-open');
+            }
+        }else {
             document.body.classList.remove('no-scroll');
-            document.querySelector('main').classList.remove('modal-open'); 
+            if (mainElement) {
+                mainElement.classList.remove('modal-open');
+            }
         }
     
         return () => {
             document.body.classList.remove('no-scroll');
-            document.querySelector('main').classList.remove('modal-open');
+            if (mainElement) {
+                mainElement.classList.remove('modal-open');
+            }
         };
     }, [isModalOpen]);
     

@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import s from '@/styles/css/page/main.module.scss';
 import detail from '@/styles/css/page/detail.module.scss';
-import { ButtonAll } from '../component/Button';
 import Footer from '../component/Footer';
 import BookStore from '../stores/BookStore';
 import { Rating } from '@mui/material';
@@ -94,9 +93,11 @@ const Detail = () => {
     // 로딩
     if (!item) {
         return (
-            <div className={s.loading}>
-                <img src="/icon/loading.gif" alt="Loading..." />
-            </div>
+            <MockupComponent>
+                <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
         );
     }
 
@@ -281,7 +282,9 @@ const Detail = () => {
                                 <div className={detail.detailCommentWrap}>
                                     <div className={`${s.contentTitle} ${detail.contentTitle}`}>
                                         <h2>코멘트</h2>
-                                        <ButtonAll />
+                                        <a onClick={() => commentMove(item)}>
+                                            <button>전체보기</button>
+                                        </a>
                                     </div>
                                     <div className={detail.detailComment}>
                                         <div><img src='./profile.png' /></div>
