@@ -30,7 +30,19 @@ const SearchList = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { searchItemId: item.itemId },
+            query: { 
+                searchItemId: item.itemId,
+                searchItemTitle: item.title,
+                searchItemCover: item.cover,
+                searchItemLogo: item.logo,
+                searchItemAuthor: item.author,
+                searchItemCategory: item.categoryName,
+                searchItemDesc: item.description,
+                searchItemPubDate: item.pubDate,
+                searchItemPrice: item.priceStandard,
+                searchItemPublisher: item.publisher,
+                searchItemLink: item.link,
+            },
         });
     };
 
@@ -44,6 +56,8 @@ const SearchList = () => {
             </MockupComponent>
         );
     }
+    console.log(searchResults);
+
     return (
         <MockupComponent>
             <Header />
@@ -54,7 +68,7 @@ const SearchList = () => {
                         </div>
                         <div className={s.bookList}>
                         {searchResults.item && searchResults.item.length > 0 ? (
-                            searchResults.item.map((item) => (
+                            searchResults.item.map((item, idx) => (
                                 <div key={item.itemId} onClick={() => detailMove(item)}>
                                     <ContentList_card item={item} showBookmark={false} />
                                 </div>

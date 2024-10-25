@@ -11,12 +11,12 @@ import MockupComponent from '@/component/MockupComponent';
 
 
 export default function Home() {
+    const { mainItems, itemApi, } = BookStore();
     const [cate, setCate] = useState('1');
     const [loading, setLoading] = useState(true); 
     const [active, setActive] = useState(true)
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
 
-    const { mainItems, itemApi, } = BookStore();
     const categoryNum = (num) => {
         setCate(num);
     };
@@ -26,16 +26,20 @@ export default function Home() {
     useEffect(() => {
         const cateNum = '';
         const coverSize = 'Big';
-
-        async function fetchData() {
-            await itemApi('main', cateNum, coverSize);
-        
-            setTimeout(() => {
-                setLoadingfadeOut(true);
-                setTimeout(() => setLoading(false), 500);
-            }, 1000);
+        if(!mainItems.Bestseller.item.length){
+            async function fetchData() {
+                console.log('데이터 가져오는 중...')
+                await itemApi('main', cateNum, coverSize);
+            
+                setTimeout(() => {
+                    setLoadingfadeOut(true);
+                    setTimeout(() => setLoading(false), 500);
+                }, 1000);
+            }
+            fetchData();
+        }else{
+            setLoading(false)
         }
-        fetchData();
     }, []);
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
