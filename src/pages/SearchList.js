@@ -42,6 +42,8 @@ const SearchList = () => {
                 searchItemPrice: item.priceStandard,
                 searchItemPublisher: item.publisher,
                 searchItemLink: item.link,
+                searchItemBestRank: item.bestRank,
+                searchItemCustomerReviewRank: item.customerReviewRank,
             },
         });
     };

@@ -1,5 +1,6 @@
 import React from 'react'
 import s from '@/styles/css/component/content/contentCard.module.scss'
+import { Rating } from '@mui/material';
 
 
 const ContentCard1 = (props) => {
@@ -32,28 +33,44 @@ const ContentCard3 = (props) => {
     )
 }
 
-const CommentCard = () => {
+const CommentCard = ({randomComment}) => {
     return (
         <div className={s.comment}>
             <div className={s.profile}>
             <span style={{backgroundImage:`url(./image16.png)`}}></span>
             <div className={s.profile_text}>
-                <p className={s.name}>지적 호기심</p>
-                <p className={s.date}>2024-10-22</p>
+                <p className={s.name}>{randomComment.nickname}</p>
+                <p className={s.date}>{randomComment.Creationdate}</p>
             </div>
             </div>
             <div className={s.commentCard}>
-                <div className={s.commentCard_img} style={{backgroundImage:`url(./image2.png)`}}></div>
+                <div className={s.commentCard_img} style={{backgroundImage:`url(${randomComment.cover})`}}></div>
                 <div className={s.commentCard_text}>
-                    <p className={s.commentCard_title}>시대예보: 호명사회</p>
-                    <div className={s.commentCard_rate}>★★★★☆</div>
-                    <p className={s.commentCard_review}>송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서! 특히 이해되지 않거나 공감되지 않는 부분이 있다면 그냥 넘어가기보다...</p>
+                    <p className={s.commentCard_title}>{randomComment.title}</p>
+                    <div className={s.commentCard_rate}>
+                    <Rating value={randomComment.rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{
+                            '& .MuiRating-icon': {
+                                fontSize: '16px',
+                                borderRadius: '50%',
+                            },
+                            '& .MuiRating-iconFilled': {
+                                color: '#FFC700'
+                            },
+                            '& .MuiRating-iconEmpty': {
+                                color: '#FFC700'
+                            }
+                        }}
+                     />
+                    </div>
+                    <p className={s.commentCard_review}>{randomComment.comment}</p>
                 </div>
             </div>
         </div>
     )
 }
-
 
 const ContentList_card = ({item, showBookmark }) => {
     return (

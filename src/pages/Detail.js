@@ -28,9 +28,14 @@ const Detail = () => {
     const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
+<<<<<<< HEAD
 
 
     console.log(searchItemTitle)
+=======
+    const [averageRating, setAverageRating] = useState(0);
+
+>>>>>>> 22104021793a52efe75518b217dbc54de8f4f4b3
 
     // 데이터 불러오기
     useEffect(() => {
@@ -41,6 +46,7 @@ const Detail = () => {
         }
         fetchData();
     }, []);
+
     useEffect(() => {
         if (itemId && category) {
             const foundItem = Object.values(category).flatMap(category => category.item)
@@ -82,17 +88,23 @@ const Detail = () => {
     const fetchComments = async () => {
         const q = query(collection(db, 'comment'), where('title', '==', itemTitle));
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot.docs);
         const comments = querySnapshot.docs.map((doc) => doc.data());
         setCommentList(comments);
+
+        //별점 평균 값
+        const ratings = comments.map(comment => comment.rating).filter(rating => typeof rating === 'number' && !isNaN(rating));
+
+        const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
+        const avgRating = ratings.length > 0 ? (totalRating / ratings.length).toFixed(1) : 0;
+
+        setAverageRating(avgRating);
     };
 
-    // useEffect(() => {
-    //     if (itemTitle) {
-    //         fetchComments();
-    //     }
-    // }, [itemTitle]);
-    
+    useEffect(() => {
+        if (itemTitle) {
+            fetchComments();
+        }
+    }, [itemTitle]);
     
     // 뒤로가기
     const backBtn = () => {
@@ -133,9 +145,8 @@ const Detail = () => {
     const futureDate = new Date()
     date.setDate(date.getDate() - 21)
     futureDate.setDate(futureDate.getDate() + 14)
+    
     // 코멘트리스트로 보내는 정보
-
-
     const commentMove = (item) => {
         router.push({
             pathname: '/CommentList',
@@ -238,18 +249,16 @@ const Detail = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={detail.detailInfoArea}>
-                                    <div className={detail.detailInfoMark}>
-                                        <div className={detail.detailInfoGrade}>
-                                            <span>평균</span>
-                                            <p>
-                                                <i><img src='./star.svg' alt="star" /></i>
-                                                <span>4.0</span>
-                                            </p>
-                                            <span>(12명)</span>
-                                        </div>
-                                        <div className={detail.detailInfoLikes}>
-                                        </div>
+                            </div>
+                            <div className={detail.detailInfoArea}>
+                                <div className={detail.detailInfoMark}>
+                                    <div className={detail.detailInfoGrade}>
+                                        <span>평균</span>
+                                        <p>
+                                            <i><img src='./star.svg' alt="star" /></i>
+                                            <span>{averageRating}</span>
+                                        </p>
+                                        <span>({commentList.length}명)</span>
                                     </div>
                                    
                                     <div className={detail.detailInfoIcon}>
@@ -334,26 +343,26 @@ const Detail = () => {
                                             <Link href={'https://m.yes24.com/Home/Main'}><img src='./yes24.jpg'></img></Link>
                                         </div>
                                     </div>
-                                    <div className={detail.detailCommentWrap}>
-                                        <div className={`${s.contentTitle} ${detail.contentTitle}`}>
-                                            <h2>코멘트</h2>
-                                            <a onClick={() => commentMove(item)}>
-                                                <button>전체보기</button>
-                                            </a>
-                                        </div>
-                                        <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
-                                            {
-                                                commentList.map((comment, index) => (
-                                                    <div key={index} className={commentS.detailComment}>
-                                                        <div>
-                                                            <img src={comment.userImage || './profile.png'} alt="Profile" />
-                                                        </div>
-                                                        <div className={commentS.detailCommentInfo}>
-                                                            <div className={commentS.detailCommentNickName}>
+                                <div className={detail.detailCommentWrap}>
+                                    <div className={`${s.contentTitle} ${detail.contentTitle}`}>
+                                        <h2>코멘트</h2>
+                                        <a onClick={() => commentMove(item)}>
+                                            <button>전체보기</button>
+                                        </a>
+                                    </div>
+                                    <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
+                                        {
+                                            commentList.slice(0, 3).map((comment, index) => (
+                                                <div key={index} className={commentS.detailComment}>
+                                                    <div>
+                                                        <img src={comment.userImage || './profile.png'} alt="Profile" />
+                                                    </div>
+                                                    <div className={commentS.detailCommentInfo}>
+                                                        <div className={commentS.detailCommentNickName}>
                                                             <p>{comment.nickname}</p>
                                                             <span>{comment.Creationdate}</span>
-                                                            </div>
-                                                            <div className={commentS.detailCommentStar}>
+                                                        </div>
+                                                        <div className={commentS.detailCommentStar}>
                                                             <Rating value={comment.rating} readOnly 
                                                             precision={0.5} 
                                                             sx={{

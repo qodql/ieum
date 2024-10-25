@@ -8,19 +8,20 @@ import { useEffect, useState } from 'react';
 import BookStore from '../stores/BookStore';
 import LoadingScreen from '../component/loadingScreen'; 
 import MockupComponent from '@/component/MockupComponent';
-
+import { db } from '@/lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function Home() {
     const { mainItems, itemApi, } = BookStore();
     const [cate, setCate] = useState('1');
     const [loading, setLoading] = useState(true); 
-    const [active, setActive] = useState(true)
+    const [active, setActive] = useState(true);
     const [loadingfadeOut, setLoadingfadeOut] = useState(false);
+    const [randomComment, setRandomComment] = useState(null);
 
     const categoryNum = (num) => {
         setCate(num);
     };
-
 
     // mainItems
     useEffect(() => {
@@ -41,6 +42,22 @@ export default function Home() {
             setLoading(false)
         }
     }, []);
+
+    //랜덤 코멘트
+    useEffect(() => {
+        const fetchRandomComment = async () => {
+            const querySnapshot = await getDocs(collection(db, 'comment'));
+            const comments = querySnapshot.docs.map((doc) => doc.data());
+
+            if (comments.length > 0) {
+                const random = Math.floor(Math.random() * comments.length);
+                setRandomComment(comments[random]);
+            }
+        };
+
+        fetchRandomComment();
+    }, []);
+
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
@@ -94,13 +111,12 @@ export default function Home() {
                         categoryNum={categoryNum} 
                         cate={cate} />
                 </div>
-
                 <div className={s.mainContent4}>
                     <div className={s.contentTitle}>
                         <h2>지금 뜨는 코멘트</h2>
                         <ButtonArrow />
                     </div>
-                    <CommentCard />
+                    <CommentCard randomComment={randomComment}/>
                 </div>
             </main>
             <Footer/>

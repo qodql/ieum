@@ -76,7 +76,7 @@ const CommentList = () => {
       const userInfo = querySnapshot2.docs.map((doc) => doc.data());
       if (userInfo.length > 0) {
         if (userInfo[0].info.nickname) {
-          nickname = userInfo[0].info.nickname || userInfo[0].info.nickName;
+          nickname = userInfo[0].info.nickname;
         }
         if (userInfo[0].info.image) {
           userImage = userInfo[0].info.image;
