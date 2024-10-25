@@ -335,32 +335,32 @@ const Detail = () => {
                                     </div>
                                     <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
                                         {
-                                            commentList.map((comment, index) => (
+                                            commentList.slice(0, 3).map((comment, index) => (
                                                 <div key={index} className={commentS.detailComment}>
                                                     <div>
                                                         <img src={comment.userImage || './profile.png'} alt="Profile" />
                                                     </div>
                                                     <div className={commentS.detailCommentInfo}>
                                                         <div className={commentS.detailCommentNickName}>
-                                                        <p>{comment.nickname}</p>
-                                                        <span>{comment.Creationdate}</span>
+                                                            <p>{comment.nickname}</p>
+                                                            <span>{comment.Creationdate}</span>
                                                         </div>
                                                         <div className={commentS.detailCommentStar}>
-                                                        <Rating value={comment.rating} readOnly 
-                                                        precision={0.5} 
-                                                        sx={{
-                                                            '& .MuiRating-icon': {
-                                                              fontSize: '14px',
-                                                              borderRadius: '50%',
-                                                            },
-                                                            '& .MuiRating-iconFilled': {
-                                                              color: '#FFC700'
-                                                            },
-                                                            '& .MuiRating-iconEmpty': {
-                                                              color: '#FFC700'
-                                                            }
-                                                        }}
-                                                        />
+                                                            <Rating value={comment.rating} readOnly 
+                                                            precision={0.5} 
+                                                            sx={{
+                                                                '& .MuiRating-icon': {
+                                                                    fontSize: '14px',
+                                                                    borderRadius: '50%',
+                                                                },
+                                                                '& .MuiRating-iconFilled': {
+                                                                    color: '#FFC700'
+                                                                },
+                                                                '& .MuiRating-iconEmpty': {
+                                                                    color: '#FFC700'
+                                                                }
+                                                            }}
+                                                            />
                                                         </div>
                                                         <p className={commentS.detailCommentCont}>{comment.comment}</p>
                                                     </div>
