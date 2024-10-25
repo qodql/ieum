@@ -34,6 +34,8 @@ const ContentCard3 = (props) => {
 }
 
 const CommentCard = ({randomComment}) => {
+    console.log(randomComment)
+    if(!randomComment){return <div>....로딩....</div>}else
     return (
         <div className={s.comment}>
             <div className={s.profile}>

@@ -28,14 +28,8 @@ const Detail = () => {
     const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
-<<<<<<< HEAD
-
-
-    console.log(searchItemTitle)
-=======
     const [averageRating, setAverageRating] = useState(0);
 
->>>>>>> 22104021793a52efe75518b217dbc54de8f4f4b3
 
     // 데이터 불러오기
     useEffect(() => {
@@ -86,7 +80,7 @@ const Detail = () => {
 
     // 코멘트 불러오기
     const fetchComments = async () => {
-        const q = query(collection(db, 'comment'), where('title', '==', itemTitle));
+        const q = query(collection(db, 'comment'), where('title', 'in', [String(itemTitle), String(searchItemTitle)]));
         const querySnapshot = await getDocs(q);
         const comments = querySnapshot.docs.map((doc) => doc.data());
         setCommentList(comments);
@@ -101,7 +95,7 @@ const Detail = () => {
     };
 
     useEffect(() => {
-        if (itemTitle) {
+        if (itemTitle || searchItemTitle) {
             fetchComments();
         }
     }, [itemTitle]);
@@ -207,7 +201,6 @@ const Detail = () => {
             alert("이미 등록된 책입니다.");
         }
     };
-    console.log(item)
     if(!searchItemTitle){
         return (
             <MockupComponent>
@@ -249,18 +242,20 @@ const Detail = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className={detail.detailInfoArea}>
-                                <div className={detail.detailInfoMark}>
-                                    <div className={detail.detailInfoGrade}>
-                                        <span>평균</span>
-                                        <p>
-                                            <i><img src='./star.svg' alt="star" /></i>
-                                            <span>{averageRating}</span>
-                                        </p>
-                                        <span>({commentList.length}명)</span>
+                                <div className={detail.detailInfoArea}>
+                                    <div className={detail.detailInfoMark}>
+                                        <div className={detail.detailInfoGrade}>
+                                            <span>평균</span>
+                                            <p>
+                                                <i><img src='./star.svg' alt="star" /></i>
+                                                <span>{averageRating}</span>
+                                            </p>
+                                            <span>({commentList.length}명)</span>
+                                        </div>
+                                        <div className={detail.detailInfoLikes}>
+                                        </div>
                                     </div>
-                                   
+                                
                                     <div className={detail.detailInfoIcon}>
                                         {session ? (
                                             <div onClick={() => {
@@ -338,46 +333,46 @@ const Detail = () => {
                                     <div className={detail.detailInfoPlace}>
                                         <p>구매 가능한 곳</p>
                                         <div className={detail.detailInfoImgbox}>
-                                            <Link href={item.link}><img src='./aladin.jpg'></img></Link>
-                                            <Link href={'https://www.kyobobook.co.kr/'}><img src='./kyobo.jpg'></img></Link>
-                                            <Link href={'https://m.yes24.com/Home/Main'}><img src='./yes24.jpg'></img></Link>
+                                            <img src='./aladin.jpg'></img>
+                                            <img src='./kyobo.jpg'></img>
+                                            <img src='./yes24.jpg'></img>
                                         </div>
                                     </div>
-                                <div className={detail.detailCommentWrap}>
-                                    <div className={`${s.contentTitle} ${detail.contentTitle}`}>
-                                        <h2>코멘트</h2>
-                                        <a onClick={() => commentMove(item)}>
-                                            <button>전체보기</button>
-                                        </a>
-                                    </div>
-                                    <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
-                                        {
-                                            commentList.slice(0, 3).map((comment, index) => (
-                                                <div key={index} className={commentS.detailComment}>
-                                                    <div>
-                                                        <img src={comment.userImage || './profile.png'} alt="Profile" />
-                                                    </div>
-                                                    <div className={commentS.detailCommentInfo}>
-                                                        <div className={commentS.detailCommentNickName}>
-                                                            <p>{comment.nickname}</p>
-                                                            <span>{comment.Creationdate}</span>
+                                    <div className={detail.detailCommentWrap}>
+                                        <div className={`${s.contentTitle} ${detail.contentTitle}`}>
+                                            <h2>코멘트</h2>
+                                            <a onClick={() => commentMove(item)}>
+                                                <button>전체보기</button>
+                                            </a>
+                                        </div>
+                                        <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
+                                            {
+                                                commentList.slice(0, 3).map((comment, index) => (
+                                                    <div key={index} className={commentS.detailComment}>
+                                                        <div>
+                                                            <img src={comment.userImage || './profile.png'} alt="Profile" />
                                                         </div>
-                                                        <div className={commentS.detailCommentStar}>
-                                                            <Rating value={comment.rating} readOnly 
-                                                            precision={0.5} 
-                                                            sx={{
-                                                                '& .MuiRating-icon': {
-                                                                  fontSize: '14px',
-                                                                  borderRadius: '50%',
-                                                                },
-                                                                '& .MuiRating-iconFilled': {
-                                                                  color: '#FFC700'
-                                                                },
-                                                                '& .MuiRating-iconEmpty': {
-                                                                  color: '#FFC700'
-                                                                }
-                                                            }}
-                                                            />
+                                                        <div className={commentS.detailCommentInfo}>
+                                                            <div className={commentS.detailCommentNickName}>
+                                                                <p>{comment.nickname}</p>
+                                                                <span>{comment.Creationdate}</span>
+                                                            </div>
+                                                            <div className={commentS.detailCommentStar}>
+                                                                <Rating value={comment.rating} readOnly 
+                                                                precision={0.5} 
+                                                                sx={{
+                                                                    '& .MuiRating-icon': {
+                                                                        fontSize: '14px',
+                                                                        borderRadius: '50%',
+                                                                    },
+                                                                    '& .MuiRating-iconFilled': {
+                                                                        color: '#FFC700'
+                                                                    },
+                                                                    '& .MuiRating-iconEmpty': {
+                                                                        color: '#FFC700'
+                                                                    }
+                                                                }}
+                                                                />
                                                             </div>
                                                             <p className={commentS.detailCommentCont}>{comment.comment}</p>
                                                         </div>
@@ -392,10 +387,10 @@ const Detail = () => {
                     </div>
                     <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />
                 </main>
-                <Footer />
-            </MockupComponent>
+            <Footer />
+        </MockupComponent>
         );
-    }else{
+    }else if(searchItemTitle){
         return (
             <MockupComponent>
                 <main style={{marginTop:'20px', height:'850px'}}>
@@ -442,9 +437,9 @@ const Detail = () => {
                                             <span>평균</span>
                                             <p>
                                                 <i><img src='./star.svg' alt="star" /></i>
-                                                <span>4.0</span>
+                                                <span>{averageRating}</span>
                                             </p>
-                                            <span>(12명)</span>
+                                            <span>({commentList.length}명)</span>
                                         </div>
                                         <div className={detail.detailInfoLikes}>
                                         </div>
@@ -540,16 +535,16 @@ const Detail = () => {
                                             </a>
                                         </div>
                                         <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
-                                            {
-                                                commentList.map((comment, index) => (
+                                            {   commentList.length > 0 && commentList[0].title == searchItemTitle ?
+                                                commentList.slice(0, 3).map((comment, index) => (
                                                     <div key={index} className={commentS.detailComment}>
                                                         <div>
                                                             <img src={comment.userImage || './profile.png'} alt="Profile" />
                                                         </div>
                                                         <div className={commentS.detailCommentInfo}>
                                                             <div className={commentS.detailCommentNickName}>
-                                                            <p>{comment.nickname}</p>
-                                                            <span>{comment.Creationdate}</span>
+                                                                <p>{comment.nickname}</p>
+                                                                <span>{comment.Creationdate}</span>
                                                             </div>
                                                             <div className={commentS.detailCommentStar}>
                                                             <Rating value={comment.rating} readOnly 
@@ -571,7 +566,7 @@ const Detail = () => {
                                                             <p className={commentS.detailCommentCont}>{comment.comment}</p>
                                                         </div>
                                                     </div>
-                                                ))
+                                                )) : ''
                                             }
                                         </div>
                                     </div>

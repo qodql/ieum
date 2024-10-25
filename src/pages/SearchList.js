@@ -58,7 +58,6 @@ const SearchList = () => {
             </MockupComponent>
         );
     }
-    console.log(searchResults);
 
     return (
         <MockupComponent>
