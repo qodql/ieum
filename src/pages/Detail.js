@@ -147,7 +147,7 @@ const Detail = () => {
             query: { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
         });
     };
-
+    console.log(item)
     // 읽는중 버튼
     const authorize = async () => {
         const q = query(
@@ -168,7 +168,9 @@ const Detail = () => {
                 email: session.user.email,
                 title: item.title,
                 bookid: item.itemId,
-                cover: item.cover
+                cover: item.cover,
+                author: item.author,
+                
             });
             alert("읽는중에 추가되었습니다.");
         } else {
@@ -193,7 +195,8 @@ const Detail = () => {
                 email: session.user.email,
                 title: item.title,
                 bookid: item.itemId,
-                cover: item.cover
+                cover: item.cover,
+                author: item.author,
             });
             alert("읽고싶어요에 추가되었습니다.");
         } else {

@@ -359,6 +359,9 @@
     top: 0;
     left: 0;
     background-color: #fafafa ;
+    &>ul{
+      height: 100%;
+    }
     .headerBox{
       width: 205px;
       display: flex;
@@ -386,6 +389,13 @@
         margin-top: 12px;
         display: block;
       }
+    }
+    .myComentList::after{
+      content: '';
+      border: 1px solid #eaeaea;
+      width: 358px;
+      margin-top: 12px;
+      display: block;
     }
   }
 }
