@@ -80,9 +80,7 @@ const Detail = () => {
         setCommentList(comments);
 
         //별점 평균 값
-        const ratings = comments
-        .map(comment => comment.rating)
-        .filter(rating => typeof rating === 'number' && !isNaN(rating));
+        const ratings = comments.map(comment => comment.rating).filter(rating => typeof rating === 'number' && !isNaN(rating));
 
         const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
         const avgRating = ratings.length > 0 ? (totalRating / ratings.length).toFixed(1) : 0;
