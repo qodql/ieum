@@ -50,8 +50,6 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
 
-
-      
       if (account.provider === 'credentials') {
         // 자체 로그인 처리
         const q = query(
@@ -97,8 +95,8 @@ export const authOptions = {
                   id: profile.response.id,
                   name: profile.response.name,
                   email: profile.response.email,
-                  nickName: profile.response.nickname,
-                  phoneNum: profile.response.mobile,
+                  nickname: profile.response.nickname,
+                  phonenum: profile.response.mobile,
                   provider: account.provider,
                   image: '/img_member_profile.svg'
                 }

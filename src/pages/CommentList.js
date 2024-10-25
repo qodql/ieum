@@ -26,6 +26,7 @@ const CommentList = () => {
   const backBtn = () => {
     router.back();
   };
+  console.log(session)
 
   // 코멘트 불러오기
   const fetchComments = async () => {
@@ -70,20 +71,18 @@ const CommentList = () => {
     const querySnapshot2 = await getDocs(q2);
 
     let userImage = null;
-    let nickname = session.user.email;
-
+    let nickname = null;
     if (!querySnapshot2.empty) {
       const userInfo = querySnapshot2.docs.map((doc) => doc.data());
       if (userInfo.length > 0) {
         if (userInfo[0].info.nickname) {
-          nickname = userInfo[0].info.nickname || userInfo[0].info.nickName;
+          nickname = userInfo[0].info.nickname;
         }
         if (userInfo[0].info.image) {
           userImage = userInfo[0].info.image;
         }
       }
     }
-
     if (querySnapshot.empty) {
       const docRef = collection(db, 'comment');
       await addDoc(docRef, {
