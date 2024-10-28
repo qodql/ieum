@@ -32,7 +32,6 @@ export default function Home() {
         const coverSize = 'Big';
         if(!mainItems.Bestseller.item.length){
             async function fetchData() {
-                console.log('데이터 가져오는 중...')
                 await itemApi('main', cateNum, coverSize);
             
                 setTimeout(() => {
@@ -61,6 +60,8 @@ export default function Home() {
         fetchRandomComment();
     }, []);
 
+
+
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
@@ -68,7 +69,7 @@ export default function Home() {
         <MockupComponent>
             <Header/>
             <main >
-                <BannerBox mainItems={mainItems}/>                   
+                <BannerBox mainItems={mainItems} />                   
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
                         <h2>블로거 베스트셀러</h2>

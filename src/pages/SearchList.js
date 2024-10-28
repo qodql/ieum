@@ -7,6 +7,8 @@ import Footer from '../component/Footer';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
 import MockupComponent from '@/component/MockupComponent';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 const SearchList = () => {
     const searchParams = useSearchParams();
@@ -14,6 +16,7 @@ const SearchList = () => {
     const { searchResults, searchApi, loading } = BookStore();
     const [keyword, setKeyword] = useState('');
     const searchKeyword = searchParams.get('k')
+    const [comment, setComment] = useState();
 
     
 
@@ -25,6 +28,20 @@ const SearchList = () => {
                 fetchData();
             }
         }, [searchKeyword]);
+
+          //평균 평점
+    useEffect(() => {
+        const fetchAverageComment = async () => {
+            const q = query(collection(db, 'comment'));
+            const querySnapshot = await getDocs(q);
+            let comments = []
+            querySnapshot.forEach((doc) => comments.push(doc.data()) );
+            
+            setComment(comments)
+        };
+
+        fetchAverageComment();
+    }, []);
         
 
     const detailMove = (item) => {
@@ -49,7 +66,7 @@ const SearchList = () => {
     };
 
     // 로딩
-    if (!searchResults.item) {
+    if (!searchResults.item || !comment) {
         return (
             <MockupComponent>
                  <div className={s.loading}>
@@ -71,7 +88,7 @@ const SearchList = () => {
                         {searchResults.item && searchResults.item.length > 0 ? (
                             searchResults.item.map((item, idx) => (
                                 <div key={item.itemId} onClick={() => detailMove(item)}>
-                                    <ContentList_card item={item} showBookmark={false} />
+                                    <ContentList_card item={item} showBookmark={false} comment={comment}/>
                                 </div>
                             ))
                         ) : (

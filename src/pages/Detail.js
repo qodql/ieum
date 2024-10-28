@@ -167,7 +167,6 @@ const Detail = () => {
             query: { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
         });
     };
-    console.log(item)
     // 읽는중 버튼
     const authorize = async () => {
         const q = query(
