@@ -1,56 +1,124 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import s from '@/styles/css/page/main.module.scss'
-import detail from '@/styles/css/page/detail.module.scss'
-import { ButtonAll } from '../component/Button';
+import React, { useEffect, useState } from 'react';
+import s from '@/styles/css/page/main.module.scss';
+import commentS from '@/styles/css/page/comment.module.scss';
+import detail from '@/styles/css/page/detail.module.scss';
 import Footer from '../component/Footer';
 import BookStore from '../stores/BookStore';
 import { Rating } from '@mui/material';
 import Modal from '../component/Modal';
 import { useSession } from 'next-auth/react';
 import { db } from '@/lib/firebase';
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import MockupComponent from '@/component/MockupComponent';
+import Link from 'next/link';
 
 const Detail = () => {
-    const {data:session} = useSession();
+    const { data: session } = useSession();
     const router = useRouter();
+<<<<<<< HEAD
     const { itemId, categoryId } = router.query;
     const { mainItems, itemApi } = BookStore();
+=======
+    const { itemId, mainCateNum, itemTitle,
+        searchItemTitle, searchItemCover, searchItemLogo,
+        searchItemAuthor, searchItemCategory, searchItemDesc,
+        searchItemPubDate, searchItemPrice,searchItemPublisher,
+        searchItemLink, searchItemBestRank, searchItemCustomerReviewRank,
+    } = router.query;
+    const { category, itemApi } = BookStore();
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [comment, setComment] = useState('');
-    const [modalBtn, setModalBtn] = useState(false);
-    const [commentTitle, setCommenttitle] = useState('');
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();    
+    const [commentList, setCommentList] = useState([]);
+    const [readState, setReadState] = useState(false);
+    const [readWantState, setReadWantState] = useState(false);
+    const [averageRating, setAverageRating] = useState(0);
 
-    //데이터 불러오기
+
+    // 데이터 불러오기
     useEffect(() => {
+<<<<<<< HEAD
         const cateNum = '1';
         const coverSize = 'Big';
         async function fetchData(){
+=======
+        const cateNum = mainCateNum;
+        const coverSize = 'Big';
+        async function fetchData() {
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
             await itemApi('cate', cateNum, coverSize);
         }
         fetchData();
     }, []);
 
+<<<<<<< HEAD
+=======
     useEffect(() => {
-        if (itemId && mainItems) {
-            const foundItem = Object.values(mainItems).flatMap(category => category.item)
-            .find(i => i.itemId === Number(itemId));
-
+        if (itemId && category) {
+            const foundItem = Object.values(category).flatMap(category => category.item)
+                .find(i => i.itemId === Number(itemId));
             setItem(foundItem);
+        }else{
+            // const foundItem2 = Object.values
         }
-    }, [itemId, mainItems]);
-    
+    }, [itemId, category]);
 
-    // 뒤로가기 
-    const backBtn = () => {
-        router.back(); 
-    }
+
+    // 유저가 이미 북마크를 추가했는지 확인하는 함수
+    useEffect(() => {
+        const fetchRead = async () => {
+            if (!session || !item) return;
+
+            const q = query(
+                collection(db, "readlist"),
+                where("email", "==", session.user.email),
+                where("title", "==", item.title),
+            );
+            const q2 = query(
+                collection(db, "readwantlist"),
+                where("email", "==", session.user.email),
+                where("title", "==", item.title),
+            );
+
+            const querySnapshot = await getDocs(q);
+            const querySnapshot2 = await getDocs(q2);
+
+            setReadState(querySnapshot.empty ? false : true);
+            setReadWantState(querySnapshot2.empty ? false : true);
+        };
+
+        fetchRead();
+    }, [session, readState, readWantState, item]);
+
+    // 코멘트 불러오기
+    const fetchComments = async () => {
+        const q = query(collection(db, 'comment'), where('title', 'in', [String(itemTitle), String(searchItemTitle)]));
+        const querySnapshot = await getDocs(q);
+        const comments = querySnapshot.docs.map((doc) => doc.data());
+        setCommentList(comments);
+
+        //별점 평균 값
+        const ratings = comments.map(comment => comment.rating).filter(rating => typeof rating === 'number' && !isNaN(rating));
+
+        const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
+        const avgRating = ratings.length > 0 ? (totalRating / ratings.length).toFixed(1) : 0;
+
+        setAverageRating(avgRating);
+    };
+
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
+    useEffect(() => {
+        if (itemTitle || searchItemTitle) {
+            fetchComments();
+        }
+    }, [itemTitle]);
     
+    // 뒤로가기
+    const backBtn = () => {
+        router.back();
+    };
+
     // 공유 버튼
     const shareBtn = () => {
         setIsModalOpen(true);
@@ -63,79 +131,289 @@ const Detail = () => {
 
     // 공유 링크 복사
     const copyLink = () => {
-        navigator.clipboard.writeText(window.location.href)
-            alert('링크가 복사되었습니다');
+        navigator.clipboard.writeText(window.location.href);
+        alert('링크가 복사되었습니다');
     };
-    
-    // console.log(item);
+
     // 로딩
-    if (!item) {
+    if (!item && !searchItemTitle) {
         return (
-            <div className={s.loading}>
-                <img src="/icon/loading.gif" alt="Loading..." />
-            </div>
+            <MockupComponent>
+                <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
         );
     }
 
+<<<<<<< HEAD
     console.log(item);
 
     //코멘트리스트로 보내는 정보
+=======
+    //신간 아이콘 내보내기
+    const pubDate = new Date(item ? item.pubDate: searchItemPubDate)
+    
+    const date = new Date()
+    const futureDate = new Date()
+    date.setDate(date.getDate() - 21)
+    futureDate.setDate(futureDate.getDate() + 14)
+    
+    // 코멘트리스트로 보내는 정보
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     const commentMove = (item) => {
         router.push({
             pathname: '/CommentList',
-            query:  { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
+            query: { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
         });
     };
-    
-    //읽는중 버튼
+    console.log(item)
+    // 읽는중 버튼
     const authorize = async () => {
         const q = query(
             collection(db, "readlist"),
+            where("email", "==", session.user.email),
             where("title", "==", item.title),
         );
         const querySnapshot = await getDocs(q);
-        
+        // querySnapshot.forEach(item=>{
+        //     item.data()
+        //     item.id
+        // })
+        // console.log(querySnapshot.doc,'=============')
+
         if (querySnapshot.empty) {
             const docRef = collection(db, "readlist"); // 컬렉션 참조 생성
             await addDoc(docRef, {
                 email: session.user.email,
                 title: item.title,
                 bookid: item.itemId,
-                cover: item.cover
+                cover: item.cover,
+                author: item.author,
+                
             });
+            alert("읽는중에 추가되었습니다.");
         } else {
+            await deleteDoc(doc(db, "readlist", querySnapshot.docs[0].id))
             // 이미 존재하는 경우의 로직을 여기에 추가할 수 있습니다.
-            console.log("Document already exists.");
+            alert("'읽는중'이 취소되었습니다.");
         }
     };
-    //읽고싶어요 버튼
 
+    // 읽고싶어요 버튼
     const readwantBtn = async () => {
         const q = query(
             collection(db, "readwantlist"),
+            where("email", "==", session.user.email),
             where("title", "==", item.title),
         );
         const querySnapshot = await getDocs(q);
-        
+
         if (querySnapshot.empty) {
             const docRef = collection(db, "readwantlist"); // 컬렉션 참조 생성
             await addDoc(docRef, {
                 email: session.user.email,
                 title: item.title,
                 bookid: item.itemId,
-                cover: item.cover
+                cover: item.cover,
+                author: item.author,
             });
+            alert("읽고싶어요에 추가되었습니다.");
         } else {
+            await deleteDoc(doc(db, "readwantlist", querySnapshot.docs[0].id))
             alert("이미 등록된 책입니다.");
         }
     };
-
-    //코멘트 버튼
-    const commentBtn = async () => {
-        const q = query(
-            collection(db, "comment"),
-            where("title", "==", item.title),
+    if(!searchItemTitle){
+        return (
+            <MockupComponent>
+                <main style={{marginTop:'20px', height:'850px'}}>
+                    <div className={detail.subWrap}>
+                        <div className={detail.subTop}>
+                            <a onClick={backBtn}><img src='./arrow-left.svg' /></a>
+                            <a onClick={shareBtn}><img src='./share.svg' /></a>
+                        </div>
+                        <div className={detail.detail}>
+                            <div className={detail.detailThumbArea}>
+                                <div className={detail.detailThumbBg}>
+                                    <img src={item.cover} alt={item.title} />
+                                </div>
+                                <div className={detail.detailThumbBox}>
+                                    <div className={detail.detailThumb}>
+                                        <img src={item.cover} alt={item.title} />
+                                    </div>
+                                    <div className={detail.detailThumbInfo}>
+                                        <h5 className={detail.detailThumbTit}>{item.title}</h5>
+                                        <span className={detail.detailThumbWriter}>{item.author}</span>
+                                        <span className={detail.detailThumbType}>{item.categoryName}</span>
+                                        <div className={detail.detailThumbIcon}>
+                                            {
+                                                item.bestRank ? 
+                                                <p>베스트<br/>{item.bestRank}&nbsp;위</p>
+                                                : <></>
+                                            }
+                                            {
+                                                item.customerReviewRank > 0 ? 
+                                                <p>블로거<br/>{item.customerReviewRank}&nbsp;위</p>
+                                                : <></>
+                                            }
+                                            {
+                                                futureDate >= pubDate && pubDate >= date ? 
+                                                <p>신&nbsp;간</p>
+                                                : <></>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={detail.detailInfoArea}>
+                                    <div className={detail.detailInfoMark}>
+                                        <div className={detail.detailInfoGrade}>
+                                            <span>평균</span>
+                                            <p>
+                                                <i><img src='./star.svg' alt="star" /></i>
+                                                <span>{averageRating}</span>
+                                            </p>
+                                            <span>({commentList.length}명)</span>
+                                        </div>
+                                        <div className={detail.detailInfoLikes}>
+                                        </div>
+                                    </div>
+                                
+                                    <div className={detail.detailInfoIcon}>
+                                        {session ? (
+                                            <div onClick={() => {
+                                                readwantBtn();
+                                                setReadWantState(!readWantState); // 상태 즉시 반영
+                                            }}>
+                                                {readWantState === true ? (
+                                                    <i><img src='./icon/icon_detail_readwantbtn_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./interest.svg' /></i>
+                                                )}
+                                                <span>읽고싶어요</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                <i><img src='./interest.svg' /></i>
+                                                <span>읽고싶어요</span>
+                                            </div>
+                                        )}
+                                        {session ? (
+                                            <div onClick={() => commentMove(item)}>
+                                                <i><img src='./comment.svg' /></i>
+                                                <span>코멘트</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                <i><img src='./comment.svg' /></i>
+                                                <span>코멘트</span>
+                                            </div>
+                                        )}
+                                        {session ? (
+                                            <div onClick={() => {
+                                                authorize();
+                                                setReadState(!readState); // 상태 즉시 반영
+                                            }}>
+                                                {readState === true ? (
+                                                    <i><img src='./icon/icon_detail_reading_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./icon_detail_reading.svg' /></i>
+                                                )}
+                                                <span>읽는중</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                {readState === true ? (
+                                                    <i><img src='./icon/icon_detail_reading_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./icon_detail_reading.svg' /></i>
+                                                )}
+                                                <span>읽는중</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={detail.detailInfo}>
+                                        <p className={detail.detailInfoTit}>기본 정보</p>
+                                        <span>{item.categoryName}</span>
+                                        <p className={detail.detailInfoDescription}>
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                    <div className={detail.detailInfoBox}>
+                                        <div>
+                                            <span>출판일</span>
+                                            <span>{item.pubDate}</span>
+                                        </div>
+                                        <div>
+                                            <span>가격(정가)</span>
+                                            <span>{item.priceStandard}원</span>
+                                        </div>
+                                        <div>
+                                            <span>출판사</span>
+                                            <span>{item.publisher}</span>
+                                        </div>
+                                    </div>
+                                    <div className={detail.detailInfoPlace}>
+                                        <p>구매 가능한 곳</p>
+                                        <div className={detail.detailInfoImgbox}>
+                                            <img src='./aladin.jpg'></img>
+                                            <img src='./kyobo.jpg'></img>
+                                            <img src='./yes24.jpg'></img>
+                                        </div>
+                                    </div>
+                                    <div className={detail.detailCommentWrap}>
+                                        <div className={`${s.contentTitle} ${detail.contentTitle}`}>
+                                            <h2>코멘트</h2>
+                                            <a onClick={() => commentMove(item)}>
+                                                <button>전체보기</button>
+                                            </a>
+                                        </div>
+                                        <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
+                                            {
+                                                commentList.slice(0, 3).map((comment, index) => (
+                                                    <div key={index} className={commentS.detailComment}>
+                                                        <div>
+                                                            <img src={comment.userImage || './profile.png'} alt="Profile" />
+                                                        </div>
+                                                        <div className={commentS.detailCommentInfo}>
+                                                            <div className={commentS.detailCommentNickName}>
+                                                                <p>{comment.nickname}</p>
+                                                                <span>{comment.Creationdate}</span>
+                                                            </div>
+                                                            <div className={commentS.detailCommentStar}>
+                                                                <Rating value={comment.rating} readOnly 
+                                                                precision={0.5} 
+                                                                sx={{
+                                                                    '& .MuiRating-icon': {
+                                                                        fontSize: '14px',
+                                                                        borderRadius: '50%',
+                                                                    },
+                                                                    '& .MuiRating-iconFilled': {
+                                                                        color: '#FFC700'
+                                                                    },
+                                                                    '& .MuiRating-iconEmpty': {
+                                                                        color: '#FFC700'
+                                                                    }
+                                                                }}
+                                                                />
+                                                            </div>
+                                                            <p className={commentS.detailCommentCont}>{comment.comment}</p>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />
+                </main>
+            <Footer />
+        </MockupComponent>
         );
+<<<<<<< HEAD
         const querySnapshot = await getDocs(q);
         
         if (querySnapshot.empty) {
@@ -170,204 +448,198 @@ const Detail = () => {
                     <div className={detail.detailThumbBox}>
                         <div className={detail.detailThumb}>
                             <img src={item.cover} alt={item.title}/>
+=======
+    }else if(searchItemTitle){
+        return (
+            <MockupComponent>
+                <main style={{marginTop:'20px', height:'850px'}}>
+                    <div className={detail.subWrap}>
+                        <div className={detail.subTop}>
+                            <a onClick={backBtn}><img src='./arrow-left.svg' /></a>
+                            <a onClick={shareBtn}><img src='./share.svg' /></a>
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
                         </div>
-                        <div className={detail.detailThumbInfo}>
-                            <div className={detail.detailThumbIcon}>
-                                <span>베스트</span>
-                                <span>편집자추천</span>
-                            </div>
-                            <h5 className={detail.detailThumbTit}>{item.title}</h5>
-                            <span className={detail.detailThumbWriter}>{item.author}</span>
-                            <span className={detail.detailThumbType}>{item.categoryName}</span>
-                        </div>
-                    </div>
-                    <div className={detail.detailInfoArea}>
-                        <div className={detail.detailInfoMark}>
-                            <div className={detail.detailInfoGrade}>
-                                <span>평균</span>
-                                <p>
-                                    <i><img src='./star.svg' alt="star"/></i>
-                                    <span>4.0</span>
-                                </p>
-                                <span>(12명)</span>
-                            </div>
-                            <div className={detail.detailInfoLikes}>
-                                <i><img src='./like.png'/></i>
-                                <span>105</span>
-                            </div>
-                        </div>
-                        {/* <div className={detail.detailInfoStar}>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                            <i><img src='./star-gray.svg'/></i>
-                        </div> */}
-                        <div className={detail.detailInfoStar}>
-                                    <Rating
-                                        name="simple-controlled"
-                                        precision={0.5}
-                                        sx={{
-                                            '& .MuiRating-icon': {
-                                                fontSize: '48px',
-                                                borderRadius: '50%',
-                                                transition: 'color 0.3s ease',
-                                            },
-                                            '& .MuiRating-iconHover': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconFilled': {
-                                                color: '#FFC700',
-                                            },
-                                            '& .MuiRating-iconEmpty': {
-                                                color: '#EAEAEA',
-                                            },
-                                        }}
-                                    />
+                        <div className={detail.detail}>
+                            <div className={detail.detailThumbArea}>
+                                <div className={detail.detailThumbBg}>
+                                    <img src={searchItemCover? searchItemCover : searchItemLogo} alt={searchItemTitle} />
                                 </div>
-                        <div className={detail.detailInfoIcon}>
-                      
-                            <div onClick={readwantBtn}>
-                                <i><img src='./interest.svg'/></i>
-                                <span>읽고싶어요</span>
-                            </div>
-                            <div onClick={()=>commentMove(item)}>
-                                <i><img src='./comment.svg'/></i>
-                                <span>코멘트</span>
-                            </div>
-                            {/* 코멘트 모달창 */}
-                            {modalBtn === true ?
-                            <>
-                            <div className={detail.modal}>
-                                <form onSubmit={(e)=> {e.preventDefault(); commentBtn();}}>
-                                    <div className={detail.labelBox}>
-                                        <label className={detail.modalLabel}>내용</label>
-                                        <div className={detail.closeBtn} style={{backgroundImage:`url(/icon_detail_modal_closeBtn.svg)`}}/>
+                                <div className={detail.detailThumbBox}>
+                                    <div className={detail.detailThumb}>
+                                        <img src={searchItemCover? searchItemCover : searchItemLogo} alt={searchItemTitle} />
                                     </div>
-                                    <input type="text" />
-                                    <div>
-                                    <label>상세리뷰</label>
-                                    <input 
-                                    type="text" 
-                                    placeholder='다른 고객님께 도움이 되도록 책에 대한 솔직한 평가를 남겨주세요'
-                                    onChange={(e)=>setComment(e.target.value)}/>
+                                    <div className={detail.detailThumbInfo}>
+                                        <h5 className={detail.detailThumbTit}>{searchItemTitle}</h5>
+                                        <span className={detail.detailThumbWriter}>{searchItemAuthor}</span>
+                                        <span className={detail.detailThumbType}>{searchItemCategory}</span>
+                                        <div className={detail.detailThumbIcon}>
+                                            {
+                                                searchItemBestRank ? 
+                                                <p>베스트<br/>{searchItemBestRank}&nbsp;위</p>
+                                                : <></>
+                                            }
+                                            {
+                                                searchItemCustomerReviewRank > 0 ? 
+                                                <p>블로거<br/>{searchItemCustomerReviewRank}&nbsp;위</p>
+                                                : <></>
+                                            }
+                                            {
+                                                futureDate >= pubDate && pubDate >= date ? 
+                                                <p>신&nbsp;간</p>
+                                                : <></>
+                                            }
+                                        </div>
                                     </div>
-                                    <button type='submit'>저장하기</button>
-                                </form> 
-                            </div>
-                            </>
-                            : null
-
-                            }
-                            <div onClick={authorize}>
-                                <i><img src='./bookmark.svg'/></i>
-                                <span>읽는중</span>
-                            </div>
-                            <div>
-                                <i><img src='./add.svg'/></i>
-                                <span>더보기</span>
-                            </div>
-                        </div>
-                        <div className={detail.detailInfo}>
-                            <p className={detail.detailInfoTit}>기본 정보</p>
-                            <span>{item.categoryName}</span>
-                            <p className={detail.detailInfoDescription}>
-                                {item.description}
-                            </p>
-                        </div>
-                        <div className={detail.detailInfoBox}>
-                            <div>
-                                <span>출판일</span>
-                                <span>{item.pubDate}</span>
-                            </div>
-                            <div>
-                                <span>페이지</span>
-                                <span>400p</span>
-                            </div>
-                            <div>
-                                <span>출판사</span>
-                                <span>{item.publisher}</span>
-                            </div>
-                        </div>
-                        <div className={detail.detailInfoPlace}>
-                            <p>구매 가능한 곳</p>
-                            <div className={detail.detailInfoImgbox}>
-                                <img src='./aladin.jpg'></img>
-                                <img src='./kyobo.jpg'></img>
-                                <img src='./yes24.jpg'></img>
-                            </div>
-                        </div>
-                        <div className={detail.detailCommentWrap}>
-                            <div className={`${s.contentTitle} ${detail.contentTitle}`}>
-                                <h2>코멘트</h2>
-                                <ButtonAll/>
-                            </div>
-                            <div className={detail.detailComment}>
-                                <div><img src='./profile.png'/></div>
-                                <div className={detail.detailCommentInfo}>
-                                    <div className={detail.detailCommentNickName}>
-                                        <p>나야들기름</p>
-                                        <span>2024-10-11</span>
-                                    </div>
-                                    <div className={detail.detailCommentStar}>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                    </div>
-                                    <p className={detail.detailCommentCont}>
-                                        작가님의 책은 지금 곧바로 읽고 봐야하는 필독서!
-                                    </p>
                                 </div>
-                            </div>
-                            <div className={detail.detailComment}>
-                                <div><img src='./profile.png'/></div>
-                                <div className={detail.detailCommentInfo}>
-                                    <div className={detail.detailCommentNickName}>
-                                        <p>고죠백종원</p>
-                                        <span>2024-10-07</span>
+                                <div className={detail.detailInfoArea}>
+                                    <div className={detail.detailInfoMark}>
+                                        <div className={detail.detailInfoGrade}>
+                                            <span>평균</span>
+                                            <p>
+                                                <i><img src='./star.svg' alt="star" /></i>
+                                                <span>{averageRating}</span>
+                                            </p>
+                                            <span>({commentList.length}명)</span>
+                                        </div>
+                                        <div className={detail.detailInfoLikes}>
+                                        </div>
                                     </div>
-                                    <div className={detail.detailCommentStar}>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
+                                   
+                                    <div className={detail.detailInfoIcon}>
+                                        {session ? (
+                                            <div onClick={() => {
+                                                readwantBtn();
+                                                setReadWantState(!readWantState); // 상태 즉시 반영
+                                            }}>
+                                                {readWantState === true ? (
+                                                    <i><img src='./icon/icon_detail_readwantbtn_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./interest.svg' /></i>
+                                                )}
+                                                <span>읽고싶어요</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                <i><img src='./interest.svg' /></i>
+                                                <span>읽고싶어요</span>
+                                            </div>
+                                        )}
+                                        {session ? (
+                                            <div onClick={() => commentMove(item)}>
+                                                <i><img src='./comment.svg' /></i>
+                                                <span>코멘트</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                <i><img src='./comment.svg' /></i>
+                                                <span>코멘트</span>
+                                            </div>
+                                        )}
+                                        {session ? (
+                                            <div onClick={() => {
+                                                authorize();
+                                                setReadState(!readState); // 상태 즉시 반영
+                                            }}>
+                                                {readState === true ? (
+                                                    <i><img src='./icon/icon_detail_reading_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./icon_detail_reading.svg' /></i>
+                                                )}
+                                                <span>읽는중</span>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => alert('로그인이 필요한 서비스입니다')}>
+                                                {readState === true ? (
+                                                    <i><img src='./icon/icon_detail_reading_color.svg' /></i>
+                                                ) : (
+                                                    <i><img src='./icon_detail_reading.svg' /></i>
+                                                )}
+                                                <span>읽는중</span>
+                                            </div>
+                                        )}
                                     </div>
-                                    <p className={detail.detailCommentCont}>
-                                        이야~ 책으로 어떻게 이런 맛을 내죠?
-                                    </p>
-                                </div>
-                            </div>
-                            <div className={detail.detailComment}>
-                                <div><img src='./profile.png'/></div>
-                                <div className={detail.detailCommentInfo}>
-                                    <div className={detail.detailCommentNickName}>
-                                        <p>나주맛피자</p>
-                                        <span>2024-09-30</span>
+                                    <div className={detail.detailInfo}>
+                                        <p className={detail.detailInfoTit}>기본 정보</p>
+                                        <span>{searchItemCategory}</span>
+                                        <p className={detail.detailInfoDescription}>
+                                            {searchItemDesc}
+                                        </p>
                                     </div>
-                                    <div className={detail.detailCommentStar}>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
-                                        <img src='./star.svg'></img>
+                                    <div className={detail.detailInfoBox}>
+                                        <div>
+                                            <span>출판일</span>
+                                            <span>{searchItemPubDate}</span>
+                                        </div>
+                                        <div>
+                                            <span>가격(정가)</span>
+                                            <span>{searchItemPrice}원</span>
+                                        </div>
+                                        <div>
+                                            <span>출판사</span>
+                                            <span>{searchItemPublisher}</span>
+                                        </div>
                                     </div>
-                                    <p className={detail.detailCommentCont}>
-                                        아쉬워요. 무엇을 말하려고 하는지는 알겠으나 별로 와닿지는 않아요.
-                                    </p>
+                                    <div className={detail.detailInfoPlace}>
+                                        <p>구매 가능한 곳</p>
+                                        <div className={detail.detailInfoImgbox}>
+                                            <Link href={searchItemLink}><img src='./aladin.jpg'></img></Link>
+                                            <Link href={'https://www.kyobobook.co.kr/'}><img src='./kyobo.jpg'></img></Link>
+                                            <Link href={'https://m.yes24.com/Home/Main'}><img src='./yes24.jpg'></img></Link>
+                                        </div>
+                                    </div>
+                                    <div className={detail.detailCommentWrap}>
+                                        <div className={`${s.contentTitle} ${detail.contentTitle}`}>
+                                            <h2>코멘트</h2>
+                                            <a onClick={() => commentMove(item)}>
+                                                <button>전체보기</button>
+                                            </a>
+                                        </div>
+                                        <div className={`${commentS.commentCard_list} ${commentS.commentCard_list2}`}>
+                                            {   commentList.length > 0 && commentList[0].title == searchItemTitle ?
+                                                commentList.slice(0, 3).map((comment, index) => (
+                                                    <div key={index} className={commentS.detailComment}>
+                                                        <div>
+                                                            <img src={comment.userImage || './profile.png'} alt="Profile" />
+                                                        </div>
+                                                        <div className={commentS.detailCommentInfo}>
+                                                            <div className={commentS.detailCommentNickName}>
+                                                                <p>{comment.nickname}</p>
+                                                                <span>{comment.Creationdate}</span>
+                                                            </div>
+                                                            <div className={commentS.detailCommentStar}>
+                                                            <Rating value={comment.rating} readOnly 
+                                                            precision={0.5} 
+                                                            sx={{
+                                                                '& .MuiRating-icon': {
+                                                                  fontSize: '14px',
+                                                                  borderRadius: '50%',
+                                                                },
+                                                                '& .MuiRating-iconFilled': {
+                                                                  color: '#FFC700'
+                                                                },
+                                                                '& .MuiRating-iconEmpty': {
+                                                                  color: '#FFC700'
+                                                                }
+                                                            }}
+                                                            />
+                                                            </div>
+                                                            <p className={commentS.detailCommentCont}>{comment.comment}</p>
+                                                        </div>
+                                                    </div>
+                                                )) : ''
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />                               
-        <Footer/>
-    </>
-  )
-}
+                    <Modal isModalOpen={isModalOpen} shareClose={shareClose} copyLink={copyLink} />
+                </main>
+                <Footer />
+            </MockupComponent>
+        );
+    }
+};
 
-export default Detail
+export default Detail;

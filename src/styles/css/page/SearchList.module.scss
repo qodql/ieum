@@ -1,5 +1,15 @@
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: transparent;
+}
 .book{
-    margin-top: 126px;
+    margin: 126px auto 0px;
+    max-width: 390px;
+    overflow: hidden;
+
     .bookBanner{
         margin: 0 16px;
         h2{}
@@ -8,7 +18,6 @@
             background-color: #2e8b57;
         }
     }
-    .bookList{}
 }
 .headerSearch{
     position: relative;

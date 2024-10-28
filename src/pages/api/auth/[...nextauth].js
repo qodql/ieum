@@ -7,6 +7,7 @@ import { getDocs, query, where, collection, addDoc } from "firebase/firestore";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
+  secret: '968416519848645165',
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
@@ -48,6 +49,7 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+
       if (account.provider === 'credentials') {
         // 자체 로그인 처리
         const q = query(
@@ -61,9 +63,8 @@ export const authOptions = {
         }
         return true;
       } else if (account.provider === 'naver' || account.provider === 'google' || account.provider === 'github') {
-        // 외부 로그인 제공자 처리
         let email;
-  
+        
         if (account.provider === 'naver') {
           email = profile.response.email;
         } else if (account.provider === 'google' || account.provider === 'github') {
@@ -94,8 +95,8 @@ export const authOptions = {
                   id: profile.response.id,
                   name: profile.response.name,
                   email: profile.response.email,
-                  nickName: profile.response.nickname,
-                  phoneNum: profile.response.mobile,
+                  nickname: profile.response.nickname,
+                  phonenum: profile.response.mobile,
                   provider: account.provider,
                   image: '/img_member_profile.svg'
                 }

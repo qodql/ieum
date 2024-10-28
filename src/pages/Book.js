@@ -5,6 +5,7 @@ import { ContentList_card } from '../component/contents/ContentCard'
 import list from '../styles/css/page/book.module.scss'
 import s from '../styles/css/page/main.module.scss'
 import BookStore from '../stores/BookStore';
+import MockupComponent from '@/component/MockupComponent';
 import { useRouter } from 'next/router';
 
 const Book = () => {
@@ -45,9 +46,11 @@ const Book = () => {
     // 로딩
     if (loading) {
         return (
-            <div className={s.loading}>
-                <img src="/icon/loading.gif" alt="Loading..." />
-            </div>
+            <MockupComponent>
+                <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
         );
     }
 
@@ -55,7 +58,7 @@ const Book = () => {
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { itemId: item.itemId },
+            query: { itemId: item.itemId, itemTitle: item.title},
         });
     };
 
@@ -66,10 +69,13 @@ const Book = () => {
             bestRank: v.bestRank || (i + 1), 
         }));
     };
-
+    // setCategoryTab(v)
+    
     return (
         <>
-            <Header />
+        <MockupComponent>
+            <Header/>
+            <main>
             <div className={list.book}>
                 <div className={list.bookBanner}>
                     <h2>
@@ -80,8 +86,8 @@ const Book = () => {
                     {categoryItems.map((v) => (
                         <button
                             key={v}
-                            className={categoryTab === v ? list.activeTab : list.tab}
-                            onClick={() => setCategoryTab(v)}
+                            className={router.query === v ? list.activeTab : list.tab}
+                            onClick={() => router.push({ pathname: '/Book', query: { category: v } })}
                         >
                             <img src={`./icon/${v}.png`} alt={v}
                                 className={list.tabImage} 
@@ -93,12 +99,14 @@ const Book = () => {
                 <div className={list.bookList}>
                     {mainItems[categoryTab]?.item && rankItems(mainItems[categoryTab].item).map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} />
+                            <ContentList_card item={item} showBookmark={true}/>
                         </div>
                     ))}
                 </div>
             </div>
+            </main>
             <Footer />
+            </MockupComponent>
         </>
     );
 };

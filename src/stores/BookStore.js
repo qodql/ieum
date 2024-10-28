@@ -27,6 +27,7 @@ const BookStore = create((set) => ({
   items: [],         // 리스트 데이터
   searchResults: [], // 검색 결과
   loading: true,    // 로딩 상태
+  searchLoading: true, // 검색 로딩 상태
   error:'',
 
   // List Api 요청
@@ -51,16 +52,21 @@ const BookStore = create((set) => ({
 
   // Search API 요청
   searchApi: async (keyword) => {
-    set({ loading: true, error: null });
+    set({ searchLoading: true, error: null });
     try {
       const response = await instant.get('/aladin', {
         params: { type:'search', Query: keyword}
       });
-      set({ searchResults: response.data, loading: false });
+      set({ searchResults: response.data, searchLoading: false });
     } catch (error) {
-      set({ error: '에러', loading: false });
+      set({ error: '에러', searchLoading: false });
     }
   },
+<<<<<<< HEAD
+=======
+
+ 
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
 }));
 
 export default BookStore;

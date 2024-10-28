@@ -6,6 +6,7 @@ import Header from '../component/Header';
 import Footer from '../component/Footer';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
+import MockupComponent from '@/component/MockupComponent';
 
 const SearchList = () => {
     const searchParams = useSearchParams();
@@ -13,7 +14,9 @@ const SearchList = () => {
     const { searchResults, searchApi, loading } = BookStore();
     const [keyword, setKeyword] = useState('');
     const searchKeyword = searchParams.get('k')
-    console.log(searchKeyword);
+
+    
+
     useEffect(() => {
         async function fetchData(){
                 await searchApi(searchParams.get('k'))
@@ -23,49 +26,66 @@ const SearchList = () => {
             }
         }, [searchKeyword]);
         
-        console.log(searchResults.item);
 
     const detailMove = (item) => {
         router.push({
             pathname: '/Detail',
-            query: { itemId: item.itemId },
+            query: { 
+                searchItemId: item.itemId,
+                searchItemTitle: item.title,
+                searchItemCover: item.cover,
+                searchItemLogo: item.logo,
+                searchItemAuthor: item.author,
+                searchItemCategory: item.categoryName,
+                searchItemDesc: item.description,
+                searchItemPubDate: item.pubDate,
+                searchItemPrice: item.priceStandard,
+                searchItemPublisher: item.publisher,
+                searchItemLink: item.link,
+                searchItemBestRank: item.bestRank,
+                searchItemCustomerReviewRank: item.customerReviewRank,
+            },
         });
     };
 
     // 로딩
-    if (loading) {
-    return (
-        <div className={s.loading}>
-            <img src="/icon/loading.gif" alt="Loading..." />
-        </div>
-    );
+    if (!searchResults.item) {
+        return (
+            <MockupComponent>
+                 <div className={s.loading}>
+                    <img src="/icon/loading.gif" alt="Loading..." />
+                </div>
+            </MockupComponent>
+        );
     }
-    return (
-        <>
-            <Header />
-            <div className={s.book}>
-                <div className={s.bookBanner}>
-                    <h2>검색 결과</h2>
-                </div>
 
-                <div className={s.bookList}>
-                    {searchResults.item && searchResults.item.length > 0 ? (
-                    searchResults.item.map((item) => (
-                        <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} />
+    return (
+        <MockupComponent>
+            <Header />
+                <main style={{marginTop:'80px', height:'800px'}}>
+                    <div className={s.book}>
+                        <div className={s.bookBanner}>
+                            <h2>검색 결과</h2>
                         </div>
-                    ))
-                ) : (
-                    (()=>{
-                        alert('검색결과가 없습니다.')
-                        router.back();
-                    })()
-                )
-                    }
-                </div>
-            </div>
+                        <div className={s.bookList}>
+                        {searchResults.item && searchResults.item.length > 0 ? (
+                            searchResults.item.map((item, idx) => (
+                                <div key={item.itemId} onClick={() => detailMove(item)}>
+                                    <ContentList_card item={item} showBookmark={false} />
+                                </div>
+                            ))
+                        ) : (
+                            (()=>{
+                                alert('검색결과가 없습니다.')
+                                router.back();
+                            })()
+                        )
+                            }
+                        </div>
+                    </div>
+                </main>
             <Footer />
-        </>
+        </MockupComponent>
     )
 }
 

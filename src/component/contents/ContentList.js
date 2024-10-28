@@ -3,10 +3,9 @@ import { ContentCard1, ContentCard2, ContentCard3 } from './ContentCard'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import s from '@/styles/css/component/content/contentList.module.scss'
+
 import BookStore from '../../stores/BookStore';
 import { useRouter } from 'next/router';
-
-
 
 
 const BannerBox = (props) => {
@@ -14,7 +13,7 @@ const BannerBox = (props) => {
   const detailMove = (item) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId, itemTitle: item.title },
     });
   };
 
@@ -57,7 +56,7 @@ const ContentListMain1 = (props) => {
   const detailMove = (item) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId, itemTitle: item.title },
     });
   };
 
@@ -79,10 +78,10 @@ const ContentListMain1 = (props) => {
 
 const ContentListMain2 = (props) => {
   const router = useRouter();
-  const detailMove = (item) => {
+  const detailMove = (item, cate) => {
     router.push({
         pathname: '/Detail',
-        query: { itemId: item.itemId },
+        query: { itemId: item.itemId, itemTitle: item.title},
     });
   };
 
@@ -105,10 +104,14 @@ const ContentListMain2 = (props) => {
 
 const ContentListMain3 = (props) => {
   const router = useRouter();
-  const detailMove = (item) => {
+  const detailMove = (item,mainCateNum) => {
     router.push({
         pathname: '/Detail',
+<<<<<<< HEAD
         query: { itemId: item.itemId , categoryId: props.cate},
+=======
+        query: { itemId: item.itemId, mainCateNum: mainCateNum, itemTitle: item.title  },
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     });
   };
 
@@ -116,7 +119,7 @@ const ContentListMain3 = (props) => {
 
   useEffect( () => {
     
-    const coverSize = 'Big'; 3
+    const coverSize = 'Big'; 
     async function fetchData(){
       await itemApi('cate', props.cate, coverSize);
     }
@@ -124,9 +127,15 @@ const ContentListMain3 = (props) => {
         fetchData();
     }
   }, [props.cate]);
-
   
+<<<<<<< HEAD
   if (loading) {
+=======
+  const mainCateNum = props.cate
+
+  // 로딩
+  if (loading || !category.ItemEditorChoice.item) {
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     return (
         <div className={s.loading}>
             <img src="/icon/loading.gif" alt="Loading..." />
@@ -141,7 +150,11 @@ const ContentListMain3 = (props) => {
     className={`${s.content3} mySwiper`}>
       {
         category.ItemEditorChoice.item.slice(0,7).map((item)=>
+<<<<<<< HEAD
           <SwiperSlide key={item.itemId} onClick={() => detailMove(item,props.cate)}>
+=======
+          <SwiperSlide key={item.itemId} onClick={() => detailMove(item, mainCateNum)}>
+>>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
             <ContentCard3 item={item}/>
           </SwiperSlide>
         )
