@@ -58,6 +58,8 @@ export default function Home() {
         fetchRandomComment();
     }, []);
 
+
+
     if (loading) return <LoadingScreen loadingfadeOut={loadingfadeOut}/>;
 
     return (
@@ -65,7 +67,7 @@ export default function Home() {
         <MockupComponent>
             <Header/>
             <main >
-                <BannerBox mainItems={mainItems}/>                   
+                <BannerBox mainItems={mainItems} />                   
                 <div className={s.mainContent1}>
                     <div className={s.contentTitle}>
                         <h2>블로거 베스트셀러</h2>
