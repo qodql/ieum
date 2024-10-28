@@ -16,10 +16,6 @@ import Link from 'next/link';
 const Detail = () => {
     const { data: session } = useSession();
     const router = useRouter();
-<<<<<<< HEAD
-    const { itemId, categoryId } = router.query;
-    const { mainItems, itemApi } = BookStore();
-=======
     const { itemId, mainCateNum, itemTitle,
         searchItemTitle, searchItemCover, searchItemLogo,
         searchItemAuthor, searchItemCategory, searchItemDesc,
@@ -27,7 +23,6 @@ const Detail = () => {
         searchItemLink, searchItemBestRank, searchItemCustomerReviewRank,
     } = router.query;
     const { category, itemApi } = BookStore();
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     const [item, setItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [commentList, setCommentList] = useState([]);
@@ -38,22 +33,14 @@ const Detail = () => {
 
     // 데이터 불러오기
     useEffect(() => {
-<<<<<<< HEAD
-        const cateNum = '1';
-        const coverSize = 'Big';
-        async function fetchData(){
-=======
         const cateNum = mainCateNum;
         const coverSize = 'Big';
         async function fetchData() {
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
             await itemApi('cate', cateNum, coverSize);
         }
         fetchData();
     }, []);
 
-<<<<<<< HEAD
-=======
     useEffect(() => {
         if (itemId && category) {
             const foundItem = Object.values(category).flatMap(category => category.item)
@@ -107,7 +94,6 @@ const Detail = () => {
         setAverageRating(avgRating);
     };
 
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     useEffect(() => {
         if (itemTitle || searchItemTitle) {
             fetchComments();
@@ -146,11 +132,6 @@ const Detail = () => {
         );
     }
 
-<<<<<<< HEAD
-    console.log(item);
-
-    //코멘트리스트로 보내는 정보
-=======
     //신간 아이콘 내보내기
     const pubDate = new Date(item ? item.pubDate: searchItemPubDate)
     
@@ -160,7 +141,6 @@ const Detail = () => {
     futureDate.setDate(futureDate.getDate() + 14)
     
     // 코멘트리스트로 보내는 정보
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     const commentMove = (item) => {
         router.push({
             pathname: '/CommentList',
@@ -412,42 +392,6 @@ const Detail = () => {
             <Footer />
         </MockupComponent>
         );
-<<<<<<< HEAD
-        const querySnapshot = await getDocs(q);
-        
-        if (querySnapshot.empty) {
-            const docRef = collection(db, "comment");
-            await addDoc(docRef, {
-                email: session.user.email,
-                title: item.title,
-                bookid: item.itemId,
-                cover: item.cover,
-                comment: comment,
-                Creationdate: `${year}.${month}.${day}`
-            });
-        }
-        else {
-            alert("이미 해당 작품에서 코멘트를 등록하셨습니다.");
-        } 
-    };
-    
-  return (
-    <>  
-
-        <div className={detail.subWrap}>
-            <div className={detail.subTop}>
-                <a onClick={backBtn}><img src='./arrow-left.svg'/></a>
-                <a onClick={shareBtn}><img src='./share.svg'/></a>
-            </div>
-            <div className={detail.detail}>
-                <div className={detail.detailThumbArea}>
-                    <div className={detail.detailThumbBg}>
-                        <img src={item.cover} alt={item.title}/>
-                    </div>
-                    <div className={detail.detailThumbBox}>
-                        <div className={detail.detailThumb}>
-                            <img src={item.cover} alt={item.title}/>
-=======
     }else if(searchItemTitle){
         return (
             <MockupComponent>
@@ -456,7 +400,6 @@ const Detail = () => {
                         <div className={detail.subTop}>
                             <a onClick={backBtn}><img src='./arrow-left.svg' /></a>
                             <a onClick={shareBtn}><img src='./share.svg' /></a>
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
                         </div>
                         <div className={detail.detail}>
                             <div className={detail.detailThumbArea}>

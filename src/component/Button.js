@@ -14,7 +14,7 @@ const ButtonArrow = () => {
     return(
         <Link href="../CommentList">
           <button className={s.contentTitle4_btn}></button>
-        </Link
+        </Link>
     )
 }
 

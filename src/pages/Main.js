@@ -7,12 +7,9 @@ import { ContentListMain1, ContentListMain2, ContentListMain3, BannerBox} from '
 import { useEffect, useState } from 'react';
 import BookStore from '../stores/BookStore';
 import LoadingScreen from '../component/loadingScreen'; 
-<<<<<<< HEAD
-=======
 import MockupComponent from '@/component/MockupComponent';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
 
 export default function Home() {
     const { mainItems, itemApi, } = BookStore();

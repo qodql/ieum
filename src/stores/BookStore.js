@@ -62,11 +62,7 @@ const BookStore = create((set) => ({
       set({ error: '에러', searchLoading: false });
     }
   },
-<<<<<<< HEAD
-=======
 
- 
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
 }));
 
 export default BookStore;

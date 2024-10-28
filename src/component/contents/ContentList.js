@@ -107,11 +107,7 @@ const ContentListMain3 = (props) => {
   const detailMove = (item,mainCateNum) => {
     router.push({
         pathname: '/Detail',
-<<<<<<< HEAD
-        query: { itemId: item.itemId , categoryId: props.cate},
-=======
         query: { itemId: item.itemId, mainCateNum: mainCateNum, itemTitle: item.title  },
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     });
   };
 
@@ -128,14 +124,10 @@ const ContentListMain3 = (props) => {
     }
   }, [props.cate]);
   
-<<<<<<< HEAD
-  if (loading) {
-=======
   const mainCateNum = props.cate
 
   // 로딩
   if (loading || !category.ItemEditorChoice.item) {
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
     return (
         <div className={s.loading}>
             <img src="/icon/loading.gif" alt="Loading..." />
@@ -150,11 +142,7 @@ const ContentListMain3 = (props) => {
     className={`${s.content3} mySwiper`}>
       {
         category.ItemEditorChoice.item.slice(0,7).map((item)=>
-<<<<<<< HEAD
-          <SwiperSlide key={item.itemId} onClick={() => detailMove(item,props.cate)}>
-=======
           <SwiperSlide key={item.itemId} onClick={() => detailMove(item, mainCateNum)}>
->>>>>>> 7543d66b1b6f0db8887513db980547fe66569ea4
             <ContentCard3 item={item}/>
           </SwiperSlide>
         )
