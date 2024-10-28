@@ -29,7 +29,6 @@ export default function Home() {
         const coverSize = 'Big';
         if(!mainItems.Bestseller.item.length){
             async function fetchData() {
-                console.log('데이터 가져오는 중...')
                 await itemApi('main', cateNum, coverSize);
             
                 setTimeout(() => {

@@ -7,12 +7,15 @@ import s from '../styles/css/page/main.module.scss'
 import BookStore from '../stores/BookStore';
 import MockupComponent from '@/component/MockupComponent';
 import { useRouter } from 'next/router';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 const Book = () => {
     const { mainItems, itemApi, loading } = BookStore();
     const [categoryTab, setCategoryTab] = useState('Bestseller');
     const router = useRouter();
     const categoryQuery = router.query.category || 'Bestseller';
+    const [comment, setComment] = useState();
     
     //api 요청
     useEffect(() => {
@@ -41,8 +44,22 @@ const Book = () => {
         }
     };
 
+    //평균 평점
+    useEffect(() => {
+        const fetchAverageComment = async () => {
+            const q = query(collection(db, 'comment'));
+            const querySnapshot = await getDocs(q);
+            let comments = []
+            querySnapshot.forEach((doc) => comments.push(doc.data()) );
+            
+            setComment(comments)
+        };
+
+        fetchAverageComment();
+    }, []);
+
     // 로딩
-    if (loading) {
+    if (loading || !comment) {
         return (
             <MockupComponent>
                 <div className={s.loading}>
@@ -97,7 +114,7 @@ const Book = () => {
                 <div className={list.bookList}>
                     {mainItems[categoryTab]?.item && rankItems(mainItems[categoryTab].item).map((item) => (
                         <div key={item.itemId} onClick={() => detailMove(item)}>
-                            <ContentList_card item={item} showBookmark={true}/>
+                            <ContentList_card item={item} showBookmark={true} comment={comment}/>
                         </div>
                     ))}
                 </div>
