@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import s from '@/styles/css/component/content/contentCard.module.scss'
 import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
@@ -38,30 +38,64 @@ const ContentCard3 = (props) => {
     )
 }
 
-const CommentCard = () => {
+const CommentCard = ({randomComment}) => {
+    if(!randomComment){return <div>....로딩....</div>}else
     return (
         <div className={s.comment}>
             <div className={s.profile}>
             <span style={{backgroundImage:`url(./image16.png)`}}></span>
             <div className={s.profile_text}>
-                <p className={s.name}>지적 호기심</p>
-                <p className={s.date}>2024-10-22</p>
+                <p className={s.name}>{randomComment.nickname}</p>
+                <p className={s.date}>{randomComment.Creationdate}</p>
             </div>
             </div>
             <div className={s.commentCard}>
-                <div className={s.commentCard_img} style={{backgroundImage:`url(./image2.png)`}}></div>
+                <div className={s.commentCard_img} style={{backgroundImage:`url(${randomComment.cover})`}}></div>
                 <div className={s.commentCard_text}>
-                    <p className={s.commentCard_title}>시대예보: 호명사회</p>
-                    <div className={s.commentCard_rate}>★★★★☆</div>
-                    <p className={s.commentCard_review}>송길영 작가님은 책도 영상도 지금 곧바로 읽고 봐야하는 필독서! 특히 이해되지 않거나 공감되지 않는 부분이 있다면 그냥 넘어가기보다...</p>
+                    <p className={s.commentCard_title}>{randomComment.title}</p>
+                    <div className={s.commentCard_rate}>
+                    <Rating value={randomComment.rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{
+                            '& .MuiRating-icon': {
+                                fontSize: '16px',
+                                borderRadius: '50%',
+                            },
+                            '& .MuiRating-iconFilled': {
+                                color: '#FFC700'
+                            },
+                            '& .MuiRating-iconEmpty': {
+                                color: '#FFC700'
+                            }
+                        }}
+                     />
+                    </div>
+                    <p className={s.commentCard_review}>{randomComment.comment}</p>
                 </div>
             </div>
         </div>
     )
 }
 
+const ContentList_card = ({item, showBookmark, comment}) => {
+    // const [averageRating, setAverageRating] = useState(0);
 
-const ContentList_card = ({item, showBookmark }) => {
+    const averageRating = useMemo(()=> {
+            const findComment = comment.filter(cmt=>cmt.title == item.title)
+
+        
+        if(findComment.length > 0){
+            const totalRatings = findComment.reduce((sum, comment) => {
+               return sum + (comment.rating || 0)
+            },0);
+            const avgRating = totalRatings / findComment.length;
+            return avgRating.toFixed(1);
+        }
+        
+    },[comment])
+
+   
     return (
         <div className={s.ContentList_card}>
             <div className={s.ContentList_card_main}>
@@ -83,9 +117,30 @@ const ContentList_card = ({item, showBookmark }) => {
                     <p className={s.ContentList_card_rateTitle}>
                     책이음 평점
                     </p>
-                    <p className={s.ContentList_card_rate}>
-                    ★★★★☆ 4.0
-                    </p>
+                    <div className={s.ContentList_card_rate}>
+                        <Rating value={averageRating}
+                        precision={0.5}
+                        readOnly
+                        sx={{
+                                '& .MuiRating-icon': {
+                                    fontSize: '16px',
+                                    borderRadius: '50%',
+                                },
+                                '& .MuiRating-iconFilled': {
+                                    color: '#FFC700'
+                                },
+                                '& .MuiRating-iconEmpty': {
+                                    color: '#FFC700'
+                                }
+                            }}
+                        />
+                        {
+                            averageRating ?
+                            <span className={s.ContentList_card_commentRate}>{averageRating}</span>
+                            : <span className={s.ContentList_card_commentRate}>리뷰없음</span>
+
+                        }
+                    </div>
                 </div>
             </div>
             <div className={s.ContentList_card_foot}>
@@ -107,7 +162,7 @@ const MypageCard = (props) => {
                 pathname: '/Detail',
                 query: { itemId: props.item.bookid },
             });
-          }; 
+        }; 
     return (
         <div className={s.MypageCard}>
             <div className={s.MypageCard_box}>

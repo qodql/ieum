@@ -25,7 +25,6 @@ const CommentList = () => {
   const backBtn = () => {
     router.back();
   };
-  console.log(session)
 
   // 코멘트 불러오기
   const fetchComments = async () => {

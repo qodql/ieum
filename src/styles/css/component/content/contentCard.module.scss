@@ -107,8 +107,10 @@
     margin: 16px 16px 80px;
     border-radius: 8px;
     .profile{
+        height: 32px;
         display: flex;
         align-items: center;
+        margin: 12px 0;
         span{
             width: 32px;
             height: 32px;
@@ -131,6 +133,7 @@
 .commentCard{
     display: flex;
     margin: 16px;
+    gap: 12px;
     .commentCard_img{
         width: 84px;
         height: 120px;
@@ -144,6 +147,13 @@
         .commentCard_rate{
             font-size: 12px;
             color: #ffc700;
+            span{
+                span{
+                    span{
+                        display: block;
+                    }
+                }
+            }
         }
         .commentCard_review{
             font-size: 12px;
@@ -214,6 +224,14 @@
             }
             .ContentList_card_rate{
                 font-size: 16px;
+                position: relative;
+            }
+            .ContentList_card_commentRate{
+                font-size: 12px;
+                position: absolute;
+                top: 28%;
+                left: 38%;
+
             }
         }
     }
