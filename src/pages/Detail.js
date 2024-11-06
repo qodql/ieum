@@ -22,10 +22,7 @@ const Detail = () => {
     const [commentList, setCommentList] = useState([]);
     const [readState, setReadState] = useState(false);
     const [readWantState, setReadWantState] = useState(false);
-
-
-
-
+    
     // 데이터 불러오기
     useEffect(() => {
         const cateNum = mainCateNum;
@@ -76,17 +73,15 @@ const Detail = () => {
     const fetchComments = async () => {
         const q = query(collection(db, 'comment'), where('title', '==', itemTitle));
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot.docs);
         const comments = querySnapshot.docs.map((doc) => doc.data());
         setCommentList(comments);
     };
-
-    // useEffect(() => {
-    //     if (itemTitle) {
-    //         fetchComments();
-    //     }
-    // }, [itemTitle]);
-    
+    useEffect(() => {
+        if (itemTitle) {
+            fetchComments();
+        }
+    }, [itemTitle]);
+    console.log(commentList);
     
     // 뒤로가기
     const backBtn = () => {
@@ -136,7 +131,6 @@ const Detail = () => {
             query: { itemId: item.itemId, itemCover: item.cover, itemTitle: item.title },
         });
     };
-    console.log(item)
     // 읽는중 버튼
     const authorize = async () => {
         const q = query(
@@ -345,6 +339,7 @@ const Detail = () => {
                                                         <div className={commentS.detailCommentStar}>
                                                         <Rating value={comment.rating} readOnly 
                                                         precision={0.5} 
+                                                        // 스타일
                                                         sx={{
                                                             '& .MuiRating-icon': {
                                                               fontSize: '14px',
@@ -355,7 +350,7 @@ const Detail = () => {
                                                             },
                                                             '& .MuiRating-iconEmpty': {
                                                               color: '#FFC700'
-                                                            }
+                                                            }   
                                                         }}
                                                         />
                                                         </div>

@@ -21,7 +21,6 @@ const CommentList = () => {
   const [commentList, setCommentList] = useState([]);
   const [ratingValue, setRatingValue] = useState(0);
   const [commentLength, setCommentLength] = useState(0);
-
   // 뒤로가기
   const backBtn = () => {
     router.back();
